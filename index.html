@@ -136,11 +136,14 @@
             document.getElementById("friends-page").style.display = "none"; 
         }
 
-        function copyInvite() {
-            const link = `https://t.me/my_earning_test_bot?start=${userID}`;
-            tele.showPopup({ message: "Invite Link: " + link });
-        }
-
+       function copyInvite() {
+    const link = `https://t.me/my_earning_test_bot?start=${userID}`;
+    const shareText = `Join BDC Network and let's earn together! 🚀`;
+    const fullUrl = `https://t.me/share/url?url=${encodeURIComponent(link)}&text=${encodeURIComponent(shareText)}`;
+    
+    // এটি সরাসরি টেলিগ্রামের ইনভাইট উইন্ডো ওপেন করবে
+    tele.openTelegramLink(fullUrl);
+}
         function loadFriends() {
             const friendsDiv = document.getElementById("friends-list");
             friendsDiv.innerHTML = '<p style="color:var(--gray)">Loading friends...</p>';
@@ -167,3 +170,4 @@
     </script>
 </body>
 </html>
+
