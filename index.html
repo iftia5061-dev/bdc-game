@@ -8,25 +8,26 @@
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-database-compat.js"></script>
+    <script src="https://sad.adsgram.ai/js/adsgram-adbox.js"></script>
 
     <style>
-        :root { --gold: #f3ba2f; --dark: #070a13; --card: #151a28; --gray: #a0a5b1; }
+        :root { --gold: #f3ba2f; --dark: #070a13; --card: #151a28; --gray: #a0a5b1; --green: #4caf50; }
         body { background: var(--dark); color: white; font-family: sans-serif; margin: 0; height: 100vh; overflow: hidden; }
         
-        .header { display: flex; justify-content: space-between; padding: 15px; align-items: center; background: var(--card); }
+        .header { display: flex; justify-content: space-between; padding: 15px; align-items: center; background: var(--card); border-bottom: 1px solid #2d3343; }
         .main-tap { display: flex; flex-direction: column; justify-content: center; align-items: center; height: 60vh; }
-        .coin-btn { width: 200px; height: 200px; background: radial-gradient(circle, var(--gold) 0%, #b38600 100%); border-radius: 50%; display: flex; justify-content: center; align-items: center; font-size: 80px; box-shadow: 0 0 30px rgba(243, 186, 47, 0.2); cursor: pointer; border: 8px solid #1c212e; transition: transform 0.05s; }
+        .coin-btn { width: 180px; height: 180px; background: radial-gradient(circle, var(--gold) 0%, #b38600 100%); border-radius: 50%; display: flex; justify-content: center; align-items: center; font-size: 70px; box-shadow: 0 0 30px rgba(243, 186, 47, 0.3); cursor: pointer; border: 6px solid #1c212e; transition: transform 0.05s; }
         .coin-btn:active { transform: scale(0.92); }
 
         .overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--dark); z-index: 100; padding: 20px; box-sizing: border-box; overflow-y: auto; }
-        .close-btn { background: var(--gold); color: black; border: none; padding: 10px 20px; border-radius: 5px; font-weight: bold; cursor: pointer; margin-bottom: 20px; }
+        .close-btn { background: var(--gold); color: black; border: none; padding: 10px 20px; border-radius: 8px; font-weight: bold; cursor: pointer; margin-bottom: 20px; }
         
-        .nav { position: fixed; bottom: 0; width: 100%; background: var(--card); display: flex; justify-content: space-around; padding: 15px 0; }
-        .nav-item { text-align: center; color: var(--gray); font-size: 12px; cursor: pointer; }
-        .friend-item { background: var(--card); padding: 15px; border-radius: 12px; margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center; border: 1px solid #2d3343; }
+        .nav { position: fixed; bottom: 0; width: 100%; background: var(--card); display: flex; justify-content: space-around; padding: 12px 0; border-top: 1px solid #2d3343; }
+        .nav-item { text-align: center; color: var(--gray); font-size: 11px; cursor: pointer; }
+        .friend-item { background: var(--card); padding: 12px; border-radius: 12px; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center; border: 1px solid #2d3343; }
         
-        .btn-task { background: var(--gold); color: black; border: none; padding: 10px 20px; border-radius: 8px; font-weight: bold; cursor: pointer; min-width: 80px; }
-        .btn-task:disabled { background: #555; color: #aaa; cursor: not-allowed; }
+        .btn-task { background: var(--gold); color: black; border: none; padding: 8px 15px; border-radius: 6px; font-weight: bold; cursor: pointer; font-size: 12px; }
+        .btn-ad { background: var(--green); color: white; width: 100%; padding: 15px; border-radius: 12px; border: none; font-weight: bold; font-size: 16px; margin-bottom: 20px; cursor: pointer; }
     </style>
 </head>
 <body>
@@ -38,39 +39,63 @@
 
     <div class="main-tap">
         <div class="coin-btn" id="tap-btn">₿</div>
-        <div id="level-text" style="margin-top:20px; color:var(--gold)">Level: 1</div>
-        <div style="margin-top:10px">⚡ <span id="energy-val">500</span>/500</div>
+        <div id="level-text" style="margin-top:15px; color:var(--gold)">Level: 1</div>
+        <div style="margin-top:5px; font-size: 14px;">⚡ <span id="energy-val">500</span>/500</div>
     </div>
 
-    <div id="profile-page" class="overlay"><button class="close-btn" onclick="hideOverlays()">Close</button><h2>Your Profile</h2><div style="background:var(--card); padding:20px; border-radius:10px"><p>Name: <span id="p-name"></span></p><p>User ID: <span id="p-id"></span></p><p>Total Balance: <span id="p-balance"></span> BDC</p><p>Level: <span id="p-level"></span></p></div></div>
-    <div id="friends-page" class="overlay"><button class="close-btn" onclick="hideOverlays()">Close</button><h2>Invite Friends</h2><button style="width:100%; padding:15px; background:var(--gold); border:none; border-radius:10px; font-weight:bold" onclick="copyInvite()">🔗 Copy Invite Link</button><h3 style="margin-top:30px">Your Friends List</h3><div id="friends-list"></div></div>
+    <div id="profile-page" class="overlay">
+        <button class="close-btn" onclick="hideOverlays()">Close</button>
+        <h2>My Profile</h2>
+        <div style="background:var(--card); padding:20px; border-radius:15px; border: 1px solid #333;">
+            <p>Name: <span id="p-name" style="color:var(--gold)"></span></p>
+            <p>UID: <span id="p-id"></span></p>
+            <p>Balance: <span id="p-balance" style="color:var(--gold)"></span> BDC</p>
+            <p>Level: <span id="p-level"></span></p>
+        </div>
+    </div>
 
     <div id="tasks-page" class="overlay">
         <button class="close-btn" onclick="hideOverlays()">Close</button>
-        <h2>Earn Extra BDC</h2>
-        <p style="color:var(--gray); margin-bottom:20px;">Complete tasks and wait for verification!</p>
+        <h2>Tasks & Rewards</h2>
         
-        <div class="friend-item">
-            <div><b>Join Telegram Channel</b><br><span style="color:var(--gold)">+5,000 BDC</span></div>
-            <button onclick="handleTask('https://t.me/your_channel', 5000, 'tg_task')" id="tg_task_btn" class="btn-task">Go</button>
-        </div>
+        <button class="btn-ad" onclick="showAd()">📺 Watch Ad (+2000 BDC)</button>
 
-        <div class="friend-item">
-            <div><b>Subscribe YouTube</b><br><span style="color:var(--gold)">+10,000 BDC</span></div>
-            <button onclick="handleTask('https://www.youtube.com/@BDC-coin-n3z', 10000, 'yt_task')" id="yt_task_btn" class="btn-task">Go</button>
+        <p style="color:var(--gray); font-size: 13px;">Complete these tasks to grow your balance!</p>
+        
+        <div id="task-list-container">
+            <div class="friend-item">
+                <div><b>Follow X (Twitter)</b><br><span style="color:var(--gold)">+7000 BDC</span></div>
+                <button onclick="handleTask('https://twitter.com/your_profile', 7000, 'x_task')" id="x_task_btn" class="btn-task">Go</button>
+            </div>
+            <div class="friend-item">
+                <div><b>Join Facebook Group</b><br><span style="color:var(--gold)">+5000 BDC</span></div>
+                <button onclick="handleTask('https://facebook.com/groups/your_group', 5000, 'fb_task')" id="fb_task_btn" class="btn-task">Go</button>
+            </div>
+            <div class="friend-item">
+                <div><b>Subscribe YouTube</b><br><span style="color:var(--gold)">+10000 BDC</span></div>
+                <button onclick="handleTask('https://www.youtube.com/@BDC-coin-n3z', 10000, 'yt_task')" id="yt_task_btn" class="btn-task">Go</button>
+            </div>
         </div>
+    </div>
+
+    <div id="friends-page" class="overlay">
+        <button class="close-btn" onclick="hideOverlays()">Close</button>
+        <h2>Invite Friends</h2>
+        <button style="width:100%; padding:15px; background:var(--gold); border:none; border-radius:12px; font-weight:bold" onclick="copyInvite()">🔗 Copy Invite Link</button>
+        <h3 style="margin-top:25px">My Friends</h3>
+        <div id="friends-list" style="color:var(--gray)">Loading...</div>
     </div>
 
     <div class="nav">
         <div class="nav-item" onclick="showProfile()">👤 Profile</div>
         <div class="nav-item" onclick="showFriends()">👥 Friends</div>
         <div class="nav-item" onclick="showTasks()">📋 Tasks</div>
-        <div class="nav-item" onclick="alert('Coming Soon!')">📅 Daily</div>
-        <div class="nav-item" onclick="alert('Wallet Locked')">👛 Wallet</div>
+        <div class="nav-item" onclick="alert('Coming Daily Check-in!')">📅 Daily</div>
+        <div class="nav-item" onclick="alert('Wallet Opens at 1M BDC')">👛 Wallet</div>
     </div>
 
     <script>
-        // Firebase & Basic Setup
+        // Firebase Config
         const firebaseConfig = {
             apiKey: "AIzaSyD3vuw74WjiWytZMbVrtNzn7igIyjRMC1c",
             authDomain: "bdc-network.firebaseapp.com",
@@ -89,17 +114,16 @@
 
         let coins = 0; let energy = 500; let level = 1;
 
-        // Sync Data
+        // ADSGRAM SETUP (আপনার Block ID পেলে এখানে বসাবেন)
+        const AdController = window.Adsgram?.init({ blockId: "YOUR_BLOCK_ID_HERE" });
+
         db.ref('users/' + userID).on('value', (snap) => {
             if(snap.exists()){
                 const d = snap.val();
                 coins = d.balance || 0; level = d.level || 1;
                 updateUI();
             } else {
-                const urlParams = new URLSearchParams(window.location.search);
-                const refID = urlParams.get('tgWebAppStartParam');
-                db.ref('users/' + userID).set({ name: userName, balance: 5000, level: 1, invitedBy: refID || "none" });
-                if(refID) db.ref('users/' + refID + '/balance').transaction(b => (b || 0) + 5000);
+                db.ref('users/' + userID).set({ name: userName, balance: 5000, level: 1, invitedBy: "none" });
             }
         });
 
@@ -111,55 +135,58 @@
             document.getElementById("p-id").innerText = userID;
             document.getElementById("p-balance").innerText = coins.toLocaleString();
             document.getElementById("p-level").innerText = level;
-            checkTaskStatus();
+            checkStatus();
         }
 
-        document.getElementById("tap-btn").addEventListener("click", () => {
+        document.getElementById("tap-btn").addEventListener("click", (e) => {
             if(energy >= level) {
                 coins += level; energy -= level; updateUI();
                 db.ref('users/' + userID).update({ balance: coins });
             }
         });
 
-        // Task System with Verification
+        // টাস্ক হ্যান্ডলার
         function handleTask(url, reward, id) {
-            if(localStorage.getItem(id) === "done") return;
-
-            // Step 1: Open Link
-            tele.openLink(url); 
-
+            if(localStorage.getItem(id)) return;
+            tele.openLink(url);
             const btn = document.getElementById(id + "_btn");
             btn.innerText = "Checking...";
             btn.disabled = true;
-
-            // Step 2: Verification Timer (10 seconds)
             setTimeout(() => {
                 btn.innerText = "Claim";
                 btn.disabled = false;
-                btn.onclick = () => claimReward(reward, id);
-            }, 10000);
+                btn.onclick = () => {
+                    coins += reward;
+                    db.ref('users/' + userID).update({ balance: coins });
+                    localStorage.setItem(id, "true");
+                    alert("Reward: " + reward + " BDC!");
+                    updateUI();
+                };
+            }, 8000);
         }
 
-        function claimReward(reward, id) {
-            coins += reward;
-            db.ref('users/' + userID).update({ balance: coins });
-            localStorage.setItem(id, "done");
-            alert("Reward Collected! " + reward + " BDC added.");
-            updateUI();
-        }
-
-        function checkTaskStatus() {
-            if(localStorage.getItem('yt_task') === "done") {
-                const btn = document.getElementById("yt_task_btn");
-                if(btn) { btn.innerText = "✅"; btn.disabled = true; }
+        // অ্যাড দেখানোর ফাংশন
+        function showAd() {
+            if (AdController) {
+                AdController.show().then(() => {
+                    coins += 2000;
+                    db.ref('users/' + userID).update({ balance: coins });
+                    alert("Ad Bonus: 2000 BDC!");
+                }).catch(() => alert("Ad not ready yet. Try again later."));
+            } else {
+                alert("Ads setup not finished. We are working on it!");
             }
-            if(localStorage.getItem('tg_task') === "done") {
-                const btn = document.getElementById("tg_task_btn");
-                if(btn) { btn.innerText = "✅"; btn.disabled = true; }
-            }
         }
 
-        // Standard Functions
+        function checkStatus() {
+            ['yt_task', 'x_task', 'fb_task'].forEach(id => {
+                if(localStorage.getItem(id)) {
+                    const b = document.getElementById(id+"_btn");
+                    if(b) { b.innerText = "✅"; b.disabled = true; }
+                }
+            });
+        }
+
         function showProfile() { document.getElementById("profile-page").style.display = "block"; }
         function showFriends() { document.getElementById("friends-page").style.display = "block"; loadFriends(); }
         function showTasks() { document.getElementById("tasks-page").style.display = "block"; }
@@ -167,18 +194,14 @@
         
         function copyInvite() {
             const link = `https://t.me/my_earning_test_bot?start=${userID}`;
-            const fullUrl = `https://t.me/share/url?url=${encodeURIComponent(link)}&text=Join BDC Network! 🚀`;
-            tele.openTelegramLink(fullUrl);
+            tele.openTelegramLink(`https://t.me/share/url?url=${encodeURIComponent(link)}&text=Join BDC! 🚀`);
         }
 
         function loadFriends() {
             const list = document.getElementById("friends-list");
-            list.innerHTML = "Loading...";
             db.ref('users').orderByChild('invitedBy').equalTo(userID.toString()).once('value', (snap) => {
-                list.innerHTML = snap.exists() ? "" : "No friends invited yet.";
-                snap.forEach(child => {
-                    list.innerHTML += `<div class="friend-item"><span>${child.val().name}</span><span style="color:var(--gold)">+5000</span></div>`;
-                });
+                list.innerHTML = snap.exists() ? "" : "No friends yet.";
+                snap.forEach(c => list.innerHTML += `<div class="friend-item"><span>${c.val().name}</span><span>+5000</span></div>`);
             });
         }
 
