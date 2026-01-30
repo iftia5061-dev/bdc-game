@@ -23,7 +23,10 @@
         
         .nav { position: fixed; bottom: 0; width: 100%; background: var(--card); display: flex; justify-content: space-around; padding: 15px 0; }
         .nav-item { text-align: center; color: var(--gray); font-size: 12px; cursor: pointer; }
-        .friend-item { background: var(--card); padding: 10px; border-radius: 8px; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center; }
+        .friend-item { background: var(--card); padding: 15px; border-radius: 12px; margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center; border: 1px solid #2d3343; }
+        
+        .btn-task { background: var(--gold); color: black; border: none; padding: 10px 20px; border-radius: 8px; font-weight: bold; cursor: pointer; min-width: 80px; }
+        .btn-task:disabled { background: #555; color: #aaa; cursor: not-allowed; }
     </style>
 </head>
 <body>
@@ -39,38 +42,22 @@
         <div style="margin-top:10px">⚡ <span id="energy-val">500</span>/500</div>
     </div>
 
-    <div id="profile-page" class="overlay">
-        <button class="close-btn" onclick="hideOverlays()">Close</button>
-        <h2>Your Profile</h2>
-        <div style="background:var(--card); padding:20px; border-radius:10px">
-            <p>Name: <span id="p-name"></span></p>
-            <p>User ID: <span id="p-id"></span></p>
-            <p>Total Balance: <span id="p-balance"></span> BDC</p>
-            <p>Level: <span id="p-level"></span></p>
-        </div>
-    </div>
-
-    <div id="friends-page" class="overlay">
-        <button class="close-btn" onclick="hideOverlays()">Close</button>
-        <h2>Invite Friends</h2>
-        <button style="width:100%; padding:15px; background:var(--gold); border:none; border-radius:10px; font-weight:bold" onclick="copyInvite()">🔗 Copy Invite Link</button>
-        <h3 style="margin-top:30px">Your Friends List</h3>
-        <div id="friends-list"></div>
-    </div>
+    <div id="profile-page" class="overlay"><button class="close-btn" onclick="hideOverlays()">Close</button><h2>Your Profile</h2><div style="background:var(--card); padding:20px; border-radius:10px"><p>Name: <span id="p-name"></span></p><p>User ID: <span id="p-id"></span></p><p>Total Balance: <span id="p-balance"></span> BDC</p><p>Level: <span id="p-level"></span></p></div></div>
+    <div id="friends-page" class="overlay"><button class="close-btn" onclick="hideOverlays()">Close</button><h2>Invite Friends</h2><button style="width:100%; padding:15px; background:var(--gold); border:none; border-radius:10px; font-weight:bold" onclick="copyInvite()">🔗 Copy Invite Link</button><h3 style="margin-top:30px">Your Friends List</h3><div id="friends-list"></div></div>
 
     <div id="tasks-page" class="overlay">
         <button class="close-btn" onclick="hideOverlays()">Close</button>
         <h2>Earn Extra BDC</h2>
-        <p style="color:var(--gray); margin-bottom:20px;">Complete tasks to get instant rewards!</p>
+        <p style="color:var(--gray); margin-bottom:20px;">Complete tasks and wait for verification!</p>
         
         <div class="friend-item">
-            <div><b>Join Official Channel</b><br><span style="color:var(--gold)">+5000 BDC</span></div>
-            <button onclick="doTask('https://t.me/your_channel', 5000, 'tg_task')" id="tg_task_btn" style="background:var(--gold); border:none; padding:8px 15px; border-radius:5px; cursor:pointer;">Go</button>
+            <div><b>Join Telegram Channel</b><br><span style="color:var(--gold)">+5,000 BDC</span></div>
+            <button onclick="handleTask('https://t.me/your_channel', 5000, 'tg_task')" id="tg_task_btn" class="btn-task">Go</button>
         </div>
 
         <div class="friend-item">
-            <div><b>Subscribe YouTube</b><br><span style="color:var(--gold)">+10000 BDC</span></div>
-            <button onclick="doTask('https://www.youtube.com/@BDC-coin-n3z', 10000, 'yt_task')" id="yt_task_btn" style="background:var(--gold); border:none; padding:8px 15px; border-radius:5px; cursor:pointer;">Go</button>
+            <div><b>Subscribe YouTube</b><br><span style="color:var(--gold)">+10,000 BDC</span></div>
+            <button onclick="handleTask('https://www.youtube.com/@BDC-coin-n3z', 10000, 'yt_task')" id="yt_task_btn" class="btn-task">Go</button>
         </div>
     </div>
 
@@ -83,6 +70,7 @@
     </div>
 
     <script>
+        // Firebase & Basic Setup
         const firebaseConfig = {
             apiKey: "AIzaSyD3vuw74WjiWytZMbVrtNzn7igIyjRMC1c",
             authDomain: "bdc-network.firebaseapp.com",
@@ -94,43 +82,24 @@
         };
         firebase.initializeApp(firebaseConfig);
         const db = firebase.database();
-
         const tele = window.Telegram.WebApp;
         const userData = tele.initDataUnsafe?.user;
         const userID = userData ? userData.id : "guest_123";
         const userName = userData ? userData.first_name : "Player";
 
-        let coins = 0;
-        let energy = 500;
-        let level = 1;
+        let coins = 0; let energy = 500; let level = 1;
 
-        // --- REFERRAL & DATA LOAD ---
-        const urlParams = new URLSearchParams(window.location.search);
-        const referrerID = urlParams.get('tgWebAppStartParam');
-
-        db.ref('users/' + userID).once('value').then((snap) => {
-            if(!snap.exists()){
-                let initialBalance = 5000;
-                db.ref('users/' + userID).set({
-                    name: userName,
-                    balance: initialBalance,
-                    level: 1,
-                    invitedBy: referrerID || "none"
-                });
-                if(referrerID) {
-                    db.ref('users/' + referrerID + '/balance').transaction((b) => (b || 0) + 5000);
-                }
-                alert("Welcome! You received 5000 BDC Bonus!");
-            }
-        });
-
-        // Live Data Sync
+        // Sync Data
         db.ref('users/' + userID).on('value', (snap) => {
             if(snap.exists()){
                 const d = snap.val();
-                coins = d.balance || 0;
-                level = d.level || 1;
+                coins = d.balance || 0; level = d.level || 1;
                 updateUI();
+            } else {
+                const urlParams = new URLSearchParams(window.location.search);
+                const refID = urlParams.get('tgWebAppStartParam');
+                db.ref('users/' + userID).set({ name: userName, balance: 5000, level: 1, invitedBy: refID || "none" });
+                if(refID) db.ref('users/' + refID + '/balance').transaction(b => (b || 0) + 5000);
             }
         });
 
@@ -142,27 +111,60 @@
             document.getElementById("p-id").innerText = userID;
             document.getElementById("p-balance").innerText = coins.toLocaleString();
             document.getElementById("p-level").innerText = level;
+            checkTaskStatus();
         }
 
         document.getElementById("tap-btn").addEventListener("click", () => {
             if(energy >= level) {
-                coins += level;
-                energy -= level;
-                updateUI();
+                coins += level; energy -= level; updateUI();
                 db.ref('users/' + userID).update({ balance: coins });
             }
         });
 
+        // Task System with Verification
+        function handleTask(url, reward, id) {
+            if(localStorage.getItem(id) === "done") return;
+
+            // Step 1: Open Link
+            tele.openLink(url); 
+
+            const btn = document.getElementById(id + "_btn");
+            btn.innerText = "Checking...";
+            btn.disabled = true;
+
+            // Step 2: Verification Timer (10 seconds)
+            setTimeout(() => {
+                btn.innerText = "Claim";
+                btn.disabled = false;
+                btn.onclick = () => claimReward(reward, id);
+            }, 10000);
+        }
+
+        function claimReward(reward, id) {
+            coins += reward;
+            db.ref('users/' + userID).update({ balance: coins });
+            localStorage.setItem(id, "done");
+            alert("Reward Collected! " + reward + " BDC added.");
+            updateUI();
+        }
+
+        function checkTaskStatus() {
+            if(localStorage.getItem('yt_task') === "done") {
+                const btn = document.getElementById("yt_task_btn");
+                if(btn) { btn.innerText = "✅"; btn.disabled = true; }
+            }
+            if(localStorage.getItem('tg_task') === "done") {
+                const btn = document.getElementById("tg_task_btn");
+                if(btn) { btn.innerText = "✅"; btn.disabled = true; }
+            }
+        }
+
+        // Standard Functions
         function showProfile() { document.getElementById("profile-page").style.display = "block"; }
         function showFriends() { document.getElementById("friends-page").style.display = "block"; loadFriends(); }
         function showTasks() { document.getElementById("tasks-page").style.display = "block"; }
+        function hideOverlays() { document.querySelectorAll('.overlay').forEach(el => el.style.display = 'none'); }
         
-        function hideOverlays() { 
-            document.getElementById("profile-page").style.display = "none"; 
-            document.getElementById("friends-page").style.display = "none"; 
-            document.getElementById("tasks-page").style.display = "none";
-        }
-
         function copyInvite() {
             const link = `https://t.me/my_earning_test_bot?start=${userID}`;
             const fullUrl = `https://t.me/share/url?url=${encodeURIComponent(link)}&text=Join BDC Network! 🚀`;
@@ -173,32 +175,14 @@
             const list = document.getElementById("friends-list");
             list.innerHTML = "Loading...";
             db.ref('users').orderByChild('invitedBy').equalTo(userID.toString()).once('value', (snap) => {
-                list.innerHTML = "";
-                if(snap.exists()){
-                    snap.forEach(child => {
-                        list.innerHTML += `<div class="friend-item"><span>${child.val().name}</span><span style="color:var(--gold)">+5000</span></div>`;
-                    });
-                } else {
-                    list.innerHTML = "No friends invited yet.";
-                }
+                list.innerHTML = snap.exists() ? "" : "No friends invited yet.";
+                snap.forEach(child => {
+                    list.innerHTML += `<div class="friend-item"><span>${child.val().name}</span><span style="color:var(--gold)">+5000</span></div>`;
+                });
             });
-        }
-
-        function doTask(url, reward, id) {
-            if(localStorage.getItem(id)) return alert("Already Done!");
-            tele.openTelegramLink(url); // টেলিগ্রাম লিঙ্ক হলে এটি ভালো কাজ করে
-            setTimeout(() => {
-                coins += reward;
-                db.ref('users/' + userID).update({ balance: coins });
-                localStorage.setItem(id, "true");
-                document.getElementById(id+"_btn").innerText = "✅";
-                alert("Reward Collected!");
-            }, 3000);
         }
 
         setInterval(() => { if(energy < 500) { energy++; updateUI(); } }, 2000);
     </script>
 </body>
 </html>
-
-
