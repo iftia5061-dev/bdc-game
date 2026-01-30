@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>BDC Network - Earn & Tap</title>
+    <title>BDC Network - Official Mining</title>
     
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
@@ -11,46 +11,63 @@
     <script src="https://sad.adsgram.ai/js/adsgram-adbox.js"></script>
 
     <style>
-        :root { --gold: #f3ba2f; --dark: #070a13; --card: #151a28; --gray: #a0a5b1; --green: #4caf50; }
-        body { background: var(--dark); color: white; font-family: sans-serif; margin: 0; display: flex; flex-direction: column; height: 100vh; overflow: hidden; user-select: none; }
+        :root { --gold: #f3ba2f; --dark: #070a13; --card: #151a28; --gray: #a0a5b1; }
+        body { background: var(--dark); color: white; font-family: 'Segoe UI', Tahoma, sans-serif; margin: 0; display: flex; flex-direction: column; height: 100vh; overflow: hidden; user-select: none; }
         
-        .ad-bar { height: 45px; background: #1c212e; display: flex; align-items: center; justify-content: center; font-size: 11px; border-bottom: 1px solid #2d3343; color: var(--gold); font-weight: bold; }
-        .header { display: flex; justify-content: space-between; padding: 15px; align-items: center; }
-        .coin-amount { font-size: 35px; font-weight: 800; color: white; text-align: center; margin-top: 10px; }
+        /* Layout */
+        .header { display: flex; justify-content: space-between; padding: 15px; align-items: center; background: var(--card); border-bottom: 1px solid #2d3343; }
+        .balance-card { text-align: center; margin: 15px 0; }
+        .coin-amount { font-size: 38px; font-weight: 800; color: white; }
         
+        /* Tap Button */
         .main-tap { flex-grow: 1; display: flex; flex-direction: column; justify-content: center; align-items: center; }
-        .coin-btn { width: 200px; height: 200px; background: radial-gradient(circle, var(--gold) 0%, #b38600 100%); border-radius: 50%; display: flex; justify-content: center; align-items: center; font-size: 80px; box-shadow: 0 0 40px rgba(243, 186, 47, 0.3); cursor: pointer; border: 8px solid #1c212e; transition: transform 0.05s; }
+        .coin-btn { 
+            width: 210px; height: 210px; 
+            background: radial-gradient(circle, var(--gold) 0%, #b38600 100%); 
+            border-radius: 50%; display: flex; justify-content: center; align-items: center; 
+            font-size: 85px; box-shadow: 0 0 40px rgba(243, 186, 47, 0.3); 
+            cursor: pointer; border: 8px solid #1c212e; transition: transform 0.05s;
+            -webkit-tap-highlight-color: transparent;
+        }
         .coin-btn:active { transform: scale(0.92); }
 
-        .progress-box { width: 80%; margin: 20px 0; }
+        /* Progress Bar */
+        .progress-box { width: 85%; margin: 20px 0; }
         .bar-bg { width: 100%; height: 12px; background: #242935; border-radius: 10px; overflow: hidden; }
-        #bar-fill { width: 100%; height: 100%; background: var(--gold); transition: width 0.3s; }
+        #bar-fill { width: 100%; height: 100%; background: var(--gold); transition: width 0.2s; }
 
+        /* Overlays (Pages) */
         .overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--dark); z-index: 100; padding: 20px; box-sizing: border-box; overflow-y: auto; }
         .close-btn { background: var(--gold); color: black; border: none; padding: 12px; border-radius: 8px; font-weight: bold; width: 100%; margin-bottom: 20px; cursor: pointer; }
         
+        /* Nav Bar */
         .nav { background: var(--card); display: flex; justify-content: space-around; padding: 12px 0; border-top: 1px solid #2d3343; }
         .nav-item { text-align: center; color: var(--gray); font-size: 11px; cursor: pointer; flex: 1; }
+        .nav-item.active { color: var(--gold); }
 
-        .task-card { background: var(--card); padding: 15px; border-radius: 12px; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center; border: 1px solid #2d3343; }
-        .btn-claim { background: var(--gold); color: black; border: none; padding: 8px 15px; border-radius: 6px; font-weight: bold; cursor: pointer; }
-        .ad-btn { background: linear-gradient(90deg, #4caf50, #2e7d32); color: white; width: 100%; padding: 15px; border-radius: 12px; border: none; font-weight: bold; margin-bottom: 15px; cursor: pointer; font-size: 16px; }
+        /* Components */
+        .card-item { background: var(--card); padding: 15px; border-radius: 12px; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center; border: 1px solid #2d3343; }
+        .btn-action { background: var(--gold); color: black; border: none; padding: 8px 15px; border-radius: 6px; font-weight: bold; cursor: pointer; }
+        .ad-btn { background: #4caf50; color: white; width: 100%; padding: 15px; border-radius: 12px; border: none; font-weight: bold; margin-bottom: 20px; cursor: pointer; font-size: 16px; box-shadow: 0 4px 10px rgba(0,0,0,0.3); }
     </style>
 </head>
 <body>
 
-    <div class="ad-bar">BDC NETWORK - MINING LIVE 🚀</div>
-
     <div class="header">
-        <div style="color:var(--gold); font-weight:bold" id="user-name">Loading...</div>
-        <button style="background:var(--card); border:1px solid #333; color:white; padding:5px 10px; border-radius:5px" onclick="showReferral()">🔗 Invite</button>
+        <div style="color:var(--gold); font-weight:bold" id="user-display">Hi, Player</div>
+        <div style="display:flex; gap:10px">
+            <button style="background:var(--card); border:1px solid #333; color:white; padding:5px 12px; border-radius:5px" onclick="showPage('profile-page')">👤 Profile</button>
+        </div>
     </div>
 
-    <div class="coin-amount">BDC - <span id="coin-count">0</span></div>
+    <div class="balance-card">
+        <div style="font-size:14px; color:var(--gray)">BDC Balance</div>
+        <div class="coin-amount" id="coin-count">0</div>
+    </div>
 
     <div class="main-tap">
         <div class="coin-btn" id="tap-btn">₿</div>
-        <div id="level-display" style="margin-top:15px; color:var(--gold); font-weight:bold">Level: 1</div>
+        <div id="level-display" style="margin-top:15px; color:var(--gold); font-weight:bold">Level 1 (+1/tap)</div>
         <div class="progress-box">
             <div style="display:flex; justify-content:space-between; font-size:12px; margin-bottom:5px">
                 <span>⚡ <span id="energy-val">500</span>/500</span>
@@ -60,37 +77,43 @@
         </div>
     </div>
 
-    <div id="task-page" class="overlay">
-        <button class="close-btn" onclick="closePages()">Back to Mining</button>
-        <h2 style="text-align:center">💰 Earn Extra BDC</h2>
+    <div id="profile-page" class="overlay">
+        <button class="close-btn" onclick="closeAll()">Back to Mining</button>
+        <h2 style="text-align:center">User Info</h2>
+        <div class="card-item">
+            <div id="p-details">Loading Profile...</div>
+        </div>
+        <button class="ad-btn" style="background:var(--gold); color:black" onclick="invite()">🔗 Invite Friends (Bonus)</button>
+    </div>
+
+    <div id="tasks-page" class="overlay">
+        <button class="close-btn" onclick="closeAll()">Back to Mining</button>
+        <h2 style="text-align:center">Extra Tasks</h2>
         
         <button class="ad-btn" onclick="showAd()">📺 Watch Ad (+5,000 BDC)</button>
-
-        <div class="task-card">
+        
+        <div class="card-item">
             <div><b>Subscribe YouTube</b><br><small style="color:var(--gold)">+10,000 BDC</small></div>
-            <button class="btn-claim" onclick="doTask('https://www.youtube.com/@BDC-coin-n3z', 10000, 'yt')">Go</button>
+            <button class="btn-action" onclick="doTask('https://www.youtube.com/@BDC-coin-n3z', 10000, 'yt')">Go</button>
         </div>
-        <div class="task-card">
-            <div><b>Join Telegram</b><br><small style="color:var(--gold)">+5,000 BDC</small></div>
-            <button class="btn-claim" onclick="doTask('https://t.me/your_channel', 5000, 'tg')">Go</button>
-        </div>
-        <div class="task-card">
-            <div><b>Follow Twitter (X)</b><br><small style="color:var(--gold)">+5,000 BDC</small></div>
-            <button class="btn-claim" onclick="doTask('https://twitter.com/your_handle', 5000, 'tw')">Go</button>
+        <div class="card-item">
+            <div><b>Daily Reward</b><br><small style="color:var(--gold)">+1,000 BDC</small></div>
+            <button class="btn-action" onclick="claimDaily()">Claim</button>
         </div>
     </div>
 
     <div class="nav">
-        <div class="nav-item" onclick="openPage('task-page')">📋 Tasks</div>
-        <div class="nav-item" onclick="upgradeLevel()">🚀 Boost</div>
-        <div class="nav-item" id="daily-btn">📅 Daily</div>
-        <div class="nav-item" onclick="alert('Coming Soon!')">🏆 Leader</div>
+        <div class="nav-item active" onclick="closeAll()">🏠 Home</div>
+        <div class="nav-item" onclick="showPage('tasks-page')">📋 Tasks</div>
+        <div class="nav-item" onclick="upgrade()">🚀 Boost</div>
+        <div class="nav-item" onclick="alert('Airdrop Coming Soon!')">🎁 Airdrop</div>
     </div>
 
     <script>
-        // --- 1. CONFIG & ADS ---
+        // --- Adsgram Setup ---
         const AdController = window.Adsgram?.init({ blockId: "22077" });
 
+        // --- Firebase Setup ---
         const firebaseConfig = {
             apiKey: "AIzaSyD3vuw74WjiWytZMbVrtNzn7igIyjRMC1c",
             authDomain: "bdc-network.firebaseapp.com",
@@ -101,103 +124,100 @@
         };
         firebase.initializeApp(firebaseConfig);
         const db = firebase.database();
+        const tg = window.Telegram.WebApp;
+        tg.expand();
 
-        // --- 2. TELEGRAM SETUP ---
-        const tele = window.Telegram.WebApp;
-        tele.expand();
-        const userID = tele.initDataUnsafe?.user?.id || "guest_123";
-        const userName = tele.initDataUnsafe?.user?.first_name || "Player";
+        const uid = tg.initDataUnsafe?.user?.id || "guest_" + Math.floor(Math.random()*999);
+        const uName = tg.initDataUnsafe?.user?.first_name || "Player";
 
-        let coins = 0; let energy = 500; let level = 1;
+        let balance = 0; let energy = 500; let level = 1;
 
-        // --- 3. DATA SYNC ---
-        db.ref('users/' + userID).on('value', (snap) => {
+        // --- Data Sync ---
+        db.ref('users/' + uid).on('value', (snap) => {
             if(snap.exists()){
                 const d = snap.val();
-                coins = d.balance || 0;
+                balance = d.balance || 0;
                 level = d.level || 1;
                 updateUI();
             } else {
-                db.ref('users/' + userID).set({ name: userName, balance: 1000, level: 1 });
+                db.ref('users/' + uid).set({ name: uName, balance: 1000, level: 1 });
             }
         });
 
         function updateUI() {
-            document.getElementById("coin-count").innerText = Math.floor(coins).toLocaleString();
+            document.getElementById("coin-count").innerText = Math.floor(balance).toLocaleString();
             document.getElementById("energy-val").innerText = energy;
             document.getElementById("bar-fill").style.width = (energy / 500) * 100 + "%";
-            document.getElementById("user-name").innerText = "Hi, " + userName;
+            document.getElementById("user-display").innerText = "Hi, " + uName;
             document.getElementById("level-display").innerText = `Level: ${level} (+${level}/tap)`;
+            document.getElementById("p-details").innerHTML = `<b>Name:</b> ${uName}<br><b>User ID:</b> ${uid}<br><b>Total BDC:</b> ${Math.floor(balance).toLocaleString()}`;
         }
 
-        // --- 4. CORE FEATURES ---
+        // --- Core Functions ---
 
-        // Tapping
+        // TAP FIX: touchstart uses for mobile speed
         document.getElementById("tap-btn").addEventListener("touchstart", (e) => {
             e.preventDefault();
             if(energy >= level) {
-                coins += level; energy -= level;
+                balance += level;
+                energy -= level;
                 updateUI();
-                db.ref('users/' + userID).update({ balance: coins });
+                db.ref('users/' + uid).update({ balance: balance });
             }
         });
 
-        // Adsgram Integration
         function showAd() {
             if (AdController) {
                 AdController.show().then(() => {
-                    coins += 5000;
-                    db.ref('users/' + userID).update({ balance: coins });
-                    alert("Success! 5,000 BDC Reward added.");
-                }).catch(() => alert("Ad not ready. Try again later."));
+                    balance += 5000;
+                    db.ref('users/' + uid).update({ balance: balance });
+                    alert("Congrats! 5,000 BDC added.");
+                }).catch(() => alert("Ad not ready. Try again in a bit."));
             }
         }
 
-        // Tasks
         function doTask(url, reward, key) {
-            tele.openLink(url);
-            if(!localStorage.getItem('task_'+key)) {
+            tg.openLink(url);
+            if(!localStorage.getItem('bdc_task_'+key)){
                 setTimeout(() => {
-                    coins += reward;
-                    db.ref('users/' + userID).update({ balance: coins });
-                    localStorage.setItem('task_'+key, "done");
-                    alert("Task Bonus Collected!");
+                    balance += reward;
+                    db.ref('users/' + uid).update({ balance: balance });
+                    localStorage.setItem('bdc_task_'+key, 'done');
+                    alert("Reward Collected!");
                 }, 5000);
-            } else { alert("Already Completed!"); }
+            } else { alert("Task already completed!"); }
         }
 
-        // Boost/Level
-        function upgradeLevel() {
-            let cost = level * 2000;
-            if(coins >= cost) {
-                coins -= cost; level++;
-                db.ref('users/' + userID).update({ balance: coins, level: level });
+        function upgrade() {
+            let cost = level * 1200;
+            if(balance >= cost) {
+                balance -= cost; level++;
+                db.ref('users/' + uid).update({ balance: balance, level: level });
                 alert("Upgraded to Level " + level);
             } else { alert("Need " + cost + " BDC to upgrade!"); }
         }
 
-        // Daily Bonus
-        document.getElementById("daily-btn").onclick = () => {
-            const last = localStorage.getItem("last_claim") || 0;
+        function claimDaily() {
+            const last = localStorage.getItem("bdc_daily") || 0;
             const now = Date.now();
             if (now - last > 86400000) {
-                coins += 1000;
-                localStorage.setItem("last_claim", now);
-                db.ref('users/' + userID).update({ balance: coins });
-                alert("Daily 1,000 BDC received!");
-            } else { alert("Wait 24 hours!"); }
-        };
-
-        function openPage(id) { document.getElementById(id).style.display = 'block'; }
-        function closePages() { document.querySelectorAll('.overlay').forEach(p => p.style.display='none'); }
-
-        function showReferral() {
-            const link = `https://t.me/YourBotName?start=${userID}`;
-            tele.openTelegramLink(`https://t.me/share/url?url=${encodeURIComponent(link)}&text=Join BDC Network!`);
+                balance += 1000;
+                localStorage.setItem("bdc_daily", now);
+                db.ref('users/' + uid).update({ balance: balance });
+                alert("Daily Bonus Claimed!");
+            } else { alert("Wait until tomorrow!"); }
         }
 
-        // Energy Recovery
-        setInterval(() => { if(energy < 500) { energy++; updateUI(); } }, 2000);
+        function showPage(id) { document.getElementById(id).style.display = 'block'; }
+        function closeAll() { document.querySelectorAll('.overlay').forEach(p => p.style.display='none'); }
+        
+        function invite() {
+            const link = `https://t.me/my_earning_test_bot?start=${uid}`;
+            tg.openTelegramLink(`https://t.me/share/url?url=${encodeURIComponent(link)}&text=Join BDC Network and mine coins!`);
+        }
+
+        // Energy Refill
+        setInterval(() => { if(energy < 500) { energy++; updateUI(); } }, 1500);
     </script>
 </body>
 </html>
