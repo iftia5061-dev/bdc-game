@@ -60,11 +60,33 @@
         <div id="friends-list">
             <p style="color:var(--gray)">No friends invited yet.</p>
         </div>
+        <div id="tasks-page" class="overlay">
+    <button class="close-btn" onclick="hideOverlays()">Close</button>
+    <h2>Earn Extra BDC</h2>
+    <p style="color:var(--gray); margin-bottom:20px;">Complete tasks to get instant rewards!</p>
+    
+    <div class="friend-item" style="flex-direction:column; align-items:flex-start; gap:10px;">
+        <div><b>Join Official Channel</b></div>
+        <div style="display:flex; justify-content:space-between; width:100%;">
+            <span style="color:var(--gold)">+5000 BDC</span>
+            <button onclick="doTask('https://t.me/your_channel', 5000, 'tg_task')" id="tg_task_btn" style="background:var(--gold); border:none; padding:5px 15px; border-radius:5px; cursor:pointer;">Go</button>
+        </div>
+    </div>
+
+    <div class="friend-item" style="flex-direction:column; align-items:flex-start; gap:10px;">
+        <div><b>Subscribe YouTube</b></div>
+        <div style="display:flex; justify-content:space-between; width:100%;">
+            <span style="color:var(--gold)">+10000 BDC</span>
+            <button onclick="doTask('https://youtube.com/your_channel', 10000, 'yt_task')" id="yt_task_btn" style="background:var(--gold); border:none; padding:5px 15px; border-radius:5px; cursor:pointer;">Go</button>
+        </div>
+    </div>
+</div>
     </div>
 
     <div class="nav">
         <div class="nav-item" onclick="showProfile()">👤 Profile</div>
         <div class="nav-item" onclick="showFriends()">👥 Friends</div>
+        <div class="nav-item" onclick="showTasks()">📋 Tasks</div>
         <div class="nav-item" onclick="alert('Daily Bonus Coming Soon!')">📅 Daily</div>
         <div class="nav-item" onclick="alert('Wallet Locked')">👛 Wallet</div>
     </div>
@@ -182,8 +204,38 @@
         }
 
         setInterval(() => { if(energy < 500) { energy++; updateUI(); } }, 2000);
+        // টাস্ক পেজ দেখানোর ফাংশন
+function showTasks() { 
+    document.getElementById("tasks-page").style.display = "block"; 
+}
+
+// টাস্ক সম্পন্ন করার লজিক
+function doTask(url, reward, taskID) {
+    const isDone = localStorage.getItem(taskID);
+    
+    if (isDone) {
+        alert("You have already completed this task!");
+        return;
+    }
+
+    // ইউজারকে লিঙ্কে পাঠানো
+    window.open(url, '_blank');
+
+    // রিওয়ার্ড দেওয়া
+    setTimeout(() => {
+        coins += reward;
+        localStorage.setItem(taskID, "true"); // যাতে বারবার না নিতে পারে
+        document.getElementById(taskID + "_btn").innerText = "✅ Done";
+        document.getElementById(taskID + "_btn").style.background = "gray";
+        
+        updateUI();
+        db.ref('users/' + userID).update({ balance: coins });
+        alert(`Congratulations! You earned ${reward} BDC!`);
+    }, 2000);
+}
     </script>
 </body>
 </html>
+
 
 
