@@ -149,17 +149,32 @@
             friendsDiv.innerHTML = '<p style="color:var(--gray)">Loading friends...</p>';
             
             // এটি আপনার ডাটাবেসে 'referrals' ফোল্ডার চেক করবে (যদি আপনি রেফারেল সিস্টেম চালু করেন)
-            db.ref('users').orderByChild('invitedBy').equalTo(userID.toString()).once('value', (snap) => {
-                if(snap.exists()){
-                    friendsDiv.innerHTML = "";
-                    snap.forEach((child) => {
-                        const f = child.val();
-                        friendsDiv.innerHTML += `
-                            <div class="friend-item">
-                                <span>${f.name}</span>
-                                <span style="color:var(--gold)">+5000 BDC</span>
-                            </div>`;
-                    });
+           // ১. ইউজার যখন প্রথমবার গেম ওপেন করবে
+    const urlParams = new URLSearchParams(window.location.search);
+    const referrerID = urlParams.get('tgWebAppStartParam'); // টেলিগ্রামের রেফারেল আইডি ধরবে
+
+    db.ref('users/' + userID).once('value').then((snap) => {
+    if(!snap.exists()){
+        // নতুন ইউজার হলে ৫০০০ কয়েন গিফট
+        let initialBalance = 5000;
+        
+        db.ref('users/' + userID).set({
+            name: userName,
+            balance: initialBalance,
+            level: 1,
+            invitedBy: referrerID || "none"
+        });
+
+        // যে ইনভাইট করেছে তাকে ৫০০০ কয়েন পাঠানো
+        if(referrerID) {
+            db.ref('users/' + referrerID + '/balance').transaction((currentBalance) => {
+                return (currentBalance || 0) + 5000;
+            });
+        }
+        
+        alert("Welcome! You received 5000 BDC as a joining bonus!");
+    }
+});
                 } else {
                     friendsDiv.innerHTML = '<p style="color:var(--gray)">No friends invited yet. Invite and earn 5000 BDC!</p>';
                 }
@@ -170,4 +185,5 @@
     </script>
 </body>
 </html>
+
 
