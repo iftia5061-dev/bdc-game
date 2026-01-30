@@ -13,19 +13,17 @@
         :root { --gold: #f3ba2f; --dark: #070a13; --card: #151a28; --gray: #a0a5b1; }
         body { background: var(--dark); color: white; font-family: sans-serif; margin: 0; height: 100vh; overflow: hidden; }
         
-        /* Layout */
         .header { display: flex; justify-content: space-between; padding: 15px; align-items: center; background: var(--card); }
         .main-tap { display: flex; flex-direction: column; justify-content: center; align-items: center; height: 60vh; }
         .coin-btn { width: 200px; height: 200px; background: radial-gradient(circle, var(--gold) 0%, #b38600 100%); border-radius: 50%; display: flex; justify-content: center; align-items: center; font-size: 80px; box-shadow: 0 0 30px rgba(243, 186, 47, 0.2); cursor: pointer; border: 8px solid #1c212e; transition: transform 0.05s; }
         .coin-btn:active { transform: scale(0.92); }
 
-        /* Full Screen Overlay for Profile/Friends */
         .overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--dark); z-index: 100; padding: 20px; box-sizing: border-box; overflow-y: auto; }
         .close-btn { background: var(--gold); color: black; border: none; padding: 10px 20px; border-radius: 5px; font-weight: bold; cursor: pointer; margin-bottom: 20px; }
         
         .nav { position: fixed; bottom: 0; width: 100%; background: var(--card); display: flex; justify-content: space-around; padding: 15px 0; }
         .nav-item { text-align: center; color: var(--gray); font-size: 12px; cursor: pointer; }
-        .friend-item { background: var(--card); padding: 10px; border-radius: 8px; margin-bottom: 10px; display: flex; justify-content: space-between; }
+        .friend-item { background: var(--card); padding: 10px; border-radius: 8px; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center; }
     </style>
 </head>
 <body>
@@ -57,37 +55,30 @@
         <h2>Invite Friends</h2>
         <button style="width:100%; padding:15px; background:var(--gold); border:none; border-radius:10px; font-weight:bold" onclick="copyInvite()">🔗 Copy Invite Link</button>
         <h3 style="margin-top:30px">Your Friends List</h3>
-        <div id="friends-list">
-            <p style="color:var(--gray)">No friends invited yet.</p>
-        </div>
-        <div id="tasks-page" class="overlay">
-    <button class="close-btn" onclick="hideOverlays()">Close</button>
-    <h2>Earn Extra BDC</h2>
-    <p style="color:var(--gray); margin-bottom:20px;">Complete tasks to get instant rewards!</p>
-    
-    <div class="friend-item" style="flex-direction:column; align-items:flex-start; gap:10px;">
-        <div><b>Join Official Channel</b></div>
-        <div style="display:flex; justify-content:space-between; width:100%;">
-            <span style="color:var(--gold)">+5000 BDC</span>
-            <button onclick="doTask('https://t.me/your_channel', 5000, 'tg_task')" id="tg_task_btn" style="background:var(--gold); border:none; padding:5px 15px; border-radius:5px; cursor:pointer;">Go</button>
-        </div>
+        <div id="friends-list"></div>
     </div>
 
-    <div class="friend-item" style="flex-direction:column; align-items:flex-start; gap:10px;">
-        <div><b>Subscribe YouTube</b></div>
-        <div style="display:flex; justify-content:space-between; width:100%;">
-            <span style="color:var(--gold)">+10000 BDC</span>
-            <button onclick="doTask('https://youtube.com/your_channel', 10000, 'yt_task')" id="yt_task_btn" style="background:var(--gold); border:none; padding:5px 15px; border-radius:5px; cursor:pointer;">Go</button>
+    <div id="tasks-page" class="overlay">
+        <button class="close-btn" onclick="hideOverlays()">Close</button>
+        <h2>Earn Extra BDC</h2>
+        <p style="color:var(--gray); margin-bottom:20px;">Complete tasks to get instant rewards!</p>
+        
+        <div class="friend-item">
+            <div><b>Join Official Channel</b><br><span style="color:var(--gold)">+5000 BDC</span></div>
+            <button onclick="doTask('https://t.me/your_channel', 5000, 'tg_task')" id="tg_task_btn" style="background:var(--gold); border:none; padding:8px 15px; border-radius:5px; cursor:pointer;">Go</button>
         </div>
-    </div>
-</div>
+
+        <div class="friend-item">
+            <div><b>Subscribe YouTube</b><br><span style="color:var(--gold)">+10000 BDC</span></div>
+            <button onclick="doTask('https://youtube.com/@your_channel', 10000, 'yt_task')" id="yt_task_btn" style="background:var(--gold); border:none; padding:8px 15px; border-radius:5px; cursor:pointer;">Go</button>
+        </div>
     </div>
 
     <div class="nav">
         <div class="nav-item" onclick="showProfile()">👤 Profile</div>
         <div class="nav-item" onclick="showFriends()">👥 Friends</div>
         <div class="nav-item" onclick="showTasks()">📋 Tasks</div>
-        <div class="nav-item" onclick="alert('Daily Bonus Coming Soon!')">📅 Daily</div>
+        <div class="nav-item" onclick="alert('Coming Soon!')">📅 Daily</div>
         <div class="nav-item" onclick="alert('Wallet Locked')">👛 Wallet</div>
     </div>
 
@@ -113,25 +104,40 @@
         let energy = 500;
         let level = 1;
 
-        // Load Data
+        // --- REFERRAL & DATA LOAD ---
+        const urlParams = new URLSearchParams(window.location.search);
+        const referrerID = urlParams.get('tgWebAppStartParam');
+
+        db.ref('users/' + userID).once('value').then((snap) => {
+            if(!snap.exists()){
+                let initialBalance = 5000;
+                db.ref('users/' + userID).set({
+                    name: userName,
+                    balance: initialBalance,
+                    level: 1,
+                    invitedBy: referrerID || "none"
+                });
+                if(referrerID) {
+                    db.ref('users/' + referrerID + '/balance').transaction((b) => (b || 0) + 5000);
+                }
+                alert("Welcome! You received 5000 BDC Bonus!");
+            }
+        });
+
+        // Live Data Sync
         db.ref('users/' + userID).on('value', (snap) => {
             if(snap.exists()){
                 const d = snap.val();
                 coins = d.balance || 0;
                 level = d.level || 1;
                 updateUI();
-            } else {
-                db.ref('users/' + userID).set({ name: userName, balance: 0, level: 1 });
             }
         });
 
         function updateUI() {
             document.getElementById("coin-display").innerText = "BDC: " + coins.toLocaleString();
-            document.getElementById("coin-count")?.innerText; // cleanup
             document.getElementById("energy-val").innerText = energy;
             document.getElementById("level-text").innerText = "Level: " + level;
-            
-            // Profile Update
             document.getElementById("p-name").innerText = userName;
             document.getElementById("p-id").innerText = userID;
             document.getElementById("p-balance").innerText = coins.toLocaleString();
@@ -139,103 +145,58 @@
         }
 
         document.getElementById("tap-btn").addEventListener("click", () => {
-            if(energy >= 1) {
+            if(energy >= level) {
                 coins += level;
-                energy -= 1;
+                energy -= level;
                 updateUI();
                 db.ref('users/' + userID).update({ balance: coins });
             }
         });
 
-        // Overlay Controllers
         function showProfile() { document.getElementById("profile-page").style.display = "block"; }
-        function showFriends() { 
-            document.getElementById("friends-page").style.display = "block"; 
-            loadFriends();
-        }
+        function showFriends() { document.getElementById("friends-page").style.display = "block"; loadFriends(); }
+        function showTasks() { document.getElementById("tasks-page").style.display = "block"; }
+        
         function hideOverlays() { 
             document.getElementById("profile-page").style.display = "none"; 
             document.getElementById("friends-page").style.display = "none"; 
+            document.getElementById("tasks-page").style.display = "none";
         }
 
-       function copyInvite() {
-    const link = `https://t.me/my_earning_test_bot?start=${userID}`;
-    const shareText = `Join BDC Network and let's earn together! 🚀`;
-    const fullUrl = `https://t.me/share/url?url=${encodeURIComponent(link)}&text=${encodeURIComponent(shareText)}`;
-    
-    // এটি সরাসরি টেলিগ্রামের ইনভাইট উইন্ডো ওপেন করবে
-    tele.openTelegramLink(fullUrl);
-}
+        function copyInvite() {
+            const link = `https://t.me/my_earning_test_bot?start=${userID}`;
+            const fullUrl = `https://t.me/share/url?url=${encodeURIComponent(link)}&text=Join BDC Network! 🚀`;
+            tele.openTelegramLink(fullUrl);
+        }
+
         function loadFriends() {
-            const friendsDiv = document.getElementById("friends-list");
-            friendsDiv.innerHTML = '<p style="color:var(--gray)">Loading friends...</p>';
-            
-            // এটি আপনার ডাটাবেসে 'referrals' ফোল্ডার চেক করবে (যদি আপনি রেফারেল সিস্টেম চালু করেন)
-           // ১. ইউজার যখন প্রথমবার গেম ওপেন করবে
-    const urlParams = new URLSearchParams(window.location.search);
-    const referrerID = urlParams.get('tgWebAppStartParam'); // টেলিগ্রামের রেফারেল আইডি ধরবে
-
-    db.ref('users/' + userID).once('value').then((snap) => {
-    if(!snap.exists()){
-        // নতুন ইউজার হলে ৫০০০ কয়েন গিফট
-        let initialBalance = 5000;
-        
-        db.ref('users/' + userID).set({
-            name: userName,
-            balance: initialBalance,
-            level: 1,
-            invitedBy: referrerID || "none"
-        });
-
-        // যে ইনভাইট করেছে তাকে ৫০০০ কয়েন পাঠানো
-        if(referrerID) {
-            db.ref('users/' + referrerID + '/balance').transaction((currentBalance) => {
-                return (currentBalance || 0) + 5000;
-            });
-        }
-        
-        alert("Welcome! You received 5000 BDC as a joining bonus!");
-    }
-});
+            const list = document.getElementById("friends-list");
+            list.innerHTML = "Loading...";
+            db.ref('users').orderByChild('invitedBy').equalTo(userID.toString()).once('value', (snap) => {
+                list.innerHTML = "";
+                if(snap.exists()){
+                    snap.forEach(child => {
+                        list.innerHTML += `<div class="friend-item"><span>${child.val().name}</span><span style="color:var(--gold)">+5000</span></div>`;
+                    });
                 } else {
-                    friendsDiv.innerHTML = '<p style="color:var(--gray)">No friends invited yet. Invite and earn 5000 BDC!</p>';
+                    list.innerHTML = "No friends invited yet.";
                 }
             });
         }
 
+        function doTask(url, reward, id) {
+            if(localStorage.getItem(id)) return alert("Already Done!");
+            tele.openTelegramLink(url); // টেলিগ্রাম লিঙ্ক হলে এটি ভালো কাজ করে
+            setTimeout(() => {
+                coins += reward;
+                db.ref('users/' + userID).update({ balance: coins });
+                localStorage.setItem(id, "true");
+                document.getElementById(id+"_btn").innerText = "✅";
+                alert("Reward Collected!");
+            }, 3000);
+        }
+
         setInterval(() => { if(energy < 500) { energy++; updateUI(); } }, 2000);
-        // টাস্ক পেজ দেখানোর ফাংশন
-function showTasks() { 
-    document.getElementById("tasks-page").style.display = "block"; 
-}
-
-// টাস্ক সম্পন্ন করার লজিক
-function doTask(url, reward, taskID) {
-    const isDone = localStorage.getItem(taskID);
-    
-    if (isDone) {
-        alert("You have already completed this task!");
-        return;
-    }
-
-    // ইউজারকে লিঙ্কে পাঠানো
-    window.open(url, '_blank');
-
-    // রিওয়ার্ড দেওয়া
-    setTimeout(() => {
-        coins += reward;
-        localStorage.setItem(taskID, "true"); // যাতে বারবার না নিতে পারে
-        document.getElementById(taskID + "_btn").innerText = "✅ Done";
-        document.getElementById(taskID + "_btn").style.background = "gray";
-        
-        updateUI();
-        db.ref('users/' + userID).update({ balance: coins });
-        alert(`Congratulations! You earned ${reward} BDC!`);
-    }, 2000);
-}
     </script>
 </body>
 </html>
-
-
-
