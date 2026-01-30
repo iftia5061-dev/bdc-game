@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>BDC Network - Earn & Tap</title>
+    <title>BDC Network - Ultimate Earn</title>
     
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
@@ -11,67 +11,80 @@
     <script src="https://sad.adsgram.ai/js/adsgram-adbox.js"></script>
 
     <style>
-        :root { --gold: #f3ba2f; --dark: #070a13; --card: #151a28; --gray: #a0a5b1; }
-        body { background: var(--dark); color: white; font-family: sans-serif; margin: 0; height: 100vh; overflow: hidden; }
+        :root { --gold: #f3ba2f; --dark: #070a13; --card: #151a28; --gray: #a0a5b1; --green: #4caf50; }
+        body { background: var(--dark); color: white; font-family: 'Segoe UI', sans-serif; margin: 0; height: 100vh; overflow: hidden; }
         
         .header { display: flex; justify-content: space-between; padding: 15px; background: var(--card); border-bottom: 2px solid #1c212e; }
-        .main-tap { display: flex; flex-direction: column; justify-content: center; align-items: center; height: 60vh; }
+        .main-tap { display: flex; flex-direction: column; justify-content: center; align-items: center; height: 55vh; }
         
         .coin-btn { 
-            width: 200px; height: 200px; 
-            background: radial-gradient(circle, var(--gold) 0%, #b38600 100%); 
+            width: 180px; height: 180px; background: radial-gradient(circle, var(--gold) 0%, #b38600 100%); 
             border-radius: 50%; display: flex; justify-content: center; align-items: center; 
-            font-size: 80px; box-shadow: 0 0 40px rgba(243, 186, 47, 0.3); 
-            cursor: pointer; border: 8px solid #1c212e; transition: transform 0.05s; user-select: none; 
+            font-size: 70px; box-shadow: 0 0 30px rgba(243, 186, 47, 0.2); 
+            cursor: pointer; border: 6px solid #1c212e; transition: transform 0.05s; user-select: none; 
         }
         .coin-btn:active { transform: scale(0.92); }
 
-        .overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--dark); z-index: 100; padding: 20px; box-sizing: border-box; }
+        .overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--dark); z-index: 100; padding: 20px; box-sizing: border-box; overflow-y: auto; }
         .close-btn { background: var(--gold); color: black; border: none; padding: 12px; border-radius: 8px; font-weight: bold; width: 100%; margin-bottom: 20px; }
         
-        .nav { position: fixed; bottom: 0; width: 100%; background: var(--card); display: flex; justify-content: space-around; padding: 15px 0; border-top: 1px solid #2d3343; }
-        .nav-item { text-align: center; color: var(--gray); font-size: 12px; cursor: pointer; }
+        .nav { position: fixed; bottom: 0; width: 100%; background: var(--card); display: flex; justify-content: space-around; padding: 12px 0; border-top: 1px solid #2d3343; }
+        .nav-item { text-align: center; color: var(--gray); font-size: 11px; cursor: pointer; flex: 1; }
         
-        .ad-banner { 
-            background: linear-gradient(90deg, #4caf50, #2e7d32); color: white; 
-            width: 100%; padding: 18px; border-radius: 12px; border: none; 
-            font-weight: bold; font-size: 16px; cursor: pointer; margin-top: 20px;
-        }
-        .info-card { background: var(--card); padding: 15px; border-radius: 10px; margin-bottom: 10px; border: 1px solid #2d3343; }
+        .card-item { background: var(--card); padding: 15px; border-radius: 12px; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center; border: 1px solid #2d3343; }
+        .btn-action { background: var(--gold); color: black; border: none; padding: 8px 15px; border-radius: 6px; font-weight: bold; cursor: pointer; }
+        .ad-special { background: linear-gradient(90deg, #4caf50, #2e7d32); color: white; width: 100%; padding: 15px; border-radius: 12px; border: none; font-weight: bold; margin-bottom: 20px; cursor: pointer; }
     </style>
 </head>
 <body>
 
     <div class="header">
-        <div style="color:var(--gold)">👤 <span id="user-name">Loading...</span></div>
-        <div id="coin-count" style="font-weight:bold;">BDC: 0</div>
+        <div style="color:var(--gold)">👤 <span id="top-name">Player</span></div>
+        <div id="coin-display" style="font-weight:bold; font-size:18px">BDC: 0</div>
     </div>
 
     <div class="main-tap">
         <div class="coin-btn" id="tap-btn">₿</div>
-        <div style="margin-top:20px; font-size:18px; color:var(--gold)">⚡ Energy: <span id="energy">500</span>/500</div>
+        <div style="margin-top:20px; color:var(--gold); font-weight:bold">Level: <span id="level-val">1</span></div>
+        <div style="margin-top:5px; font-size:14px">⚡ Energy: <span id="energy-val">500</span>/500</div>
     </div>
 
-    <div id="earn-page" class="overlay">
-        <button class="close-btn" onclick="closePage()">Back to Game</button>
-        <h2>💰 Earn More BDC</h2>
-        <div class="info-card">
-            <p>বিজ্ঞাপন দেখুন এবং প্রতিবার ৫,০০০ কয়েন ইনকাম করুন!</p>
-            <button class="ad-banner" onclick="showAd()">📺 Watch Video Ad</button>
+    <div id="tasks-page" class="overlay">
+        <button class="close-btn" onclick="hideAll()">Close</button>
+        <h3>💰 Earn Rewards</h3>
+        <button class="ad-special" onclick="showAd()">📺 Watch Ad (+5,000 BDC)</button>
+        
+        <div class="card-item">
+            <div><b>Subscribe YouTube</b><br><small style="color:var(--gold)">+10,000 BDC</small></div>
+            <button class="btn-action" onclick="doTask('https://www.youtube.com/@BDC-coin-n3z', 10000, 'yt')">Go</button>
         </div>
+    </div>
+
+    <div id="leader-page" class="overlay">
+        <button class="close-btn" onclick="hideAll()">Close</button>
+        <h3>🏆 Global Leaderboard</h3>
+        <div id="leader-list">Loading...</div>
+    </div>
+
+    <div id="friends-page" class="overlay">
+        <button class="close-btn" onclick="hideAll()">Close</button>
+        <h3>👥 Invite Friends</h3>
+        <button class="ad-special" style="background:var(--gold); color:black" onclick="invite()">🔗 Send Invite Link</button>
+        <p style="text-align:center; font-size:12px; color:var(--gray)">Invite friends to earn 5% of their taps!</p>
     </div>
 
     <div class="nav">
         <div class="nav-item" onclick="location.reload()">🏠<br>Home</div>
-        <div class="nav-item" onclick="openPage('earn-page')">💰<br>Earn</div>
+        <div class="nav-item" onclick="showPage('friends-page')">👥<br>Friends</div>
+        <div class="nav-item" onclick="showPage('tasks-page')">📋<br>Tasks</div>
+        <div class="nav-item" onclick="showPage('leader-page')">🏆<br>Leader</div>
     </div>
 
     <script>
-        // --- Adsgram Initialization ---
-        // আপনার দেওয়া Block ID: 22077 এখানে বসানো হয়েছে
+        // --- Adsgram Setup ---
         const AdController = window.Adsgram?.init({ blockId: "22077" });
 
-        // --- Firebase Config ---
+        // --- Firebase Setup ---
         const firebaseConfig = {
             apiKey: "AIzaSyD3vuw74WjiWytZMbVrtNzn7igIyjRMC1c",
             authDomain: "bdc-network.firebaseapp.com",
@@ -87,67 +100,89 @@
         const tg = window.Telegram.WebApp;
         tg.expand();
         const user = tg.initDataUnsafe?.user;
-        const userId = user?.id || "guest_user";
-        const name = user?.first_name || "Player";
+        const uid = user?.id || "guest_" + Math.floor(Math.random()*9999);
+        const uName = user?.first_name || "Unknown";
 
-        document.getElementById("user-name").innerText = name;
+        let coins = 0; let energy = 500; let level = 1;
 
-        let balance = 0;
-        let energy = 500;
-
-        // Load Data from Firebase
-        db.ref('users/' + userId).on('value', (snapshot) => {
-            const data = snapshot.val();
-            if (data) {
-                balance = data.balance;
-                document.getElementById("coin-count").innerText = "BDC: " + balance.toLocaleString();
+        // Sync Data
+        db.ref('users/' + uid).on('value', (s) => {
+            if(s.exists()){
+                const d = s.val();
+                coins = d.balance; level = d.level || 1;
+                updateUI();
             } else {
-                db.ref('users/' + userId).set({ name: name, balance: 0 });
+                db.ref('users/' + uid).set({ name: uName, balance: 1000, level: 1 });
             }
         });
 
-        // Tap Logic
+        function updateUI() {
+            document.getElementById("coin-display").innerText = "BDC: " + coins.toLocaleString();
+            document.getElementById("energy-val").innerText = energy;
+            document.getElementById("level-val").innerText = level;
+            document.getElementById("top-name").innerText = uName;
+        }
+
+        // Tapping
         document.getElementById("tap-btn").addEventListener("touchstart", (e) => {
             e.preventDefault();
-            if (energy > 0) {
-                balance += 1;
-                energy -= 1;
+            if(energy >= level) {
+                coins += level; energy -= level;
                 updateUI();
-                db.ref('users/' + userId).update({ balance: balance });
+                db.ref('users/' + uid).update({ balance: coins });
             }
         });
 
-        // Ad Logic (The Money Maker)
+        // Ads System
         function showAd() {
             if (AdController) {
                 AdController.show().then(() => {
-                    // বিজ্ঞাপন দেখা শেষ হলে পুরস্কার
-                    balance += 5000;
-                    db.ref('users/' + userId).update({ balance: balance });
-                    alert("অভিনন্দন! আপনি ৫,০০০ BDC পেয়েছেন।");
-                }).catch((err) => {
-                    alert("এই মুহূর্তে বিজ্ঞাপন নেই। একটু পর চেষ্টা করুন।");
+                    coins += 5000;
+                    db.ref('users/' + uid).update({ balance: coins });
+                    alert("Success! +5,000 BDC Reward.");
+                }).catch(() => alert("Ads not ready. Try again later."));
+            }
+        }
+
+        // Leaderboard Logic
+        function loadLeader() {
+            const list = document.getElementById("leader-list");
+            db.ref('users').orderByChild('balance').limitToLast(10).once('value', (s) => {
+                list.innerHTML = "";
+                let players = [];
+                s.forEach(child => players.push(child.val()));
+                players.reverse().forEach((p, i) => {
+                    list.innerHTML += `<div class="card-item"><span>${i+1}. ${p.name}</span><b>${p.balance.toLocaleString()}</b></div>`;
                 });
-            } else {
-                alert("Ad System loading... Please wait.");
+            });
+        }
+
+        function showPage(id) { 
+            hideAll(); 
+            document.getElementById(id).style.display = "block"; 
+            if(id === 'leader-page') loadLeader();
+        }
+        function hideAll() { document.querySelectorAll('.overlay').forEach(o => o.style.display = 'none'); }
+        
+        function doTask(url, reward, key) {
+            tg.openLink(url);
+            if(!localStorage.getItem(key)) {
+                setTimeout(() => {
+                    coins += reward;
+                    db.ref('users/' + uid).update({ balance: coins });
+                    localStorage.setItem(key, "done");
+                    alert("Task Bonus Added!");
+                }, 3000);
             }
         }
 
-        function updateUI() {
-            document.getElementById("coin-count").innerText = "BDC: " + balance.toLocaleString();
-            document.getElementById("energy").innerText = energy;
+        function invite() {
+            const link = `https://t.me/my_earning_test_bot?start=${uid}`;
+            tg.openTelegramLink(`https://t.me/share/url?url=${encodeURIComponent(link)}&text=Join BDC Network and earn together! 🚀`);
         }
 
-        function openPage(id) { document.getElementById(id).style.display = "block"; }
-        function closePage() { document.querySelectorAll('.overlay').forEach(p => p.style.display = 'none'); }
-
-        // Energy Refill
-        setInterval(() => {
-            if (energy < 500) {
-                energy += 1;
-                document.getElementById("energy").innerText = energy;
-            }
-        }, 2000);
+        // Energy Recovery
+        setInterval(() => { if(energy < 500) { energy += 1; updateUI(); } }, 2000);
     </script>
 </body>
 </html>
