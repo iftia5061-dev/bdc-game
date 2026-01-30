@@ -66,6 +66,9 @@
         <div class="nav-item" onclick="alert('Airdrop Scheduled for Q4')">🎁 Airdrop</div>
         <div class="nav-item active" id="boost-btn">🚀 Boost</div>
         <div class="nav-item" onclick="alert('Wallet Locked until 100k BDC')">👛 Wallet</div>
+        <div class="nav-item" id="daily-reward-btn">
+    <span>📅</span> Daily Bonus
+</div>
     </div>
 
     <script>
@@ -160,7 +163,25 @@
                 updateUI();
             }
         }, 2000);
+    document.getElementById("daily-reward-btn").addEventListener("click", () => {
+    const lastClaim = localStorage.getItem("last_claim") || 0;
+    const now = Date.now();
+    const twentyFourHours = 24 * 60 * 60 * 1000; // একদিনের সময়
+
+    if (now - lastClaim > twentyFourHours) {
+        const bonus = 1000; // প্রতিদিন ১০০০ কয়েন বোনাস
+        coins += bonus;
+        localStorage.setItem("last_claim", now);
+        alert("অভিনন্দন! আপনি আজকের ১০০০ কয়েন বোনাস পেয়েছেন।");
+        updateUI();
+        saveData();
+    } else {
+        const remaining = Math.ceil((twentyFourHours - (now - lastClaim)) / (60 * 60 * 1000));
+        alert(`আবার বোনাস পেতে আরও ${remaining} ঘণ্টা অপেক্ষা করুন।`);
+    }
+});
 
     </script>
 </body>
+
 </html>
