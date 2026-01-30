@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>BDC Network - Official</title>
+    
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-database-compat.js"></script>
+
+    <style>
+        :root { --gold: #f3ba2f; --dark: #070a13; --card: #151a28; --gray: #a0a5b1; }
+        body { background: var(--dark); color: white; font-family: sans-serif; margin: 0; display: flex; flex-direction: column; height: 100vh; overflow: hidden; user-select: none; }
+        
+        /* Layout CSS */
+        .ad-bar { height: 45px; background: #1c212e; display: flex; align-items: center; justify-content: center; font-size: 11px; border-bottom: 1px solid #2d3343; color: var(--gray); }
+        .header { display: flex; justify-content: space-between; padding: 15px; align-items: center; }
+        .balance-card { text-align: center; margin: 10px 0; }
+        .coin-amount { font-size: 35px; font-weight: 800; color: white; }
+        
+        .main-tap { flex-grow: 1; display: flex; flex-direction: column; justify-content: center; align-items: center; }
+        .coin-btn { width: 220px; height: 220px; background: radial-gradient(circle, var(--gold) 0%, #b38600 100%); border-radius: 50%; display: flex; justify-content: center; align-items: center; font-size: 90px; box-shadow: 0 0 40px rgba(243, 186, 47, 0.2); cursor: pointer; border: 10px solid #1c212e; transition: transform 0.05s; }
+        .coin-btn:active { transform: scale(0.92); }
+
+        .progress-box { width: 80%; margin: 20px 0; }
+        .bar-bg { width: 100%; height: 10px; background: #242935; border-radius: 5px; overflow: hidden; }
+        #bar-fill { width: 100%; height: 100%; background: var(--gold); }
+
+        .nav { background: var(--card); display: flex; justify-content: space-around; padding: 12px 0; border-top: 1px solid #2d3343; }
+        .nav-item { text-align: center; color: var(--gray); font-size: 11px; cursor: pointer; flex: 1; }
+        .nav-item.active { color: var(--gold); }
+    </style>
+</head>
+<body>
+
+    <div class="ad-bar">BDC NETWORK - TAP TO MINE YOUR FUTURE</div>
+
+    <div class="header">
+        <div style="color:var(--gold); font-weight:bold" id="user-name">Loading...</div>
+        <div style="display:flex; gap:8px">
+            <button style="background:var(--card); border:1px solid #333; color:white; padding:5px; border-radius:5px" onclick="showReferral()">🔗 Invite</button>
+            <button style="background:var(--card); border:1px solid #333; color:white; padding:5px; border-radius:5px">⚙️</button>
+        </div>
+    </div>
+
+    <div class="balance-card">
+        <div style="font-size:12px; color:var(--gray)">Total Balance</div>
+        <div class="coin-amount">BDC - <span id="coin-count">0</span></div>
+    </div>
+
+    <div class="main-tap">
+        <div class="coin-btn" id="tap-btn">₿</div>
+        <div id="level-display" style="margin-top:15px; color:var(--gold)">Level: 1 (+1/tap)</div>
+        <div class="progress-box">
+            <div style="display:flex; justify-content:space-between; font-size:12px; margin-bottom:5px">
+                <span>⚡ <span id="energy-val">500</span>/500</span>
+                <span id="rank-name">Bronze</span>
+            </div>
+            <div class="bar-bg"><div id="bar-fill"></div></div>
+        </div>
+    </div>
+
+    <div class="nav">
+        <div class="nav-item" onclick="alert('Tasks Coming Soon!')">📋 Tasks</div>
+        <div class="nav-item" onclick="alert('Airdrop Scheduled for Q4')">🎁 Airdrop</div>
+        <div class="nav-item active" id="boost-btn">🚀 Boost</div>
+        <div class="nav-item" onclick="alert('Wallet Locked until 100k BDC')">👛 Wallet</div>
+    </div>
+
+    <script>
+        // 1. Firebase Configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyD3vuw74WjiWytZMbVrtNzn7igIyjRMC1c",
+            authDomain: "bdc-network.firebaseapp.com",
+            databaseURL: "https://bdc-network-default-rtdb.firebaseio.com",
+            projectId: "bdc-network",
+            storageBucket: "bdc-network.firebasestorage.app",
+            messagingSenderId: "897735329291",
+            appId: "1:897735329291:web:0edde171fbf812e9cf290e"
+        };
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.database();
+
+        // 2. Telegram WebApp Setup
+        const tele = window.Telegram.WebApp;
+        tele.ready();
+        tele.expand();
+
+        const userData = tele.initDataUnsafe?.user;
+        const userID = userData ? userData.id : "guest_" + Math.floor(Math.random() * 99999);
+        const userName = userData ? userData.first_name : "Player";
+
+        // 3. Game Variables
+        let coins = 0;
+        let energy = 500;
+        let level = 1;
+
+        // 4. Initial Load from Database
+        db.ref('users/' + userID).once('value').then((snap) => {
+            if(snap.exists()){
+                const d = snap.val();
+                coins = d.balance || 0;
+                level = d.level || 1;
+            } else {
+                // New User Registration
+                db.ref('users/' + userID).set({ name: userName, balance: 0, level: 1, invitedBy: "none" });
+            }
+            updateUI();
+        });
+
+        // 5. Game Functions
+        function updateUI() {
+            document.getElementById("coin-count").innerText = Math.floor(coins).toLocaleString();
+            document.getElementById("energy-val").innerText = energy;
+            document.getElementById("bar-fill").style.width = (energy / 500) * 100 + "%";
+            document.getElementById("user-name").innerText = "Hi, " + userName;
+            document.getElementById("level-display").innerText = `Level: ${level} (+${level}/tap)`;
+        }
+
+        document.getElementById("tap-btn").addEventListener("click", () => {
+            if(energy >= level) {
+                coins += level;
+                energy -= level;
+                updateUI();
+                saveData();
+            }
+        });
+
+        document.getElementById("boost-btn").addEventListener("click", () => {
+            let cost = level * 1000;
+            if(coins >= cost) {
+                coins -= cost;
+                level++;
+                alert("Upgraded to Level " + level + "!");
+                updateUI();
+                saveData();
+            } else {
+                alert("Need " + cost + " BDC to Upgrade!");
+            }
+        });
+
+        function saveData() {
+            db.ref('users/' + userID).update({
+                balance: coins,
+                level: level,
+                last_active: Date.now()
+            });
+        }
+
+        function showReferral() {
+            const refLink = `https://t.me/YourBotName?start=${userID}`;
+            prompt("Copy and send this link to invite friends (5000 BDC Bonus):", refLink);
+        }
+
+        // Energy Refill (1 point every 2 seconds)
+        setInterval(() => {
+            if(energy < 500) {
+                energy++;
+                updateUI();
+            }
+        }, 2000);
+
+    </script>
+</body>
+</html>
