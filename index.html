@@ -11,68 +11,65 @@
 
     <style>
         :root { --gold: #f3ba2f; --dark: #070a13; --card: #151a28; --gray: #a0a5b1; }
-        body { background: var(--dark); color: white; font-family: sans-serif; margin: 0; display: flex; flex-direction: column; height: 100vh; overflow: hidden; user-select: none; }
+        body { background: var(--dark); color: white; font-family: sans-serif; margin: 0; height: 100vh; overflow: hidden; }
         
-        /* Layout CSS */
-        .ad-bar { height: 45px; background: #1c212e; display: flex; align-items: center; justify-content: center; font-size: 11px; border-bottom: 1px solid #2d3343; color: var(--gray); }
-        .header { display: flex; justify-content: space-between; padding: 15px; align-items: center; }
-        .balance-card { text-align: center; margin: 10px 0; }
-        .coin-amount { font-size: 35px; font-weight: 800; color: white; }
-        
-        .main-tap { flex-grow: 1; display: flex; flex-direction: column; justify-content: center; align-items: center; }
-        .coin-btn { width: 220px; height: 220px; background: radial-gradient(circle, var(--gold) 0%, #b38600 100%); border-radius: 50%; display: flex; justify-content: center; align-items: center; font-size: 90px; box-shadow: 0 0 40px rgba(243, 186, 47, 0.2); cursor: pointer; border: 10px solid #1c212e; transition: transform 0.05s; }
+        /* Layout */
+        .header { display: flex; justify-content: space-between; padding: 15px; align-items: center; background: var(--card); }
+        .main-tap { display: flex; flex-direction: column; justify-content: center; align-items: center; height: 60vh; }
+        .coin-btn { width: 200px; height: 200px; background: radial-gradient(circle, var(--gold) 0%, #b38600 100%); border-radius: 50%; display: flex; justify-content: center; align-items: center; font-size: 80px; box-shadow: 0 0 30px rgba(243, 186, 47, 0.2); cursor: pointer; border: 8px solid #1c212e; transition: transform 0.05s; }
         .coin-btn:active { transform: scale(0.92); }
 
-        .progress-box { width: 80%; margin: 20px 0; }
-        .bar-bg { width: 100%; height: 10px; background: #242935; border-radius: 5px; overflow: hidden; }
-        #bar-fill { width: 100%; height: 100%; background: var(--gold); }
-
-        .nav { background: var(--card); display: flex; justify-content: space-around; padding: 12px 0; border-top: 1px solid #2d3343; }
-        .nav-item { text-align: center; color: var(--gray); font-size: 11px; cursor: pointer; flex: 1; }
-        .nav-item.active { color: var(--gold); }
+        /* Full Screen Overlay for Profile/Friends */
+        .overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--dark); z-index: 100; padding: 20px; box-sizing: border-box; overflow-y: auto; }
+        .close-btn { background: var(--gold); color: black; border: none; padding: 10px 20px; border-radius: 5px; font-weight: bold; cursor: pointer; margin-bottom: 20px; }
+        
+        .nav { position: fixed; bottom: 0; width: 100%; background: var(--card); display: flex; justify-content: space-around; padding: 15px 0; }
+        .nav-item { text-align: center; color: var(--gray); font-size: 12px; cursor: pointer; }
+        .friend-item { background: var(--card); padding: 10px; border-radius: 8px; margin-bottom: 10px; display: flex; justify-content: space-between; }
     </style>
 </head>
 <body>
 
-    <div class="ad-bar">BDC NETWORK - TAP TO MINE YOUR FUTURE</div>
-
     <div class="header">
-        <div style="color:var(--gold); font-weight:bold" id="user-name">Loading...</div>
-        <div style="display:flex; gap:8px">
-            <button style="background:var(--card); border:1px solid #333; color:white; padding:5px; border-radius:5px" onclick="showReferral()">🔗 Invite</button>
-            <button style="background:var(--card); border:1px solid #333; color:white; padding:5px; border-radius:5px">⚙️</button>
-        </div>
-    </div>
-
-    <div class="balance-card">
-        <div style="font-size:12px; color:var(--gray)">Total Balance</div>
-        <div class="coin-amount">BDC - <span id="coin-count">0</span></div>
+        <div id="user-name" style="font-weight:bold; color:var(--gold)" onclick="showProfile()">👤 Profile</div>
+        <div id="coin-display" style="font-weight:bold">BDC: 0</div>
     </div>
 
     <div class="main-tap">
         <div class="coin-btn" id="tap-btn">₿</div>
-        <div id="level-display" style="margin-top:15px; color:var(--gold)">Level: 1 (+1/tap)</div>
-        <div class="progress-box">
-            <div style="display:flex; justify-content:space-between; font-size:12px; margin-bottom:5px">
-                <span>⚡ <span id="energy-val">500</span>/500</span>
-                <span id="rank-name">Bronze</span>
-            </div>
-            <div class="bar-bg"><div id="bar-fill"></div></div>
+        <div id="level-text" style="margin-top:20px; color:var(--gold)">Level: 1</div>
+        <div style="margin-top:10px">⚡ <span id="energy-val">500</span>/500</div>
+    </div>
+
+    <div id="profile-page" class="overlay">
+        <button class="close-btn" onclick="hideOverlays()">Close</button>
+        <h2>Your Profile</h2>
+        <div style="background:var(--card); padding:20px; border-radius:10px">
+            <p>Name: <span id="p-name"></span></p>
+            <p>User ID: <span id="p-id"></span></p>
+            <p>Total Balance: <span id="p-balance"></span> BDC</p>
+            <p>Level: <span id="p-level"></span></p>
+        </div>
+    </div>
+
+    <div id="friends-page" class="overlay">
+        <button class="close-btn" onclick="hideOverlays()">Close</button>
+        <h2>Invite Friends</h2>
+        <button style="width:100%; padding:15px; background:var(--gold); border:none; border-radius:10px; font-weight:bold" onclick="copyInvite()">🔗 Copy Invite Link</button>
+        <h3 style="margin-top:30px">Your Friends List</h3>
+        <div id="friends-list">
+            <p style="color:var(--gray)">No friends invited yet.</p>
         </div>
     </div>
 
     <div class="nav">
-        <div class="nav-item" onclick="alert('Tasks Coming Soon!')">📋 Tasks</div>
-        <div class="nav-item" onclick="alert('Airdrop Scheduled for Q4')">🎁 Airdrop</div>
-        <div class="nav-item active" id="boost-btn">🚀 Boost</div>
-        <div class="nav-item" onclick="alert('Wallet Locked until 100k BDC')">👛 Wallet</div>
-        <div class="nav-item" id="daily-reward-btn">
-    <span>📅</span> Daily Bonus
-</div>
+        <div class="nav-item" onclick="showProfile()">👤 Profile</div>
+        <div class="nav-item" onclick="showFriends()">👥 Friends</div>
+        <div class="nav-item" onclick="alert('Daily Bonus Coming Soon!')">📅 Daily</div>
+        <div class="nav-item" onclick="alert('Wallet Locked')">👛 Wallet</div>
     </div>
 
     <script>
-        // 1. Firebase Configuration
         const firebaseConfig = {
             apiKey: "AIzaSyD3vuw74WjiWytZMbVrtNzn7igIyjRMC1c",
             authDomain: "bdc-network.firebaseapp.com",
@@ -85,103 +82,88 @@
         firebase.initializeApp(firebaseConfig);
         const db = firebase.database();
 
-        // 2. Telegram WebApp Setup
         const tele = window.Telegram.WebApp;
-        tele.ready();
-        tele.expand();
-
         const userData = tele.initDataUnsafe?.user;
-        const userID = userData ? userData.id : "guest_" + Math.floor(Math.random() * 99999);
+        const userID = userData ? userData.id : "guest_123";
         const userName = userData ? userData.first_name : "Player";
 
-        // 3. Game Variables
         let coins = 0;
         let energy = 500;
         let level = 1;
 
-        // 4. Initial Load from Database
-        db.ref('users/' + userID).once('value').then((snap) => {
+        // Load Data
+        db.ref('users/' + userID).on('value', (snap) => {
             if(snap.exists()){
                 const d = snap.val();
                 coins = d.balance || 0;
                 level = d.level || 1;
+                updateUI();
             } else {
-                // New User Registration
-                db.ref('users/' + userID).set({ name: userName, balance: 0, level: 1, invitedBy: "none" });
+                db.ref('users/' + userID).set({ name: userName, balance: 0, level: 1 });
             }
-            updateUI();
         });
 
-        // 5. Game Functions
         function updateUI() {
-            document.getElementById("coin-count").innerText = Math.floor(coins).toLocaleString();
+            document.getElementById("coin-display").innerText = "BDC: " + coins.toLocaleString();
+            document.getElementById("coin-count")?.innerText; // cleanup
             document.getElementById("energy-val").innerText = energy;
-            document.getElementById("bar-fill").style.width = (energy / 500) * 100 + "%";
-            document.getElementById("user-name").innerText = "Hi, " + userName;
-            document.getElementById("level-display").innerText = `Level: ${level} (+${level}/tap)`;
+            document.getElementById("level-text").innerText = "Level: " + level;
+            
+            // Profile Update
+            document.getElementById("p-name").innerText = userName;
+            document.getElementById("p-id").innerText = userID;
+            document.getElementById("p-balance").innerText = coins.toLocaleString();
+            document.getElementById("p-level").innerText = level;
         }
 
         document.getElementById("tap-btn").addEventListener("click", () => {
-            if(energy >= level) {
+            if(energy >= 1) {
                 coins += level;
-                energy -= level;
+                energy -= 1;
                 updateUI();
-                saveData();
+                db.ref('users/' + userID).update({ balance: coins });
             }
         });
 
-        document.getElementById("boost-btn").addEventListener("click", () => {
-            let cost = level * 1000;
-            if(coins >= cost) {
-                coins -= cost;
-                level++;
-                alert("Upgraded to Level " + level + "!");
-                updateUI();
-                saveData();
-            } else {
-                alert("Need " + cost + " BDC to Upgrade!");
-            }
-        });
+        // Overlay Controllers
+        function showProfile() { document.getElementById("profile-page").style.display = "block"; }
+        function showFriends() { 
+            document.getElementById("friends-page").style.display = "block"; 
+            loadFriends();
+        }
+        function hideOverlays() { 
+            document.getElementById("profile-page").style.display = "none"; 
+            document.getElementById("friends-page").style.display = "none"; 
+        }
 
-        function saveData() {
-            db.ref('users/' + userID).update({
-                balance: coins,
-                level: level,
-                last_active: Date.now()
+        function copyInvite() {
+            const link = `https://t.me/my_earning_test_bot?start=${userID}`;
+            tele.showPopup({ message: "Invite Link: " + link });
+        }
+
+        function loadFriends() {
+            const friendsDiv = document.getElementById("friends-list");
+            friendsDiv.innerHTML = '<p style="color:var(--gray)">Loading friends...</p>';
+            
+            // এটি আপনার ডাটাবেসে 'referrals' ফোল্ডার চেক করবে (যদি আপনি রেফারেল সিস্টেম চালু করেন)
+            db.ref('users').orderByChild('invitedBy').equalTo(userID.toString()).once('value', (snap) => {
+                if(snap.exists()){
+                    friendsDiv.innerHTML = "";
+                    snap.forEach((child) => {
+                        const f = child.val();
+                        friendsDiv.innerHTML += `
+                            <div class="friend-item">
+                                <span>${f.name}</span>
+                                <span style="color:var(--gold)">+5000 BDC</span>
+                            </div>`;
+                    });
+                } else {
+                    friendsDiv.innerHTML = '<p style="color:var(--gray)">No friends invited yet. Invite and earn 5000 BDC!</p>';
+                }
             });
         }
 
-        function showReferral() {
-            const refLink = `https://t.me/YourBotName?start=${userID}`;
-            prompt("Copy and send this link to invite friends (5000 BDC Bonus):", refLink);
-        }
-
-        // Energy Refill (1 point every 2 seconds)
-        setInterval(() => {
-            if(energy < 500) {
-                energy++;
-                updateUI();
-            }
-        }, 2000);
-    document.getElementById("daily-reward-btn").addEventListener("click", () => {
-    const lastClaim = localStorage.getItem("last_claim") || 0;
-    const now = Date.now();
-    const twentyFourHours = 24 * 60 * 60 * 1000; // একদিনের সময়
-
-    if (now - lastClaim > twentyFourHours) {
-        const bonus = 1000; // প্রতিদিন ১০০০ কয়েন বোনাস
-        coins += bonus;
-        localStorage.setItem("last_claim", now);
-        alert("অভিনন্দন! আপনি আজকের ১০০০ কয়েন বোনাস পেয়েছেন।");
-        updateUI();
-        saveData();
-    } else {
-        const remaining = Math.ceil((twentyFourHours - (now - lastClaim)) / (60 * 60 * 1000));
-        alert(`আবার বোনাস পেতে আরও ${remaining} ঘণ্টা অপেক্ষা করুন।`);
-    }
-});
-
+        setInterval(() => { if(energy < 500) { energy++; updateUI(); } }, 2000);
     </script>
 </body>
-
 </html>
