@@ -273,6 +273,16 @@
             document.getElementById("p-lvl").innerText = level;
             document.getElementById("p-energy").innerText = maxEnergy;
 
+            // Boosters
+            document.getElementById("bot-info").innerText = `Level ${botLevel} (Cost: ${format((botLevel+1)*10000)})`;
+            document.getElementById("tap-upgrade-info").innerText = `Level ${level} (Cost: ${format(level*2000)})`;
+            document.getElementById("energy-lv-info").innerText = `Max: ${maxEnergy} (Cost: ${format(maxEnergy*5)})`;
+
+            if(botLevel > 0) {
+                document.getElementById("bot-claim-box").style.display = 'flex';
+                document.getElementById("bot-stored").innerText = format(botStored) + " BDC";
+            }
+
             let tHTML = '';
             DYNAMIC_CONFIG.tasks.forEach(t => {
                 const done = localStorage.getItem('task_'+t.id);
@@ -323,5 +333,6 @@
     </script>
 </body>
 </html>
+
 
 
