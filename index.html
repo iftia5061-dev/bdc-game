@@ -136,10 +136,28 @@
             <button class="btn-action" style="background:var(--blue); color:white; width:100%; margin-top:20px;" onclick="tg.showAlert('Wallet connection opening soon!')">Connect TON</button>
         </div>
     </div>
+    
+    <div id="boost-page" class="overlay">
+        <button class="close-btn" onclick="closeAll()">X</button>
+        <div class="page-title">Mining Boosters</div>
+        <div class="card">
+            <div class="card-info"><b>Auto-Mining Bot</b><br><small id="bot-info">Level 0</small></div>
+            <button class="btn-action" onclick="buyBot()">Upgrade</button>
+        </div>
+        <div class="card">
+            <div class="card-info"><b>Tap Multiplier</b><br><small id="tap-upgrade-info">Level 1</small></div>
+            <button class="btn-action" onclick="upgradeTap()">Upgrade</button>
+        </div>
+        <div class="card">
+            <div class="card-info"><b>Energy Limit</b><br><small id="energy-lv-info">Max: 500</small></div>
+            <button class="btn-action" onclick="upgradeEnergy()">Upgrade</button>
+        </div>
+    </div>
 
     <div class="nav">
         <div class="nav-item active" onclick="closeAll()">Home</div>
         <div class="nav-item" onclick="showPage('tasks-page')">Tasks</div>
+        <div class="nav-item" onclick="showPage('boost-page')">Boost</div>
         <div class="nav-item" onclick="showPage('rank-page')">Rank</div>
         <div class="nav-item" onclick="showPage('friends-page')">Friends</div>
         <div class="nav-item" onclick="showPage('wallet-page')">Wallet</div>
@@ -305,4 +323,5 @@
     </script>
 </body>
 </html>
+
 
