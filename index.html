@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="bn">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
@@ -18,7 +18,6 @@
         .header { display: flex; justify-content: space-between; padding: 15px; align-items: center; background: var(--card); border-bottom: 1px solid #2d3343; }
         .balance-section { text-align: center; margin: 20px 0; }
         .coin-val { font-size: 42px; font-weight: 900; color: white; display: flex; align-items: center; justify-content: center; gap: 10px; }
-        .coin-val img { width: 40px; }
 
         /* Main Tap Area */
         .main-tap { flex-grow: 1; display: flex; flex-direction: column; justify-content: center; align-items: center; position: relative; }
@@ -46,7 +45,6 @@
         .nav { background: var(--card); display: flex; justify-content: space-around; padding: 12px 0; border-top: 1px solid #2d3343; }
         .nav-item { text-align: center; color: var(--gray); font-size: 11px; cursor: pointer; flex: 1; transition: 0.3s; }
         .nav-item.active { color: var(--gold); font-weight: bold; }
-        .nav-item i { font-size: 20px; display: block; margin-bottom: 4px; }
 
         /* Profile Special */
         .p-header { text-align: center; margin-bottom: 25px; }
@@ -79,7 +77,7 @@
 
     <div id="profile-page" class="overlay">
         <button class="close-btn" onclick="closeAll()">X</button>
-        <div class="page-title">User Profile</div>
+        <div class="page-title">Account Details</div>
         <div class="p-header">
             <div class="p-avatar" id="p-initial">B</div>
             <h3 id="p-name" style="margin:5px 0">User Name</h3>
@@ -91,69 +89,59 @@
         <div class="card">
             <div class="card-info"><b>Mining Level</b><small id="p-lv">Level 1</small></div>
         </div>
-        <button class="btn-ad" style="background:var(--gold); color:black" onclick="invite()">🔗 Invite & Earn Bonus</button>
+        <button class="btn-ad" style="background:var(--gold); color:black" onclick="invite()">🔗 Invite Friends</button>
     </div>
 
     <div id="tasks-page" class="overlay">
         <button class="close-btn" onclick="closeAll()">X</button>
         <div class="page-title">Tasks Center</div>
-        
-        <button class="btn-ad" onclick="showAd()">📺 Watch Video (+10,000 BDC)</button>
+        <button class="btn-ad" onclick="showAd()">📺 Watch Ad (+10,000 BDC)</button>
+        <div id="task-list-dynamic"></div>
     </div>
 
     <div id="boost-page" class="overlay">
         <button class="close-btn" onclick="closeAll()">X</button>
         <div class="page-title">Mining Boosters</div>
-        
         <div class="card">
             <div class="card-info"><b>Auto-Mining Bot</b><br><small id="bot-info">Level 0 (+0/sec)</small></div>
             <button class="btn-action" id="bot-buy-btn" onclick="buyBot()">Upgrade</button>
         </div>
-
-        <div class="card">
-            <div class="card-info"><b>Rank: Silver</b><br><small>Unlock 2x Rewards</small></div>
-            <button class="btn-action" style="background:silver" onclick="alert('Contact Admin for Payment')">Buy Rank</button>
-        </div>
-        
         <div class="card">
             <div class="card-info"><b>Tap Multiplier</b><br><small id="tap-upgrade-info">Cost: 2000 BDC</small></div>
             <button class="btn-action" onclick="upgradeTap()">Upgrade</button>
         </div>
     </div>
 
-    <div class="nav">
-        <div class="nav-item active" onclick="closeAll()"><i>🏠</i>Home</div>
-        <div class="nav-item" onclick="showPage('tasks-page')"><i>📋</i>Tasks</div>
-        <div class="nav-item" onclick="showPage('boost-page')"><i>🚀</i>Boost</div>
-        <div class="nav-item" onclick="showPage('profile-page')"><i>👤</i>Profile</div>
-        <div class="nav-item" onclick="showPage('wallet-page')"><i>👛</i>Wallet</div>
     <div id="wallet-page" class="overlay">
         <button class="close-btn" onclick="closeAll()">X</button>
-    <div class="page-title">BDC Wallet</div>
-    <div style="text-align:center; margin-top:50px;">
-        <div style="font-size:60px; margin-bottom:20px;">👛</div>
-        <h3>Airdrop & Withdrawal</h3>
-        <p style="color:var(--gray); padding:0 20px;">আপনার BDC কয়েনগুলো ওয়ালেটে নেওয়ার সিস্টেম খুব শীঘ্রই চালু হবে। আমাদের টেলিগ্রাম চ্যানেলে নজর রাখুন।</p>
-        
-        <div class="card" style="margin-top:30px; border:1px dashed var(--gold); opacity:0.7;">
-            <div class="card-info">
-                <b>Connect TON Wallet</b>
-                <small>Status: Coming Soon</small>
-            </div>
-            <button class="btn-action" style="background:gray; cursor:not-allowed;" onclick="tg.showAlert('Wallet Connection will be available after Listing!')">Connect</button>
-            </div>
+        <div class="page-title">BDC Wallet</div>
+        <div style="text-align:center; margin-top:50px;">
+            <div style="font-size:60px">👛</div>
+            <h3>Connect Wallet</h3>
+            <p style="color:var(--gray); font-size:14px; padding:0 20px;">Wallet connection will be available after the official token listing.</p>
+            <button class="btn-action" style="background:#555; margin-top:20px;" onclick="tg.showAlert('Feature coming soon!')">Connect TON</button>
         </div>
     </div>
+
+    <div class="nav">
+        <div class="nav-item active" onclick="closeAll()">Home</div>
+        <div class="nav-item" onclick="showPage('tasks-page')">Tasks</div>
+        <div class="nav-item" onclick="showPage('boost-page')">Boost</div>
+        <div class="nav-item" onclick="showPage('wallet-page')">Wallet</div>
+        <div class="nav-item" onclick="showPage('profile-page')">Profile</div>
     </div>
 
     <script>
-        // 🔗 UPDATE YOUR LINKS HERE
-        const task_links = {
-            youtube: "https://youtube.com/@BDC-coin-n3z", 
-            facebook: "https://www.facebook.com/profile.php?id=61587487880831",
-            other: "https://t.me/yourchannel" 
+        // 🚀 DYNAMIC CONFIG: ইউটুউব বা ফেসবুক লিঙ্ক এখান থেকে সহজেই আপডেট করুন
+        const DYNAMIC_CONFIG = {
+            tasks: [
+                { name: "Follow Facebook", reward: 15000, link: "https://www.facebook.com/profile.php?id=61587487880831", id: "fb" },
+                { name: "Subscribe YouTube", reward: 20000, link: "https://www.youtube.com/@BDC-coin-n3z", id: "yt" },
+                { name: "Join News Channel", reward: 5000, link: "https://t.me/yourchannel", id: "tg" },
+                { name: "Video news", reward: 5000, link: "https://youtu.be/yJxRLVuNeyM?si=mekEmmzsCyy_U7Ez", id: "veo" }
+            ]
         };
-        // --- Setup ---
+
         const AdController = window.Adsgram?.init({ blockId: "22105" });
         const firebaseConfig = {
             apiKey: "AIzaSyD3vuw74WjiWytZMbVrtNzn7igIyjRMC1c",
@@ -173,7 +161,6 @@
 
         let balance = 0; let energy = 500; let level = 1; let botLevel = 0;
 
-        // Firebase Sync
         db.ref('users/' + uid).on('value', (snap) => {
             if(snap.exists()){
                 const d = snap.val();
@@ -204,9 +191,20 @@
             document.getElementById("bot-info").innerText = `Level ${botLevel} (+${botLevel}/sec)`;
             document.getElementById("bot-buy-btn").innerText = `Upgrade (${(botLevel+1)*5000})`;
             document.getElementById("tap-upgrade-info").innerText = `Cost: ${level*2000} BDC`;
+
+            // Dynamic Tasks Rendering
+            let taskHTML = '';
+            DYNAMIC_CONFIG.tasks.forEach(task => {
+                const isDone = localStorage.getItem('task_' + task.id);
+                taskHTML += `
+                    <div class="card">
+                        <div class="card-info"><b>${task.name}</b><small>+${task.reward.toLocaleString()} BDC</small></div>
+                        <button class="btn-action" onclick="doTask('${task.link}', ${task.reward}, '${task.id}')">${isDone ? 'Done' : 'Go'}</button>
+                    </div>`;
+            });
+            document.getElementById("task-list-dynamic").innerHTML = taskHTML;
         }
 
-        // Tap
         document.getElementById("tap-btn").addEventListener("touchstart", (e) => {
             e.preventDefault();
             if(energy >= level) {
@@ -216,7 +214,6 @@
             }
         });
 
-        // Auto Bot Logic
         setInterval(() => {
             if(botLevel > 0) {
                 balance += botLevel;
@@ -224,25 +221,8 @@
                 document.getElementById("farming-status").innerText = `⚡ Bot Farming: +${botLevel}/sec`;
                 updateUI();
             }
+            if(energy < 500) { energy++; updateUI(); }
         }, 1000);
-
-        function buyBot() {
-            let cost = (botLevel + 1) * 5000;
-            if(balance >= cost) {
-                balance -= cost; botLevel++;
-                db.ref('users/' + uid).update({ balance: balance, botLevel: botLevel });
-                tg.showAlert("Bot Upgraded! Now farming faster.");
-            } else { tg.showAlert("Need " + cost + " BDC"); }
-        }
-
-        function upgradeTap() {
-            let cost = level * 2000;
-            if(balance >= cost) {
-                balance -= cost; level++;
-                db.ref('users/' + uid).update({ balance: balance, level: level });
-                tg.showAlert("Tap Level Upgraded!");
-            } else { tg.showAlert("Need " + cost + " BDC"); }
-        }
 
         function showAd() {
             if (AdController) {
@@ -261,22 +241,34 @@
                     balance += reward;
                     db.ref('users/' + uid).update({ balance: balance });
                     localStorage.setItem('task_'+key, 'done');
+                    updateUI();
                     tg.showAlert("Task Reward Collected!");
                 }, 8000);
-            } else { tg.showAlert("Already Done!"); }
+            }
+        }
+
+        function buyBot() {
+            let cost = (botLevel + 1) * 5000;
+            if(balance >= cost) {
+                balance -= cost; botLevel++;
+                db.ref('users/' + uid).update({ balance: balance, botLevel: botLevel });
+            } else { tg.showAlert("Need more coins!"); }
+        }
+
+        function upgradeTap() {
+            let cost = level * 2000;
+            if(balance >= cost) {
+                balance -= cost; level++;
+                db.ref('users/' + uid).update({ balance: balance, level: level });
+            } else { tg.showAlert("Need more coins!"); }
         }
 
         function showPage(id) { document.getElementById(id).style.display = 'block'; }
         function closeAll() { document.querySelectorAll('.overlay').forEach(p => p.style.display='none'); }
         function invite() {
             const link = `https://t.me/my_earning_test_bot?start=${uid}`;
-            tg.openTelegramLink(`https://t.me/share/url?url=${encodeURIComponent(link)}&text=Mine BDC together!`);
+            tg.openTelegramLink(`https://t.me/share/url?url=${encodeURIComponent(link)}&text=Join me on BDC Network!`);
         }
-
-        setInterval(() => { if(energy < 500) { energy++; updateUI(); } }, 2000);
     </script>
 </body>
 </html>
-
-
-
