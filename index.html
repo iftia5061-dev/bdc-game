@@ -12,6 +12,10 @@
 
     <style>
         :root { --gold: #f3ba2f; --dark: #070a13; --card: #1c212e; --gray: #a0a5b1; --green: #4caf50; --blue: #3498db; }
+        
+        /* Tap Highlight Remove and General Styles */
+        * { -webkit-tap-highlight-color: transparent; }
+        
         body { background: var(--dark); color: white; font-family: 'Segoe UI', sans-serif; margin: 0; display: flex; flex-direction: column; height: 100vh; overflow: hidden; user-select: none; }
         
         /* Header & Balance */
@@ -21,7 +25,7 @@
 
         /* Main Tap Area */
         .main-tap { flex-grow: 1; display: flex; flex-direction: column; justify-content: center; align-items: center; position: relative; }
-        .coin-btn { width: 220px; height: 220px; background: radial-gradient(circle, #f3ba2f 0%, #b38600 100%); border-radius: 50%; display: flex; flex-direction: column; justify-content: center; align-items: center; font-size: 45px; font-weight: bold; box-shadow: 0 0 50px rgba(243, 186, 47, 0.2); cursor: pointer; border: 10px solid #151a28; transition: transform 0.1s; -webkit-tap-highlight-color: transparent; color: white; }
+        .coin-btn { width: 220px; height: 220px; background: radial-gradient(circle, #f3ba2f 0%, #b38600 100%); border-radius: 50%; display: flex; flex-direction: column; justify-content: center; align-items: center; font-size: 45px; font-weight: bold; box-shadow: 0 0 50px rgba(243, 186, 47, 0.2); cursor: pointer; border: 10px solid #151a28; transition: transform 0.1s; color: white; }
         .coin-btn:active { transform: scale(0.95); }
 
         .tap-anim { position: absolute; color: white; font-size: 32px; font-weight: bold; animation: fadeUp 0.8s ease-out forwards; pointer-events: none; z-index: 10; }
@@ -213,6 +217,7 @@
             }
         });
 
+        // Friend List
         db.ref('users').orderByChild('invitedBy').equalTo(uid.toString()).on('value', (snap) => {
             const list = document.getElementById("friend-list");
             const count = document.getElementById("f-count");
@@ -226,15 +231,13 @@
             }
         });
 
-        // Fixed Leaderboard (Descending Order)
         function loadLeaderboard() {
             const listDiv = document.getElementById("leaderboard-list");
             listDiv.innerHTML = "Fetching kings...";
             db.ref('users').orderByChild('balance').limitToLast(10).once('value', (snap) => {
                 let players = [];
                 snap.forEach(child => { players.push(child.val()); });
-                players.sort((a, b) => b.balance - a.balance); // Manual Sort for Accuracy
-                
+                players.sort((a, b) => b.balance - a.balance);
                 let html = '';
                 players.forEach((p, index) => {
                     const isMe = (p.name === uName);
@@ -251,7 +254,7 @@
             balance += 5000;
             db.ref('users/' + uid).update({ balance: balance, lastClaim: new Date().toDateString() });
             document.getElementById("daily-reward-box").style.display = 'none';
-            tg.showAlert("200 BDC Reward Collected!");
+            tg.showAlert("5000 BDC Reward Collected!");
         }
 
         function updateUI() {
@@ -273,7 +276,6 @@
             document.getElementById("p-lvl").innerText = level;
             document.getElementById("p-energy").innerText = maxEnergy;
 
-            // Boosters
             document.getElementById("bot-info").innerText = `Level ${botLevel} (Cost: ${format((botLevel+1)*10000)})`;
             document.getElementById("tap-upgrade-info").innerText = `Level ${level} (Cost: ${format(level*2000)})`;
             document.getElementById("energy-lv-info").innerText = `Max: ${maxEnergy} (Cost: ${format(maxEnergy*5)})`;
@@ -289,7 +291,6 @@
                 tHTML += `<div class="card"><div><b>${t.name}</b><br><small>+${format(t.reward)}</small></div><button class="btn-action" onclick="doTask('${t.link}', ${t.reward}, '${t.id}')">${done?'Done':'Go'}</button></div>`;
             });
             document.getElementById("task-list-dynamic").innerHTML = tHTML;
-            if(botLevel > 0) { document.getElementById("bot-claim-box").style.display = 'flex'; document.getElementById("bot-stored").innerText = format(botStored) + " BDC"; }
         }
 
         document.getElementById("tap-btn").addEventListener("touchstart", (e) => {
@@ -315,9 +316,50 @@
             }
         }, 1000);
 
+        // --- FIXED BOOSTER FUNCTIONS ---
+        function buyBot() {
+            let cost = (botLevel + 1) * 10000;
+            if(balance >= cost) {
+                balance -= cost;
+                botLevel++;
+                save();
+                updateUI();
+                tg.showAlert("Bot Upgraded to Level " + botLevel);
+            } else {
+                tg.showAlert("Not enough BDC!");
+            }
+        }
+
+        function upgradeTap() {
+            let cost = level * 2000;
+            if(balance >= cost) {
+                balance -= cost;
+                level++;
+                save();
+                updateUI();
+                tg.showAlert("Tap Multiplier Upgraded to Level " + level);
+            } else {
+                tg.showAlert("Not enough BDC!");
+            }
+        }
+
+        function upgradeEnergy() {
+            let cost = maxEnergy * 5;
+            if(balance >= cost) {
+                balance -= cost;
+                maxEnergy += 500;
+                save();
+                updateUI();
+                tg.showAlert("Energy Limit Increased!");
+            } else {
+                tg.showAlert("Not enough BDC!");
+            }
+        }
+
         function save() { db.ref('users/' + uid).update({ balance, level, botLevel, botStored, maxEnergy }); }
         function claimBot() { balance += botStored; botStored = 0; save(); updateUI(); }
         function showAd() { balance += 10000; save(); updateUI(); tg.showAlert("Ad Reward Added!"); }
+        
         function doTask(url, r, k) {
             tg.openLink(url);
             if(!localStorage.getItem('task_'+k)) {
@@ -333,6 +375,3 @@
     </script>
 </body>
 </html>
-
-
-
