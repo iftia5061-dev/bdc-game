@@ -137,6 +137,24 @@
         <div class="nav-item" onclick="showPage('tasks-page')"><i>📋</i>Tasks</div>
         <div class="nav-item" onclick="showPage('boost-page')"><i>🚀</i>Boost</div>
         <div class="nav-item" onclick="showPage('profile-page')"><i>👤</i>Profile</div>
+        <div class="nav-item" onclick="showPage('wallet-page')"><i>👛</i>Wallet</div>
+    <div id="wallet-page" class="overlay">
+        <button class="close-btn" onclick="closeAll()">X</button>
+    <div class="page-title">BDC Wallet</div>
+    <div style="text-align:center; margin-top:50px;">
+        <div style="font-size:60px; margin-bottom:20px;">👛</div>
+        <h3>Airdrop & Withdrawal</h3>
+        <p style="color:var(--gray); padding:0 20px;">আপনার BDC কয়েনগুলো ওয়ালেটে নেওয়ার সিস্টেম খুব শীঘ্রই চালু হবে। আমাদের টেলিগ্রাম চ্যানেলে নজর রাখুন।</p>
+        
+        <div class="card" style="margin-top:30px; border:1px dashed var(--gold); opacity:0.7;">
+            <div class="card-info">
+                <b>Connect TON Wallet</b>
+                <small>Status: Coming Soon</small>
+            </div>
+            <button class="btn-action" style="background:gray; cursor:not-allowed;" onclick="tg.showAlert('Wallet Connection will be available after Listing!')">Connect</button>
+            </div>
+        </div>
+    </div>
     </div>
 
     <script>
@@ -264,4 +282,5 @@
     </script>
 </body>
 </html>
+
 
