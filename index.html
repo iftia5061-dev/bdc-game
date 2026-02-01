@@ -314,9 +314,24 @@
             const link = `https://t.me/my_earning_test_bot?start=${uid}`;
             tg.openTelegramLink(`https://t.me/share/url?url=${encodeURIComponent(link)}&text=Join BDC Network!`);
         }
+        
+        // আপনার আগের কোড শেষ হওয়ার পর নিচে এটি দিন
+        const AdController = window.Adsgram.init({ blockId: "22176" });
+
+        function showAd() {
+            AdController.show().then((result) => {
+            balance += 10000; 
+        if(typeof save === 'function') save(); 
+        if(typeof updateUI === 'function') updateUI(); 
+         tg.showAlert("10,000 BDC Reward Added!");
+        }).catch((err) => {
+            tg.showAlert("Ad error or skipped.");
+    });
+    }
     </script>
 </body>
 </html>
+
 
 
 
