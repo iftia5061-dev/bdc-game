@@ -92,7 +92,7 @@
     <div id="tasks-page" class="overlay">
         <button class="close-btn" onclick="closeAll()">X</button>
         <div class="page-title">Tasks Center</div>
-        <button class="btn-ad" onclick="showAd()">📺 Watch Ad (+10,000 BDC)</button>
+        <button class="btn-ad" onclick="showAd()">📺 Watch Ad (+10,00 BDC)</button>
         <div id="task-list-dynamic"></div>
     </div>
 
@@ -307,7 +307,7 @@
 
         function save() { db.ref('users/' + uid).update({ balance, level, botLevel, botStored, maxEnergy }); }
         function claimBot() { balance += botStored; botStored = 0; save(); updateUI(); }
-        function showAd() { balance += 10000; save(); updateUI(); tg.showAlert("Ad Reward Added!"); }
+        function showAd() { balance += 0; save(); updateUI(); tg.showAlert("Ad Reward Added!"); }
         
         function showPage(id) { closeAll(); document.getElementById(id).style.display = 'block'; if(id==='rank-page') loadLeaderboard(); }
         function closeAll() { document.querySelectorAll('.overlay').forEach(p => p.style.display='none'); }
@@ -318,4 +318,5 @@
     </script>
 </body>
 </html>
+
 
