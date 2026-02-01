@@ -150,19 +150,39 @@
         }
 
         db.ref('users/' + uid).on('value', (snap) => {
-            if(snap.exists()){
-                const d = snap.val();
-                balance = d.balance || 0;
-                level = d.level || 1;
-                botLevel = d.botLevel || 0;
-                botStored = d.botStored || 0;
-                maxEnergy = d.maxEnergy || 500;
-                if(d.lastClaim !== new Date().toDateString()) document.getElementById("daily-reward-box").style.display = 'block';
-                updateUI();
-            } else {
-                db.ref('users/' + uid).set({ name: uName, balance: 1000, level: 1, botLevel: 0, botStored: 0, maxEnergy: 500, lastClaim: 0 });
+        if(snap.exists()){
+        const d = snap.val();
+        balance = d.balance || 0;
+        level = d.level || 1;
+        botLevel = d.botLevel || 0;
+        maxEnergy = d.maxEnergy || 500;
+        
+        // --- অফলাইন ক্যালকুলেশন শুরু ---
+        let lastSeen = d.lastSeen || Date.now();
+        let now = Date.now();
+        let secondsPassed = Math.floor((now - lastSeen) / 1000);
+
+        // ১. এনার্জি রিফিল (গেমের বাইরেও এনার্জি বাড়বে)
+        let oldEnergy = d.energy || 0;
+        let refillAmount = secondsPassed * 1.5; // প্রতি সেকেন্ডে ১.৫ করে বাড়বে
+        energy = Math.min(maxEnergy, oldEnergy + refillAmount);
+
+        // ২. বোট ফার্মিং (গেমের বাইরে কয়েন জমবে)
+        if(botLevel > 0) {
+            let cap = botLevel * 500;
+            let earnedOffline = secondsPassed * (botLevel * 0.2);
+            botStored = Math.min(cap, (d.botStored || 0) + earnedOffline);
+        } else {
+            botStored = d.botStored || 0;
+        }
+        // --- অফলাইন ক্যালকুলেশন শেষ ---
+
+        if(d.lastClaim !== new Date().toDateString()) document.getElementById("daily-reward-box").style.display = 'block';
+        updateUI();
+        } else {
+        db.ref('users/' + uid).set({ name: uName, balance: 1000, level: 1, botLevel: 0, botStored: 0, maxEnergy: 500, lastClaim: 0, lastSeen: Date.now(), energy: 500 });
             }
-        });   
+        });
   // Friend List & Leaderboard (Same as your code)
         db.ref('users').orderByChild('invitedBy').equalTo(uid.toString()).on('value', (snap) => {
             const list = document.getElementById("friend-list");
@@ -266,7 +286,7 @@
         });
 
         setInterval(() => {
-            if(energy < maxEnergy) { energy += 1.5; updateUI(); }
+            if(energy < maxEnergy) { energy += 0.5; updateUI(); }
             if(botLevel > 0) {
                 let cap = botLevel * 500;
                 if(botStored < cap) { botStored += (botLevel * 0.2); save(); }
@@ -304,10 +324,17 @@
             else { tg.showAlert("Not enough BDC!"); }
         }
 
-        function save() { db.ref('users/' + uid).update({ balance, level, botLevel, botStored, maxEnergy }); }
-        function claimBot() { balance += botStored; botStored = 0; save(); updateUI(); }
-        function showAd() { balance += 10000; save(); updateUI(); tg.showAlert("Ad Reward Added!"); }
-
+       function save() {
+        db.ref('users/' + uid).update({
+        balance: balance,
+        level: level,
+        botLevel: botLevel,
+        botStored: botStored,
+        maxEnergy: maxEnergy,
+        energy: energy,      // বর্তমান এনার্জি সেভ হবে
+        lastSeen: Date.now() // যাওয়ার সময়টা সেভ হবে
+        });
+        }
         function showPage(id) { closeAll(); document.getElementById(id).style.display = 'block'; if(id==='rank-page') loadLeaderboard(); }
         function closeAll() { document.querySelectorAll('.overlay').forEach(p => p.style.display='none'); }
         function invite() {
@@ -331,6 +358,7 @@
     </script>
 </body>
 </html>
+
 
 
 
