@@ -320,10 +320,10 @@
 
         function showAd() {
             AdController.show().then((result) => {
-            balance += 10000; 
+            balance += 2000; 
         if(typeof save === 'function') save(); 
         if(typeof updateUI === 'function') updateUI(); 
-         tg.showAlert("10,000 BDC Reward Added!");
+         tg.showAlert("20,00 BDC Reward Added!");
         }).catch((err) => {
             tg.showAlert("Ad error or skipped.");
     });
@@ -331,6 +331,7 @@
     </script>
 </body>
 </html>
+
 
 
 
