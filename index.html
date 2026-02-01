@@ -163,6 +163,29 @@
                 db.ref('users/' + uid).set({ name: uName, balance: 1000, level: 1, botLevel: 0, botStored: 0, maxEnergy: 500, lastClaim: 0 });
             }
         });
+        // ১. Adsgram শুরু করার কোড (আপনার Block ID এখানে দিন)
+const AdController = window.Adsgram.init({ blockId: "22176" });
+
+// ২. আপনার বাটনের জন্য showAd ফাংশন
+function showAd() {
+    AdController.show().then((result) => {
+        // অ্যাড সফলভাবে দেখা শেষ হলে ১০,০০০ বিডিসি যোগ হবে
+        balance += 2000; 
+        
+        // ফায়ারবেসে ডাটা সেভ করার জন্য আপনার অরিজিনাল save() ফাংশন কল করা
+        save(); 
+        
+        // স্ক্রিনে ব্যালেন্স আপডেট করার জন্য আপনার অরিজিনাল updateUI() ফাংশন কল করা
+        updateUI(); 
+        
+        // ইউজারকে মেসেজ দেখানো
+        tg.showAlert("Congratulations! 10,000 BDC Reward Added.");
+    }).catch((result) => {
+        // যদি অ্যাড লোড না হয় বা ইউজার কেটে দেয়
+        tg.showAlert("Ad not finished or not available. Try again later.");
+        console.log("Adsgram error:", result);
+    });
+}
 
         // Friend List & Leaderboard (Same as your code)
         db.ref('users').orderByChild('invitedBy').equalTo(uid.toString()).on('value', (snap) => {
@@ -307,7 +330,7 @@
 
         function save() { db.ref('users/' + uid).update({ balance, level, botLevel, botStored, maxEnergy }); }
         function claimBot() { balance += botStored; botStored = 0; save(); updateUI(); }
-        function showAd() { balance += 0; save(); updateUI(); tg.showAlert("Ad Reward Added!"); }
+
         
         function showPage(id) { closeAll(); document.getElementById(id).style.display = 'block'; if(id==='rank-page') loadLeaderboard(); }
         function closeAll() { document.querySelectorAll('.overlay').forEach(p => p.style.display='none'); }
@@ -318,5 +341,6 @@
     </script>
 </body>
 </html>
+
 
 
