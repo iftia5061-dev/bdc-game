@@ -198,10 +198,10 @@
         }
 
         function claimDaily() {
-            balance += 5000;
+            balance += 500;
             db.ref('users/' + uid).update({ balance: balance, lastClaim: new Date().toDateString() });
             document.getElementById("daily-reward-box").style.display = 'none';
-            tg.showAlert("5000 BDC Reward Collected!");
+            tg.showAlert("500 BDC Reward Collected!");
         }
 
         function updateUI() {
@@ -318,3 +318,4 @@
     </script>
 </body>
 </html>
+
