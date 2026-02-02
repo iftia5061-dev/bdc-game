@@ -393,44 +393,65 @@
     }
     }
 
-    const tonConnectUI = new TON_CONNECT_UI.TonConnectUI({
-    manifestUrl: 'https://bdc-game.vercel.app/tonconnect-manifest.json', //  ডোমেইন লিঙ্ক 
-    });
+    // ১. মেইন কনফিগারেশন (এটি ফাংশনের বাইরে উপরে থাকবে)
+const tonConnectUI = new TON_CONNECT_UI.TonConnectUI({
+    manifestUrl: 'https://bdc-game.vercel.app/tonconnect-manifest.json'
+});
 
-    async function connectWallet() {
+// ২. ওয়ালেট কানেক্ট ফাংশন (আপডেটেড)
+async function connectWallet() {
     try {
-        const connectedWallet = await tonConnectUI.connectWallet();
-        if (connectedWallet) {
-            handleWalletConnection(connectedWallet);
+        // যদি আগে থেকেই কানেক্ট থাকে, তবে সেটা ডিসকানেক্ট করে ফ্রেশ কানেকশন করবে
+        if (tonConnectUI.connected) {
+            await tonConnectUI.disconnect();
         }
-    } catch (error) {
-        console.error("Wallet connection failed", error);
-        tg.showAlert("Connection cancelled or failed.");
-    }
-    }
 
-    function handleWalletConnection(wallet) {
+        // ওয়ালেট চয়েস করার মডাল ওপেন হবে
+        await tonConnectUI.openModal();
+
+        // ওয়ালেটের স্ট্যাটাস পরিবর্তন হলে অটোমেটিক হ্যান্ডেল করবে
+        const unsubscribe = tonConnectUI.onStatusChange(wallet => {
+            if (wallet) {
+                handleWalletConnection(wallet);
+                unsubscribe(); // কানেক্ট হয়ে গেলে লিসেনার বন্ধ করে দিবে
+            }
+        });
+
+    } catch (error) {
+        console.error("Wallet error:", error);
+        tg.showAlert("Wallet connection failed. Please open in Telegram!");
+    }
+}
+
+// ৩. কানেকশন সফল হলে যা হবে
+function handleWalletConnection(wallet) {
     const address = wallet.account.address;
-    // অ্যাড্রেসটি ছোট করে দেখানোর জন্য (যেমন: 0x12...abcd)
+    // অ্যাড্রেসটি ছোট করে দেখানো (0x12...abcd)
     const shortAddress = address.substring(0, 4) + "..." + address.substring(address.length - 4);
     
-    // UI আপডেট
-    document.getElementById("wallet-status").innerText = "Connected: " + shortAddress;
-    document.getElementById("connect-btn").innerText = "Wallet Linked";
-    document.getElementById("connect-btn").style.background = "var(--green)";
-    document.getElementById("connect-btn").disabled = true;
+    // UI পরিবর্তন
+    const statusText = document.getElementById("wallet-status");
+    const connectBtn = document.getElementById("connect-btn");
+
+    if (statusText) statusText.innerText = "Connected: " + shortAddress;
+    if (connectBtn) {
+        connectBtn.innerText = "Wallet Linked";
+        connectBtn.style.background = "var(--green)";
+        connectBtn.disabled = true;
+    }
 
     // ফায়ারবেসে সেভ করা
-    db.ref('users/' + uid).update({
-        walletAddress: address
-    });
-
-    tg.showAlert("Wallet linked successfully!");
+    if (typeof uid !== 'undefined') {
+        db.ref('users/' + uid).update({
+            walletAddress: address
+        }).then(() => {
+            tg.showAlert("Wallet linked successfully!");
+        });
     }
+}
     </script>
 </body>
 </html>
-
 
 
 
