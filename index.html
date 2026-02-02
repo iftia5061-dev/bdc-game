@@ -400,35 +400,44 @@
 
     // ২. কানেক্ট ফাংশন (সহজ এবং সরাসরি)
     async function connectWallet() {
-        try {
-        // মডাল আসার আগে একটু অপেক্ষা করা
+    try {
+        // ১. চেক করা ওয়ালেট আগে থেকেই কানেক্টেড কি না
+        if (tonConnectUI.connected) {
+            const address = tonConnectUI.account.address;
+            tg.showAlert("Already connected: " + address.substring(0, 6));
+            return;
+        }
+
+        // ২. সরাসরি মডাল ওপেন করার জন্য এই কমান্ডটি দিন
         await tonConnectUI.openModal();
-        
-        // কানেক্ট হলে কি হবে তা শোনা
-        const unsubscribe = tonConnectUI.onStatusChange(wallet => {
+
+        // ৩. কানেকশন সাকসেসফুল হলে ডেটা সেভ করা
+        tonConnectUI.onStatusChange((wallet) => {
             if (wallet) {
-                console.log("Connected:", wallet);
                 const address = wallet.account.address;
+                const shortAddr = address.substring(0, 6) + "..." + address.substring(address.length - 4);
                 
-                // UI আপডেট
-                document.getElementById("wallet-status").innerText = "Connected: " + address.substring(0,6) + "...";
-                document.getElementById("connect-btn").innerText = "Linked";
-                document.getElementById("connect-btn").style.background = "var(--green)";
+                document.getElementById("wallet-status").innerText = "Connected: " + shortAddr;
+                document.getElementById("connect-btn").innerText = "Linked ✅";
+                document.getElementById("connect-btn").style.background = "#28a745"; // Green color
                 
                 // ফায়ারবেসে সেভ
-                db.ref('users/' + uid).update({ walletAddress: address });
-                
-                unsubscribe(); // কানেক্ট হয়ে গেলে বন্ধ করে দাও
+                db.ref('users/' + uid).update({
+                    walletAddress: address
+                });
             }
         });
-    } catch (e) {
-        console.error(e);
-        tg.showAlert("Please install Tonkeeper or use Telegram Wallet!");
+
+    } catch (error) {
+        console.error("Full Error:", error);
+        // যদি মডাল না আসে, তবে সরাসরি টেলিগ্রাম ওয়ালেট ট্রাই করতে বলা
+        tg.showAlert("Wait a moment... if not opening, please restart the game.");
     }
-    }
+}
     </script>
 </body>
 </html>
+
 
 
 
