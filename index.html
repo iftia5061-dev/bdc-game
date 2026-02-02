@@ -396,42 +396,55 @@
     }
 
     // ১. আগে কনফিগারেশন চেক করুন
-   // ১. সবার উপরে এটা থাকবে
-   // ১. টন কানেক্ট ইনিশিয়ালাইজ করা
-const tonConnectUI = new TON_CONNECT_UI.TonConnectUI({
-    manifestUrl: 'https://bdc-game.vercel.app/tonconnect-manifest.json',
-    buttonRootId: 'ton-connect-button' // এই আইডিটি ইম্পর্টেন্ট
+   // ১. গ্লোবাল ভেরিয়েবল
+let tonConnectUI;
+
+// ২. পেজ লোড হওয়ার সাথে সাথে এটি তৈরি হবে
+document.addEventListener("DOMContentLoaded", () => {
+    tonConnectUI = new TON_CONNECT_UI.TonConnectUI({
+        manifestUrl: 'https://bdc-game.vercel.app/tonconnect-manifest.json',
+        buttonRootId: 'ton-connect-button'
+    });
 });
 
-// ২. অটোমেটিক কানেকশন চেক করার জন্য
-tonConnectUI.onStatusChange(wallet => {
-    if (wallet) {
-        const address = wallet.account.address;
-        const shortAddr = address.substring(0, 6) + "..." + address.substring(address.length - 4);
-        
-        // আপনার UI আপডেট করা
-        const statusEl = document.getElementById("wallet-status");
-        if (statusEl) statusEl.innerText = "Connected: " + shortAddr;
-        
-        // ফায়ারবেসে সেভ
-        if (typeof uid !== 'undefined') {
-            db.ref('users/' + uid).update({ walletAddress: address });
-        }
-    }
-});
-
-// ৩. আপনার বাটনটি শুধু মডাল খোলার কাজ করবে
+// ৩. কানেক্ট ফাংশন (উন্নত ভার্সন)
 async function connectWallet() {
     try {
+        // যদি লাইব্রেরি রেডি না থাকে
+        if (!tonConnectUI) {
+            tg.showAlert("System initializing... please wait 2 seconds.");
+            return;
+        }
+
+        // কানেক্ট করার চেষ্টা
         await tonConnectUI.openModal();
-    } catch (e) {
-        console.error(e);
-        tg.showAlert("Wallet is not responding. Please try again!");
+
+        // কানেকশন সাকসেসফুল হলে
+        tonConnectUI.onStatusChange(wallet => {
+            if (wallet) {
+                const address = wallet.account.address;
+                const shortAddr = address.substring(0, 6) + "..." + address.substring(address.length - 4);
+                
+                document.getElementById("wallet-status").innerText = "Linked: " + shortAddr;
+                document.getElementById("connect-btn").innerText = "Linked ✅";
+                document.getElementById("connect-btn").disabled = true;
+
+                db.ref('users/' + uid).update({
+                    walletAddress: address
+                });
+                tg.showAlert("Wallet linked successfully!");
+            }
+        });
+    } catch (error) {
+        console.error("Connection Error:", error);
+        // যদি মডাল না খোলে, তবে ইউজারকে সরাসরি বাটন ব্যবহার করতে বলা
+        tg.showAlert("Please use the official button below your 'Connect TON' button.");
     }
 }
     </script>
 </body>
 </html>
+
 
 
 
