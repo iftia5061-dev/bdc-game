@@ -9,6 +9,7 @@
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-database-compat.js"></script>
     <script src="https://sad.adsgram.ai/js/adsgram-adbox.js"></script>
+    <script src="https://unpkg.com/@tonconnect/ui@latest/dist/tonconnect-ui.min.js"></script>
 
     <style>
         :root { --gold: #f3ba2f; --dark: #070a13; --card: #1c212e; --gray: #a0a5b1; --green: #4caf50; --blue: #3498db; }
@@ -97,7 +98,19 @@
     </div>
 
     <div id="rank-page" class="overlay"><button class="close-btn" onclick="closeAll()">X</button><div class="page-title">Top 10 Mining Kings</div><div id="leaderboard-list"></div></div>
-    <div id="wallet-page" class="overlay"><button class="close-btn" onclick="closeAll()">X</button><div class="page-title">Wallet</div><div style="text-align:center; padding:50px 20px; background:var(--card); border-radius:20px; border:1px solid var(--blue);"><div style="font-size:50px">👛</div><h3>Connect Wallet</h3><p style="color:var(--gray)">Airdrop distributions will be sent here.</p><button class="btn-action" style="background:var(--blue); color:white; width:100%; margin-top:20px;" onclick="tg.showAlert('Wallet connection opening soon!')">Connect TON</button></div></div>
+   
+    <div id="wallet-page" class="overlay">
+    <button class="close-btn" onclick="closeAll()">X</button>
+    <div class="page-title">Wallet</div>
+    <div style="text-align:center; padding:50px 20px; background:var(--card); border-radius:20px; border:1px solid var(--blue);">
+        <div style="font-size:50px">👛</div>
+        <h3>Connect Wallet</h3>
+        <p id="wallet-status" style="color:var(--gray)">Airdrop distributions will be sent here.</p>
+        
+        <button id="connect-btn" class="btn-action" style="background:var(--blue); color:white; width:100%; margin-top:20px;" onclick="connectWallet()">Connect TON</button>
+    </div>
+    </div>
+    
     <div id="boost-page" class="overlay"><button class="close-btn" onclick="closeAll()">X</button><div class="page-title">Mining Boosters</div><div class="card"><div class="card-info"><b>Auto-Mining Bot</b><br><small id="bot-info">Level 0</small></div><button class="btn-action" onclick="buyBot()">Upgrade</button></div><div class="card"><div class="card-info"><b>Tap Multiplier</b><br><small id="tap-upgrade-info">Level 1</small></div><button class="btn-action" onclick="upgradeTap()">Upgrade</button></div><div class="card"><div class="card-info"><b>Energy Limit</b><br><small id="energy-lv-info">Max: 500</small></div><button class="btn-action" onclick="upgradeEnergy()">Upgrade</button></div></div>
 
     <div class="nav">
@@ -378,12 +391,45 @@
             tg.showAlert("Nothing to claim!");
         }
     }
-}
+    }
+
+    const tonConnectUI = new TON_CONNECT_UI.TonConnectUI({
+    manifestUrl: 'https://bdc-game.vercel.app/', //  ডোমেইন লিঙ্ক 
+    });
+
+    async function connectWallet() {
+    try {
+        const connectedWallet = await tonConnectUI.connectWallet();
+        if (connectedWallet) {
+            handleWalletConnection(connectedWallet);
+        }
+    } catch (error) {
+        console.error("Wallet connection failed", error);
+        tg.showAlert("Connection cancelled or failed.");
+    }
+    }
+
+    function handleWalletConnection(wallet) {
+    const address = wallet.account.address;
+    // অ্যাড্রেসটি ছোট করে দেখানোর জন্য (যেমন: 0x12...abcd)
+    const shortAddress = address.substring(0, 4) + "..." + address.substring(address.length - 4);
+    
+    // UI আপডেট
+    document.getElementById("wallet-status").innerText = "Connected: " + shortAddress;
+    document.getElementById("connect-btn").innerText = "Wallet Linked";
+    document.getElementById("connect-btn").style.background = "var(--green)";
+    document.getElementById("connect-btn").disabled = true;
+
+    // ফায়ারবেসে সেভ করা
+    db.ref('users/' + uid).update({
+        walletAddress: address
+    });
+
+    tg.showAlert("Wallet linked successfully!");
+    }
     </script>
 </body>
 </html>
-
-
 
 
 
