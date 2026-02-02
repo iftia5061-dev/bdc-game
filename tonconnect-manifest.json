@@ -1,4 +1,6 @@
 {
   "url": "https://bdc-game.vercel.app/",
-  "name": "BDC Network Game" 
+  "name": "BDC Network Game",
+  "iconUrl": "https://bdc-game.vercel.app/logo.png"
 }
+
