@@ -106,10 +106,12 @@
         <div style="font-size:50px">👛</div>
         <h3>Connect Wallet</h3>
         <p id="wallet-status" style="color:var(--gray)">Airdrop distributions will be sent here.</p>
-        <div id="ton-connect-button" style="display: flex !important; justify-content: center; margin-top: 20px; min-height: 40px;"></div>   
-        <p style="font-size: 12px; color: #555; margin-top: 10px;">If the button doesn't load, please reload the page.</p>
+        
+        <button class="btn-action" onclick="connectWallet()" style="margin-bottom: 20px; width: 100%;">Connect TON</button>
+        
+        <div id="ton-connect-button" style="display: flex !important; justify-content: center;"></div>   
+        </div>
     </div>
-</div>
     
     <div id="boost-page" class="overlay"><button class="close-btn" onclick="closeAll()">X</button><div class="page-title">Mining Boosters</div><div class="card"><div class="card-info"><b>Auto-Mining Bot</b><br><small id="bot-info">Level 0</small></div><button class="btn-action" onclick="buyBot()">Upgrade</button></div><div class="card"><div class="card-info"><b>Tap Multiplier</b><br><small id="tap-upgrade-info">Level 1</small></div><button class="btn-action" onclick="upgradeTap()">Upgrade</button></div><div class="card"><div class="card-info"><b>Energy Limit</b><br><small id="energy-lv-info">Max: 500</small></div><button class="btn-action" onclick="upgradeEnergy()">Upgrade</button></div></div>
 
@@ -392,18 +394,22 @@
         }
     }
     }
-        // ১. গ্লোবাল ভেরিয়েবল
+
+    // ১. গ্লোবাল ভেরিয়েবল হিসেবে ডিক্লেয়ার করুন
     let tonConnectUI;
 
-    // ২. সবার আগে এটি লোড করার চেষ্টা করবে
-    function initTonConnect() {
+    // ২. একটি নির্দিষ্ট ফাংশন যা লাইব্রেরি লোড হওয়া নিশ্চিত করবে
+    async function initializeTonConnect() {
+    // যদি আগে থেকেই তৈরি থাকে তবে আর করবে না
+    if (tonConnectUI) return; 
+
     try {
         tonConnectUI = new TON_CONNECT_UI.TonConnectUI({
             manifestUrl: 'https://bdc-game.vercel.app/tonconnect-manifest.json',
             buttonRootId: 'ton-connect-button'
         });
 
-        // ওয়ালেট কানেক্ট হলে অটোমেটিক আপডেট
+        // ওয়ালেট কানেক্ট স্ট্যাটাস চেক
         tonConnectUI.onStatusChange(wallet => {
             if (wallet) {
                 const address = wallet.account.address;
@@ -415,49 +421,32 @@
                 }
             }
         });
+        console.log("TON Connect Initialized Successfully");
     } catch (e) {
-        console.error("TonConnect Init Error:", e);
+        console.error("TON Connect Error:", e);
         }
     }
 
-// ৩. পেজ লোড হওয়ার সাথে সাথে এবং ৩ সেকেন্ড পর—দুইবার চেক করবে
-    window.addEventListener('load', initTonConnect);
-    setTimeout(initTonConnect, 3000); 
+    // ৩. উইন্ডো লোড হওয়ার সাথে সাথে ইনিশিয়ালাইজ হবে
+    window.addEventListener('DOMContentLoaded', initializeTonConnect);
 
-// ৪. আপনার পুরনো বাটন ফাংশনটি এখন সরাসরি অফিসিয়াল মডাল ডাকবে
+    // ৪. আপনার বাটন ক্লিক ফাংশন (এটি সরাসরি মডাল ওপেন করবে)
     async function connectWallet() {
     if (!tonConnectUI) {
-        initTonConnect();
-        tg.showAlert("Initializing wallet system... click again in 2 seconds.");
-        return;
+        await initializeTonConnect();
     }
+    
     try {
-        await tonConnectUI.openModal();
+        // একাধিক ওয়ালেট সাপোর্ট করার জন্য এটিই বেস্ট পদ্ধতি
+        await tonConnectUI.openModal(); 
     } catch (err) {
-        document.getElementById("ton-connect-button").style.display = "block";
-        tg.showAlert("Please use the official blue button below.");
+        console.error("Modal Error:", err);
+        tg.showAlert("Wallet list is loading... please try again.");
         }
     }
     </script>
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
