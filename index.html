@@ -8,55 +8,38 @@
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-database-compat.js"></script>
-    <script src="https://sad.adsgram.ai/js/adsgram-adbox.js"></script>
     <script src="https://unpkg.com/@tonconnect/ui@latest/dist/tonconnect-ui.min.js"></script>
 
     <style>
         :root { --gold: #f3ba2f; --dark: #070a13; --card: #1c212e; --gray: #a0a5b1; --green: #4caf50; --blue: #3498db; }
-        
         * { -webkit-tap-highlight-color: transparent; }
-        
         body { background: var(--dark); color: white; font-family: 'Segoe UI', sans-serif; margin: 0; display: flex; flex-direction: column; height: 100vh; overflow: hidden; user-select: none; }
-        
         .header { display: flex; justify-content: space-between; padding: 15px; align-items: center; background: var(--card); border-bottom: 1px solid #2d3343; }
         .balance-section { text-align: center; margin: 20px 0; }
         .coin-val { font-size: 42px; font-weight: 900; color: white; display: flex; align-items: center; justify-content: center; gap: 10px; }
-
         .main-tap { flex-grow: 1; display: flex; flex-direction: column; justify-content: center; align-items: center; position: relative; }
         .coin-btn { width: 220px; height: 220px; background: radial-gradient(circle, #f3ba2f 0%, #b38600 100%); border-radius: 50%; display: flex; flex-direction: column; justify-content: center; align-items: center; font-size: 45px; font-weight: bold; box-shadow: 0 0 50px rgba(243, 186, 47, 0.2); cursor: pointer; border: 10px solid #151a28; transition: transform 0.1s; color: white; }
         .coin-btn:active { transform: scale(0.95); }
-
         .tap-anim { position: absolute; color: white; font-size: 32px; font-weight: bold; animation: fadeUp 0.8s ease-out forwards; pointer-events: none; z-index: 10; }
         @keyframes fadeUp { 0% { opacity: 1; transform: translateY(0); } 100% { opacity: 0; transform: translateY(-120px); } }
-
         .stat-box { width: 85%; margin: 15px 0; }
         .bar-bg { width: 100%; height: 14px; background: #242935; border-radius: 10px; overflow: hidden; border: 1px solid #333; }
         #bar-fill { width: 100%; height: 100%; background: linear-gradient(90deg, #f3ba2f, #ffea00); transition: width 0.3s; }
-
         .overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: calc(100% - 70px); background: var(--dark); z-index: 100; padding: 20px; box-sizing: border-box; overflow-y: auto; }
         .page-title { text-align: center; color: var(--gold); font-size: 24px; margin-bottom: 20px; font-weight: bold; }
         .close-btn { background: #ff4444; color: white; border: none; padding: 10px 20px; border-radius: 8px; font-weight: bold; float: right; cursor: pointer; }
-        
         .card { background: var(--card); padding: 18px; border-radius: 15px; margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center; border: 1px solid #2d3343; }
         .btn-action { background: var(--gold); color: black; border: none; padding: 10px 18px; border-radius: 8px; font-weight: bold; cursor: pointer; }
         .btn-action.done { background: #3d4455; color: var(--gray); cursor: default; }
-        .btn-ad { background: var(--green); color: white; width: 100%; padding: 16px; border-radius: 15px; border: none; font-weight: bold; margin-bottom: 20px; font-size: 18px; }
-
         .p-avatar-circle { width: 100px; height: 100px; background: linear-gradient(135deg, var(--gold), #b38600); border-radius: 50%; margin: 0 auto 15px; display: flex; align-items: center; justify-content: center; font-size: 45px; color: black; font-weight: 900; border: 4px solid #1c212e; }
         .user-info-card { background: #1c212e; padding: 20px; border-radius: 20px; margin-bottom: 20px; border: 1px solid #3d4455; }
         .stat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
         .stat-item { background: rgba(255,255,255,0.05); padding: 15px; border-radius: 12px; border: 1px solid #2d3343; text-align: center; }
         .invite-box { background: linear-gradient(135deg, #1c212e, #252b3a); padding: 25px; border-radius: 20px; text-align: center; border: 1px dashed var(--gold); margin-bottom: 25px; }
-
-        /* Navigation & Notification Badge */
         .nav { background: var(--card); display: flex; justify-content: space-around; padding: 12px 0; border-top: 1px solid #2d3343; height: 70px; }
         .nav-item { text-align: center; color: var(--gray); font-size: 11px; cursor: pointer; flex: 1; transition: 0.3s; position: relative; }
         .nav-item.active { color: var(--gold); font-weight: bold; }
-        
-        .badge { 
-            position: absolute; top: 0; right: 25%; width: 10px; height: 10px; 
-            background: red; border-radius: 50%; display: none; border: 2px solid var(--card);
-        }
+        .badge { position: absolute; top: 0; right: 25%; width: 10px; height: 10px; background: red; border-radius: 50%; display: none; border: 2px solid var(--card); }
     </style>
 </head>
 <body>
@@ -88,28 +71,28 @@
     </div>
 
     <div id="profile-page" class="overlay"><button class="close-btn" onclick="closeAll()">X</button><div class="page-title">User Profile</div><div class="profile-container" style="text-align:center;"><div class="p-avatar-circle" id="p-initial">U</div><h2 id="p-name" style="margin:0;">User Name</h2><p id="p-id" style="color:var(--gray); font-size:14px; margin-bottom:20px;">ID: 000000</p><div class="user-info-card"><div class="stat-grid"><div class="stat-item"><small style="color:var(--gray)">Current Rank</small><br><b id="p-rank" style="color:var(--gold); font-size:18px;">Bronze</b></div><div class="stat-item"><small style="color:var(--gray)">Total Balance</small><br><b id="p-bal" style="color:white; font-size:18px;">0</b></div><div class="stat-item"><small style="color:var(--gray)">Mining Level</small><br><b id="p-lvl" style="color:var(--blue); font-size:18px;">1</b></div><div class="stat-item"><small style="color:var(--gray)">Energy Limit</small><br><b id="p-energy" style="color:var(--green); font-size:18px;">500</b></div></div></div></div></div>
-    <div id="friends-page" class="overlay"><button class="close-btn" onclick="closeAll()">X</button><div class="page-title">Invite Friends</div><div class="invite-box"><div style="font-size: 50px; margin-bottom: 10px;">🎁</div><h3>Invite & Earn Rewards</h3><p style="color:var(--gray); font-size:14px;">You and your friend receive <br><b style="color:var(--gold)">+2,500 BDC Coins</b></p><button class="btn-ad" style="background:var(--gold); color:black; margin-top:15px;" onclick="invite()">🔗 Copy Invite Link</button></div><h4>Friends List (<span id="f-count">0</span>)</h4><div id="friend-list"></div></div>
+    
+    <div id="friends-page" class="overlay"><button class="close-btn" onclick="closeAll()">X</button><div class="page-title">Invite Friends</div><div class="invite-box"><div style="font-size: 50px; margin-bottom: 10px;">🎁</div><h3>Invite & Earn Rewards</h3><p style="color:var(--gray); font-size:14px;">You and your friend receive <br><b style="color:var(--gold)">+2,500 BDC Coins</b></p><button class="btn-action" style="background:var(--gold); color:black; width:100%; padding:15px; margin-top:15px;" onclick="invite()">🔗 Copy Invite Link</button></div><h4>Friends List (<span id="f-count">0</span>)</h4><div id="friend-list"></div></div>
     
     <div id="tasks-page" class="overlay">
         <button class="close-btn" onclick="closeAll()">X</button>
         <div class="page-title">Tasks Center</div>
-        <button class="btn-ad" onclick="showAd()"> Watch Ad (+20,00 BDC)</button>
         <div id="task-list-dynamic"></div>
     </div>
 
     <div id="rank-page" class="overlay"><button class="close-btn" onclick="closeAll()">X</button><div class="page-title">Top 10 Mining Kings</div><div id="leaderboard-list"></div></div>
    
     <div id="wallet-page" class="overlay">
-    <button class="close-btn" onclick="closeAll()">X</button>
-    <div class="page-title">Wallet</div>
-    <div style="text-align:center; padding:50px 20px; background:var(--card); border-radius:20px; border:1px solid var(--blue);">
-        <div style="font-size:50px">👛</div>
-        <h3>Connect Wallet</h3>
-        <p id="wallet-status" style="color:var(--gray)">Airdrop distributions will be sent here.</p>
-        
-        <button class="btn-action" onclick="connectWallet()" style="margin-bottom: 20px; width: 100%;">Connect TON</button>
-        
-        <div id="ton-connect-button" style="display: flex !important; justify-content: center;"></div>   
+        <button class="close-btn" onclick="closeAll()">X</button>
+        <div class="page-title">Wallet</div>
+        <div style="text-align:center; padding:40px 20px; background:var(--card); border-radius:20px; border:1px solid var(--blue); margin: 10px;">
+            <div style="font-size:50px; margin-bottom: 15px;">👛</div>
+            <h3>Connect Wallet</h3>
+            <p id="wallet-status" style="color:var(--gray); margin-bottom: 20px;">Airdrop distributions will be sent here.</p>
+            
+            <div id="ton-connect-button" style="display: flex; justify-content: center;"></div> 
+            
+            <p style="font-size: 12px; color: #555; margin-top: 20px;">Connect your TON wallet to receive rewards.</p>
         </div>
     </div>
     
@@ -165,40 +148,36 @@
         }
 
         db.ref('users/' + uid).on('value', (snap) => {
-        if(snap.exists()){
-        const d = snap.val();
-        balance = d.balance || 0;
-        level = d.level || 1;
-        botLevel = d.botLevel || 0;
-        maxEnergy = d.maxEnergy || 500;
-        
-        // --- অফলাইন ক্যালকুলেশন শুরু ---
-        let lastSeen = d.lastSeen || Date.now();
-        let now = Date.now();
-        let secondsPassed = Math.floor((now - lastSeen) / 1000);
+            if(snap.exists()){
+                const d = snap.val();
+                balance = d.balance || 0;
+                level = d.level || 1;
+                botLevel = d.botLevel || 0;
+                maxEnergy = d.maxEnergy || 500;
+                
+                let lastSeen = d.lastSeen || Date.now();
+                let now = Date.now();
+                let secondsPassed = Math.floor((now - lastSeen) / 1000);
 
-        // ১. এনার্জি রিফিল (গেমের বাইরেও এনার্জি বাড়বে)
-        let oldEnergy = d.energy || 0;
-        let refillAmount = secondsPassed * 1.5; // প্রতি সেকেন্ডে ১.৫ করে বাড়বে
-        energy = Math.min(maxEnergy, oldEnergy + refillAmount);
+                let oldEnergy = d.energy || 0;
+                let refillAmount = secondsPassed * 1.5;
+                energy = Math.min(maxEnergy, oldEnergy + refillAmount);
 
-        // ২. বোট ফার্মিং (গেমের বাইরে কয়েন জমবে)
-        if(botLevel > 0) {
-            let cap = botLevel * 500;
-            let earnedOffline = secondsPassed * (botLevel * 0.2);
-            botStored = Math.min(cap, (d.botStored || 0) + earnedOffline);
-        } else {
-            botStored = d.botStored || 0;
-        }
-        // --- অফলাইন ক্যালকুলেশন শেষ ---
+                if(botLevel > 0) {
+                    let cap = botLevel * 500;
+                    let earnedOffline = secondsPassed * (botLevel * 0.2);
+                    botStored = Math.min(cap, (d.botStored || 0) + earnedOffline);
+                } else {
+                    botStored = d.botStored || 0;
+                }
 
-        if(d.lastClaim !== new Date().toDateString()) document.getElementById("daily-reward-box").style.display = 'block';
-        updateUI();
-        } else {
-        db.ref('users/' + uid).set({ name: uName, balance: 1000, level: 1, botLevel: 0, botStored: 0, maxEnergy: 500, lastClaim: 0, lastSeen: Date.now(), energy: 500 });
+                if(d.lastClaim !== new Date().toDateString()) document.getElementById("daily-reward-box").style.display = 'block';
+                updateUI();
+            } else {
+                db.ref('users/' + uid).set({ name: uName, balance: 1000, level: 1, botLevel: 0, botStored: 0, maxEnergy: 500, lastClaim: 0, lastSeen: Date.now(), energy: 500 });
             }
         });
-  // Friend List & Leaderboard (Same as your code)
+
         db.ref('users').orderByChild('invitedBy').equalTo(uid.toString()).on('value', (snap) => {
             const list = document.getElementById("friend-list");
             const count = document.getElementById("f-count");
@@ -266,7 +245,6 @@
                 document.getElementById("bot-stored").innerText = format(botStored) + " BDC";
             }
 
-            // --- Updated Task List UI with Badge Logic ---
             let tHTML = '';
             let hasNewTask = false;
             DYNAMIC_CONFIG.tasks.forEach(t => {
@@ -308,13 +286,9 @@
             }
         }, 1000);
 
-        // --- Updated Task Logic ---
         function doTask(url, r, k) {
-            if(localStorage.getItem('task_'+k)) return; // Already done
-            
+            if(localStorage.getItem('task_'+k)) return;
             tg.openLink(url);
-            
-            // Immediately reward and mark as done
             balance += r;
             save();
             localStorage.setItem('task_'+k, 'done');
@@ -322,7 +296,6 @@
             tg.showAlert(`Reward ${format(r)} BDC added!`);
         }
 
-        // --- Booster Functions ---
         function buyBot() {
             let cost = (botLevel + 1) * 10000;
             if(balance >= cost) { balance -= cost; botLevel++; save(); updateUI(); tg.showAlert("Bot Upgraded!"); } 
@@ -339,122 +312,87 @@
             else { tg.showAlert("Not enough BDC!"); }
         }
 
-       function save() {
-        db.ref('users/' + uid).update({
-        balance: balance,
-        level: level,
-        botLevel: botLevel,
-        botStored: botStored,
-        maxEnergy: maxEnergy,
-        energy: energy,      // বর্তমান এনার্জি সেভ হবে
-        lastSeen: Date.now() // যাওয়ার সময়টা সেভ হবে
-        });
+        function save() {
+            db.ref('users/' + uid).update({
+                balance: balance,
+                level: level,
+                botLevel: botLevel,
+                botStored: botStored,
+                maxEnergy: maxEnergy,
+                energy: energy,
+                lastSeen: Date.now()
+            });
         }
-        function showPage(id) { closeAll(); document.getElementById(id).style.display = 'block'; if(id==='rank-page') loadLeaderboard(); }
-        function closeAll() { document.querySelectorAll('.overlay').forEach(p => p.style.display='none'); }
+
+        function showPage(id) { 
+            closeAll(); 
+            document.getElementById(id).style.display = 'block'; 
+            if(id==='rank-page') loadLeaderboard(); 
+        }
+
+        function closeAll() { 
+            document.querySelectorAll('.overlay').forEach(p => p.style.display='none'); 
+        }
+
         function invite() {
             const link = `https://t.me/my_earning_test_bot?start=${uid}`;
             tg.openTelegramLink(`https://t.me/share/url?url=${encodeURIComponent(link)}&text=Join BDC Network!`);
         }
-        
-        // আপনার আগের কোড শেষ হওয়ার পর নিচে এটি দিন
-        const AdController = window.Adsgram.init({ blockId: "22176" });
 
-        function showAd() {
-            AdController.show().then((result) => {
-            balance += 2000; 
-        if(typeof save === 'function') save(); 
-        if(typeof updateUI === 'function') updateUI(); 
-         tg.showAlert("20,00 BDC Reward Added!");
-        }).catch((err) => {
-            tg.showAlert("Ad error or skipped.");
-    });
-    }
-        
-    // এই ফাংশনটি আপনার ফাইলে না থাকলে Claim বাটন কাজ করবে না
-    function claimBot() {
-        if (botStored > 0) {
-        // ১. জমানো কয়েন ব্যালেন্সে যোগ করা
-        balance += botStored; 
-        
-        // ২. বোটের জমা কয়েন শূন্য করে দেওয়া
-        botStored = 0; 
-        
-        // ৩. স্ক্রিন এবং ডাটাবেস আপডেট করা
-        if(typeof updateUI === 'function') updateUI(); 
-        if(typeof save === 'function') save(); 
-        
-        // ৪. ইউজারকে জানানো (ঐচ্ছিক)
-        if(typeof tg !== 'undefined') {
-            tg.showAlert("Claim Successful!");
-        }
-    } else {
-        if(typeof tg !== 'undefined') {
-            tg.showAlert("Nothing to claim!");
-        }
-    }
-    }
-
-    // ১. গ্লোবাল ভেরিয়েবল হিসেবে ডিক্লেয়ার করুন
-    let tonConnectUI;
-
-    // ২. একটি নির্দিষ্ট ফাংশন যা লাইব্রেরি লোড হওয়া নিশ্চিত করবে
-    async function initializeTonConnect() {
-    // যদি আগে থেকেই তৈরি থাকে তবে আর করবে না
-    if (tonConnectUI) return; 
-
-    try {
-        tonConnectUI = new TON_CONNECT_UI.TonConnectUI({
-            manifestUrl: 'https://bdc-game.vercel.app/tonconnect-manifest.json',
-            buttonRootId: 'ton-connect-button'
-        });
-
-        // ওয়ালেট কানেক্ট স্ট্যাটাস চেক
-        tonConnectUI.onStatusChange(wallet => {
-            if (wallet) {
-                const address = wallet.account.address;
-                const shortAddr = address.substring(0, 6) + "..." + address.substring(address.length - 4);
-                document.getElementById("wallet-status").innerText = "Linked: " + shortAddr;
-                
-                if (typeof uid !== 'undefined' && uid) {
-                    db.ref('users/' + uid).update({ walletAddress: address });
-                }
+        function claimBot() {
+            if (botStored > 0) {
+                balance += botStored; 
+                botStored = 0; 
+                updateUI(); 
+                save(); 
+                tg.showAlert("Claim Successful!");
+            } else {
+                tg.showAlert("Nothing to claim!");
             }
-        });
-        console.log("TON Connect Initialized Successfully");
-    } catch (e) {
-        console.error("TON Connect Error:", e);
         }
-    }
 
-    // ৩. উইন্ডো লোড হওয়ার সাথে সাথে ইনিশিয়ালাইজ হবে
-    window.addEventListener('DOMContentLoaded', initializeTonConnect);
+        // --- WALLET SECTION ---
+        let tonConnectUI;
 
-    // ৪. আপনার বাটন ক্লিক ফাংশন (এটি সরাসরি মডাল ওপেন করবে)
-    async function connectWallet() {
-    if (!tonConnectUI) {
-        await initializeTonConnect();
-    }
-    
-    try {
-        // একাধিক ওয়ালেট সাপোর্ট করার জন্য এটিই বেস্ট পদ্ধতি
-        await tonConnectUI.openModal(); 
-    } catch (err) {
-        console.error("Modal Error:", err);
-        tg.showAlert("Wallet list is loading... please try again.");
+        async function initTonConnect() {
+            if (tonConnectUI) return;
+            try {
+                tonConnectUI = new TON_CONNECT_UI.TonConnectUI({
+                    manifestUrl: 'https://bdc-game.vercel.app/tonconnect-manifest.json',
+                    buttonRootId: 'ton-connect-button'
+                });
+
+                tonConnectUI.onStatusChange(wallet => {
+                    if (wallet) {
+                        const address = wallet.account.address;
+                        const shortAddr = address.substring(0, 6) + "..." + address.substring(address.length - 4);
+                        document.getElementById("wallet-status").innerText = "Linked: " + shortAddr;
+                        document.getElementById("wallet-status").style.color = "#4caf50";
+                        if (uid) {
+                            db.ref('users/' + uid).update({ walletAddress: address });
+                        }
+                    } else {
+                        document.getElementById("wallet-status").innerText = "Airdrop distributions will be sent here.";
+                        document.getElementById("wallet-status").style.color = "var(--gray)";
+                    }
+                });
+            } catch (e) {
+                console.error("TON Connect Init Error:", e);
+            }
         }
-    }
+
+        // Initialize when the script loads
+        initTonConnect();
+        
+        // This function handles manual trigger if the button isn't enough
+        async function connectWallet() {
+            if (!tonConnectUI) await initTonConnect();
+            try {
+                await tonConnectUI.openModal();
+            } catch (err) {
+                tg.showAlert("Please use the 'Connect Wallet' button below.");
+            }
+        }
     </script>
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
