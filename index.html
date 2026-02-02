@@ -394,37 +394,59 @@
         }
     }
     }
-        
-        // ১. টন কানেক্ট লাইব্রেরি অটোমেটিক লোড হবে
-const tonConnectUI = new TON_CONNECT_UI.TonConnectUI({
-    manifestUrl: 'https://bdc-game.vercel.app/tonconnect-manifest.json',
-    buttonRootId: 'ton-connect-button'
-});
+        // ১. গ্লোবাল ভেরিয়েবল
+    let tonConnectUI;
 
-// ২. কানেকশন স্ট্যাটাস অটো-ট্র্যাক হবে
-tonConnectUI.onStatusChange(wallet => {
-    if (wallet) {
-        const address = wallet.account.address;
-        const shortAddr = address.substring(0, 6) + "..." + address.substring(address.length - 4);
-        
-        // UI আপডেট
-        document.getElementById("wallet-status").innerText = "Connected: " + shortAddr;
-        
-        // ফায়ারবেসে সেভ
-        if (typeof uid !== 'undefined' && uid) {
-            db.ref('users/' + uid).update({
-                walletAddress: address
-            });
+    // ২. সবার আগে এটি লোড করার চেষ্টা করবে
+    function initTonConnect() {
+    try {
+        tonConnectUI = new TON_CONNECT_UI.TonConnectUI({
+            manifestUrl: 'https://bdc-game.vercel.app/tonconnect-manifest.json',
+            buttonRootId: 'ton-connect-button'
+        });
+
+        // ওয়ালেট কানেক্ট হলে অটোমেটিক আপডেট
+        tonConnectUI.onStatusChange(wallet => {
+            if (wallet) {
+                const address = wallet.account.address;
+                const shortAddr = address.substring(0, 6) + "..." + address.substring(address.length - 4);
+                document.getElementById("wallet-status").innerText = "Linked: " + shortAddr;
+                
+                if (typeof uid !== 'undefined' && uid) {
+                    db.ref('users/' + uid).update({ walletAddress: address });
+                }
+            }
+        });
+    } catch (e) {
+        console.error("TonConnect Init Error:", e);
         }
-        tg.showAlert("Wallet linked successfully!");
     }
-});
+
+// ৩. পেজ লোড হওয়ার সাথে সাথে এবং ৩ সেকেন্ড পর—দুইবার চেক করবে
+    window.addEventListener('load', initTonConnect);
+    setTimeout(initTonConnect, 3000); 
+
+// ৪. আপনার পুরনো বাটন ফাংশনটি এখন সরাসরি অফিসিয়াল মডাল ডাকবে
+    async function connectWallet() {
+    if (!tonConnectUI) {
+        initTonConnect();
+        tg.showAlert("Initializing wallet system... click again in 2 seconds.");
+        return;
+    }
+    try {
+        await tonConnectUI.openModal();
+    } catch (err) {
+        document.getElementById("ton-connect-button").style.display = "block";
+        tg.showAlert("Please use the official blue button below.");
+        }
+    }
 
      
 
     </script>
 </body>
 </html>
+
 
 
 
