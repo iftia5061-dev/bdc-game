@@ -108,8 +108,10 @@
         <p id="wallet-status" style="color:var(--gray)">Airdrop distributions will be sent here.</p>
         
         <button id="connect-btn" class="btn-action" style="background:var(--blue); color:white; width:100%; margin-top:20px;" onclick="connectWallet()">Connect TON</button>
+        
+        <div id="ton-connect-button" style="display: flex; justify-content: center; margin-top: 15px;"></div>
     </div>
-    </div>
+</div>
     
     <div id="boost-page" class="overlay"><button class="close-btn" onclick="closeAll()">X</button><div class="page-title">Mining Boosters</div><div class="card"><div class="card-info"><b>Auto-Mining Bot</b><br><small id="bot-info">Level 0</small></div><button class="btn-action" onclick="buyBot()">Upgrade</button></div><div class="card"><div class="card-info"><b>Tap Multiplier</b><br><small id="tap-upgrade-info">Level 1</small></div><button class="btn-action" onclick="upgradeTap()">Upgrade</button></div><div class="card"><div class="card-info"><b>Energy Limit</b><br><small id="energy-lv-info">Max: 500</small></div><button class="btn-action" onclick="upgradeEnergy()">Upgrade</button></div></div>
 
@@ -395,44 +397,42 @@
 
     // ১. আগে কনফিগারেশন চেক করুন
    // ১. সবার উপরে এটা থাকবে
-    const tonConnectUI = new TON_CONNECT_UI.TonConnectUI({
-    manifestUrl: 'https://bdc-game.vercel.app/tonconnect-manifest.json'
+   // ১. টন কানেক্ট ইনিশিয়ালাইজ করা
+const tonConnectUI = new TON_CONNECT_UI.TonConnectUI({
+    manifestUrl: 'https://bdc-game.vercel.app/tonconnect-manifest.json',
+    buttonRootId: 'ton-connect-button' // এই আইডিটি ইম্পর্টেন্ট
 });
 
-// ২. কানেক্ট ফাংশন
-    async function connectWallet() {
-        try {
-        // সরাসরি মডাল ওপেন হবে
+// ২. অটোমেটিক কানেকশন চেক করার জন্য
+tonConnectUI.onStatusChange(wallet => {
+    if (wallet) {
+        const address = wallet.account.address;
+        const shortAddr = address.substring(0, 6) + "..." + address.substring(address.length - 4);
+        
+        // আপনার UI আপডেট করা
+        const statusEl = document.getElementById("wallet-status");
+        if (statusEl) statusEl.innerText = "Connected: " + shortAddr;
+        
+        // ফায়ারবেসে সেভ
+        if (typeof uid !== 'undefined') {
+            db.ref('users/' + uid).update({ walletAddress: address });
+        }
+    }
+});
+
+// ৩. আপনার বাটনটি শুধু মডাল খোলার কাজ করবে
+async function connectWallet() {
+    try {
         await tonConnectUI.openModal();
-
-        // কানেক্ট হলে অটোমেটিক এই অংশ কাজ করবে
-        tonConnectUI.onStatusChange(wallet => {
-            if (wallet) {
-                const address = wallet.account.address;
-                const shortAddr = address.substring(0, 6) + "..." + address.substring(address.length - 4);
-                
-                // UI আপডেট
-                document.getElementById("wallet-status").innerText = "Connected: " + shortAddr;
-                document.getElementById("connect-btn").innerText = "Wallet Linked ✅";
-                document.getElementById("connect-btn").style.background = "#28a745";
-                document.getElementById("connect-btn").disabled = true;
-
-                // ফায়ারবেসে সেভ
-                db.ref('users/' + uid).update({
-                    walletAddress: address
-                });
-
-                tg.showAlert("Wallet linked successfully!");
-            }
-        });
-    } catch (error) {
-        // যদি মডাল না আসে তবেই এই অ্যালার্ট দিবে
-        tg.showAlert("Wallet connection opening soon!");
+    } catch (e) {
+        console.error(e);
+        tg.showAlert("Wallet is not responding. Please try again!");
     }
 }
     </script>
 </body>
 </html>
+
 
 
 
