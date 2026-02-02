@@ -394,64 +394,46 @@
     }
 
     // ১. আগে কনফিগারেশন চেক করুন
-    // ১. গ্লোবাল ভেরিয়েবল
-    let tonConnectUI;
+   // ১. সবার উপরে এটা থাকবে
+    const tonConnectUI = new TON_CONNECT_UI.TonConnectUI({
+    manifestUrl: 'https://bdc-game.vercel.app/tonconnect-manifest.json'
+});
 
-    // ২. পেজ লোড হওয়ার সাথে সাথে এটি কাজ করবে
-    window.addEventListener('load', () => {
-    try {
-        tonConnectUI = new TON_CONNECT_UI.TonConnectUI({
-            manifestUrl: 'https://bdc-game.vercel.app/tonconnect-manifest.json'
-        });
-    } catch (e) {
-        console.error("TON Connect failed to load", e);
-    }
-    });
-
-// ৩. কানেক্ট বাটন ফাংশন
+// ২. কানেক্ট ফাংশন
     async function connectWallet() {
-    if (!tonConnectUI) {
-        tg.showAlert("Wallet library is still loading... please wait.");
-        return;
-    }
-
-    try {
-        // মডাল ওপেন হবে
+        try {
+        // সরাসরি মডাল ওপেন হবে
         await tonConnectUI.openModal();
 
-        // কানেকশন চেক করার লিসেনার
-        const unsubscribe = tonConnectUI.onStatusChange(wallet => {
+        // কানেক্ট হলে অটোমেটিক এই অংশ কাজ করবে
+        tonConnectUI.onStatusChange(wallet => {
             if (wallet) {
                 const address = wallet.account.address;
                 const shortAddr = address.substring(0, 6) + "..." + address.substring(address.length - 4);
                 
                 // UI আপডেট
                 document.getElementById("wallet-status").innerText = "Connected: " + shortAddr;
-                const btn = document.getElementById("connect-btn");
-                btn.innerText = "Wallet Linked ✅";
-                btn.style.background = "#28a745";
-                btn.disabled = true;
+                document.getElementById("connect-btn").innerText = "Wallet Linked ✅";
+                document.getElementById("connect-btn").style.background = "#28a745";
+                document.getElementById("connect-btn").disabled = true;
 
-                // ফায়ারবেসে সেভ
-                if (typeof uid !== 'undefined' && uid) {
-                    db.ref('users/' + uid).update({
-                        walletAddress: address
-                    });
-                }
-                
+                // ফায়ারবেসে সেভ
+                db.ref('users/' + uid).update({
+                    walletAddress: address
+                });
+
                 tg.showAlert("Wallet linked successfully!");
-                unsubscribe(); // কাজ হয়ে গেলে লিসেনার বন্ধ
             }
         });
-
-        } catch (error) {
-        console.error("Modal Error:", error);
-        tg.showAlert("Could not open wallet connection.");
-        }
+    } catch (error) {
+        // যদি মডাল না আসে তবেই এই অ্যালার্ট দিবে
+        tg.showAlert("Wallet connection opening soon!");
     }
+}
     </script>
 </body>
 </html>
+
 
 
 
