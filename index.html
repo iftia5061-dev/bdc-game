@@ -396,8 +396,8 @@
    
 // ১. টন কানেক্ট অবজেক্ট তৈরি (সবার উপরে গ্লোবাল এরিয়াতে রাখবেন)
 const tonConnectUI = new TON_CONNECT_UI.TonConnectUI({
-    manifestUrl: 'https://bdc-game.vercel.app/tonconnect-manifest.json',
-    buttonRootId: 'ton-connect-button'
+    manifestUrl: 'https://bdc-game.vercel.app/tonconnect-manifest.json', // এই লিঙ্কটি যেন ব্রাউজারে কাজ করে
+    buttonRootId: 'ton-connect-button' 
 });
 
 // ২. অটোমেটিক স্ট্যাটাস চেক (ওয়ালেট কানেক্ট হলে এটি নিজে থেকেই রান হবে)
@@ -448,6 +448,7 @@ async function connectWallet() {
     </script>
 </body>
 </html>
+
 
 
 
