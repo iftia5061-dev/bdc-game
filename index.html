@@ -355,9 +355,34 @@
             tg.showAlert("Ad error or skipped.");
     });
     }
+        
+    // এই ফাংশনটি আপনার ফাইলে না থাকলে Claim বাটন কাজ করবে না
+    function claimBot() {
+        if (botStored > 0) {
+        // ১. জমানো কয়েন ব্যালেন্সে যোগ করা
+        balance += botStored; 
+        
+        // ২. বোটের জমা কয়েন শূন্য করে দেওয়া
+        botStored = 0; 
+        
+        // ৩. স্ক্রিন এবং ডাটাবেস আপডেট করা
+        if(typeof updateUI === 'function') updateUI(); 
+        if(typeof save === 'function') save(); 
+        
+        // ৪. ইউজারকে জানানো (ঐচ্ছিক)
+        if(typeof tg !== 'undefined') {
+            tg.showAlert("Claim Successful!");
+        }
+    } else {
+        if(typeof tg !== 'undefined') {
+            tg.showAlert("Nothing to claim!");
+        }
+    }
+}
     </script>
 </body>
 </html>
+
 
 
 
