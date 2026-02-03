@@ -40,6 +40,17 @@
         .nav-item { text-align: center; color: var(--gray); font-size: 11px; cursor: pointer; flex: 1; transition: 0.3s; position: relative; }
         .nav-item.active { color: var(--gold); font-weight: bold; }
         .badge { position: absolute; top: 0; right: 25%; width: 10px; height: 10px; background: red; border-radius: 50%; display: none; border: 2px solid var(--card); }
+        
+        /* Updated Daily Grid & Animation */
+        .daily-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-top: 10px; }
+        .daily-item { background: #1c212e; border: 1px solid #333; padding: 10px 5px; border-radius: 10px; text-align: center; font-size: 11px; transition: 0.3s; }
+        .daily-active { border: 2px solid var(--gold); animation: pulse 1.5s infinite; cursor: pointer; }
+        @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.05); } 100% { transform: scale(1); } }
+
+        .bot-container { position: absolute; right: 20px; top: 40%; display: none; flex-direction: column; align-items: center; gap: 5px; z-index: 5; }
+        .bot-icon-box { width: 60px; height: 60px; background: var(--card); border-radius: 15px; border: 2px solid var(--gold); display: flex; justify-content: center; align-items: center; font-size: 30px; animation: botFloat 3s ease-in-out infinite; }
+        @keyframes botFloat { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+        .bot-claim-mini { background: var(--green); color: white; border: none; padding: 5px 10px; border-radius: 10px; font-size: 10px; font-weight: bold; cursor: pointer; box-shadow: 0 4px 10px rgba(0,0,0,0.3); }
     </style>
 </head>
 <body>
@@ -55,12 +66,16 @@
     </div>
 
     <div class="main-tap">
-        <div id="daily-reward-box" onclick="claimDaily()" style="display:none; background:rgba(243,186,47,0.1); border:1px solid var(--gold); color:var(--gold); padding:8px 15px; border-radius:20px; margin-bottom:15px; font-size:13px; cursor:pointer;">🎁 Claim Daily Reward</div>
+        <div id="daily-reward-box" onclick="showPage('tasks-page')" style="display:none; background:rgba(243,186,47,0.1); border:1px solid var(--gold); color:var(--gold); padding:8px 15px; border-radius:20px; margin-bottom:15px; font-size:13px; cursor:pointer;">🎁 Claim Daily Reward</div>
+        
         <div class="coin-btn" id="tap-btn">BDC<span style="font-size: 14px; opacity: 0.8;" id="btn-lvl-text">LVL 1</span></div>
-        <div id="bot-claim-box" class="card" style="width: 80%; margin-top: 15px; display: none;">
-            <div><b>Bot Farming</b><br><small id="bot-stored" style="color:var(--gold)">0 BDC</small></div>
-            <button class="btn-action" style="background:var(--green); color:white" onclick="claimBot()">Claim</button>
+
+        <div id="bot-ui-container" class="bot-container">
+            <div class="bot-icon-box">🤖</div>
+            <div id="bot-stored-val" style="font-size: 10px; color: var(--gold); font-weight: bold;">0</div>
+            <button id="bot-claim-btn" class="bot-claim-mini" onclick="claimBot()" style="display: none;">CLAIM</button>
         </div>
+
         <div class="stat-box">
             <div style="display:flex; justify-content:space-between; font-size:13px; margin-bottom:8px">
                 <span>⚡ <span id="energy-val">500</span>/<span id="max-energy-text">500</span></span>
@@ -77,6 +92,11 @@
     <div id="tasks-page" class="overlay">
         <button class="close-btn" onclick="closeAll()">X</button>
         <div class="page-title">Tasks Center</div>
+        <div style="display:flex; gap:5px; margin-bottom:15px;">
+            <button class="btn-action" style="flex:1; font-size:12px" onclick="renderTasks('daily')">Daily Task</button>
+            <button class="btn-action" style="flex:1; font-size:12px" onclick="renderTasks('social')">Social Task</button>
+            <button class="btn-action" style="flex:1; font-size:12px" onclick="renderTasks('video')">Video</button>
+        </div>
         <div id="task-list-dynamic"></div>
     </div>
 
@@ -89,10 +109,7 @@
             <div style="font-size:50px; margin-bottom: 15px;">👛</div>
             <h3>Connect Wallet</h3>
             <p id="wallet-status" style="color:var(--gray); margin-bottom: 20px;">Airdrop distributions will be sent here.</p>
-            
             <div id="ton-connect-button" style="display: flex; justify-content: center;"></div> 
-            
-            <p style="font-size: 12px; color: #555; margin-top: 20px;">Connect your TON wallet to receive rewards.</p>
         </div>
     </div>
     
@@ -100,10 +117,7 @@
 
     <div class="nav">
         <div class="nav-item active" onclick="closeAll()">Home</div>
-        <div class="nav-item" onclick="showPage('tasks-page')">
-            <span id="task-badge" class="badge"></span>
-            Tasks
-        </div>
+        <div class="nav-item" onclick="showPage('tasks-page')"><span id="task-badge" class="badge"></span>Tasks</div>
         <div class="nav-item" onclick="showPage('boost-page')">Boost</div>
         <div class="nav-item" onclick="showPage('rank-page')">Rank</div>
         <div class="nav-item" onclick="showPage('friends-page')">Friends</div>
@@ -112,17 +126,6 @@
     </div>
 
     <script>
-        const DYNAMIC_CONFIG = {
-            tasks: [
-                { name: "Follow Facebook", reward: 2000, link: "https://www.facebook.com/profile.php?id=61587487880831", id: "fb" },
-                { name: "Subscribe YouTube", reward: 5000, link: "https://www.youtube.com/@BDC-coin-n3z", id: "yt" },
-                { name: "Join News Channel", reward: 500, link: "https://t.me/bdc_network", id: "tg" },
-                { name: "YouTube Video 1", reward: 500, link: "https://youtu.be/yJxRLVuNeyM?si=mekEmmzsCyy_U7Ez", id: "v1" },
-                { name: "YouTube Video 2", reward: 500, link: "https://youtube.com/shorts/7tuSPJijW8Y?si=0lOyKtCf05fGyV-7", id: "v2" },
-                { name: "Facebook Share", reward: 500, link: "https://www.facebook.com/share/r/1BWXc9BiJE/", id: "f1" }
-            ]
-        };
-
         const firebaseConfig = {
             apiKey: "AIzaSyD3vuw74WjiWytZMbVrtNzn7igIyjRMC1c",
             authDomain: "bdc-network.firebaseapp.com",
@@ -141,6 +144,26 @@
 
         let balance = 0, energy = 500, maxEnergy = 500, level = 1, botLevel = 0, botStored = 0;
 
+        const DAILY_REWARDS = Array.from({length: 30}, (_, i) => Math.floor(200 + (i * (29800/29))));
+
+        // ID গুলো ইউনিক করা হয়েছে যাতে সব টাস্ক শো করে
+        const TASK_CATEGORIES = {
+            social: [
+                { name: "Follow Facebook", reward: 1000, link: "https://www.facebook.com/profile.php?id=61587487880831", id: "fb_01" },
+                { name: "Instagram Profile", reward: 1000, link: "https://www.instagram.com/asportcricx?igsh=MXBxeHduano1NmN2YQ==", id: "ig_01" },
+                { name: "Subscribe YouTube", reward: 1000, link: "https://youtube.com/@bdc-coin-n3z?si=soLTJO94vDdYA84E", id: "yt_01" },
+                { name: "Telegram Official Channel", reward: 1000, link: "https://t.me/bdc_network", id: "tg_01" },
+                { name: "Telegram Bot", reward: 1000, link: "https://t.me/my_earning_test_bot", id: "tg_bot_01" },
+                { name: "Twitter Official Channel", reward: 1000, link: "https://x.com/iftia5061", id: "tw_01" }
+            ],
+            video: [
+                { name: "FB Reel", reward: 100, link: "https://www.facebook.com/share/r/17xbTUPj4o/", id: "vid_01" },
+                { name: "Instagram Reel", reward: 300, link: "https://www.instagram.com/reel/DURDQIGEw6S/?igsh=YXZoMWpsOWQwOTd3", id: "vid_02" },
+                { name: "YouTube Reel", reward: 300, link: "https://youtube.com/shorts/Qzuj_8NurEc?si=-fQdUbq6xCd9qJx2", id: "vid_03" },
+                { name: "Twitter Reel", reward: 300, link: "https://x.com/i/status/2018397320791077140", id: "vid_04" }
+            ]
+        };
+
         function format(n) {
             if (n >= 1000000) return (n / 1000000).toFixed(2) + 'M';
             if (n >= 1000) return (n / 1000).toFixed(1) + 'K';
@@ -154,67 +177,34 @@
                 level = d.level || 1;
                 botLevel = d.botLevel || 0;
                 maxEnergy = d.maxEnergy || 500;
-                
                 let lastSeen = d.lastSeen || Date.now();
                 let now = Date.now();
                 let secondsPassed = Math.floor((now - lastSeen) / 1000);
-
-                let oldEnergy = d.energy || 0;
-                let refillAmount = secondsPassed * 1.5;
-                energy = Math.min(maxEnergy, oldEnergy + refillAmount);
-
+                energy = Math.min(maxEnergy, (d.energy || 0) + (secondsPassed * 1.5));
                 if(botLevel > 0) {
                     let cap = botLevel * 500;
-                    let earnedOffline = secondsPassed * (botLevel * 0.2);
-                    botStored = Math.min(cap, (d.botStored || 0) + earnedOffline);
-                } else {
-                    botStored = d.botStored || 0;
+                    botStored = Math.min(cap, (d.botStored || 0) + (secondsPassed * (botLevel * 0.2)));
                 }
+                
+                const today = new Date().toDateString();
+                const lastClaim = localStorage.getItem('last_daily_claim_date');
+                if(lastClaim !== today) document.getElementById("daily-reward-box").style.display = 'block';
+                else document.getElementById("daily-reward-box").style.display = 'none';
 
-                if(d.lastClaim !== new Date().toDateString()) document.getElementById("daily-reward-box").style.display = 'block';
                 updateUI();
+                checkTaskNotification();
             } else {
-                db.ref('users/' + uid).set({ name: uName, balance: 1000, level: 1, botLevel: 0, botStored: 0, maxEnergy: 500, lastClaim: 0, lastSeen: Date.now(), energy: 500 });
+                db.ref('users/' + uid).set({ name: uName, balance: 1000, level: 1, botLevel: 0, botStored: 0, maxEnergy: 500, lastSeen: Date.now(), energy: 500 });
             }
         });
 
-        db.ref('users').orderByChild('invitedBy').equalTo(uid.toString()).on('value', (snap) => {
-            const list = document.getElementById("friend-list");
-            const count = document.getElementById("f-count");
-            if(snap.exists()){
-                let html = ''; let total = 0;
-                snap.forEach(child => {
-                    total++;
-                    html += `<div class="card"><span>👤 ${child.val().name}</span><span style="color:var(--gold)">+2.5K</span></div>`;
-                });
-                list.innerHTML = html; count.innerText = total;
+        function checkTaskNotification() {
+            let hasNew = false;
+            if (localStorage.getItem('last_daily_claim_date') !== new Date().toDateString()) hasNew = true;
+            for (let cat in TASK_CATEGORIES) {
+                TASK_CATEGORIES[cat].forEach(t => { if (!localStorage.getItem('task_' + t.id)) hasNew = true; });
             }
-        });
-
-        function loadLeaderboard() {
-            const listDiv = document.getElementById("leaderboard-list");
-            listDiv.innerHTML = "Fetching kings...";
-            db.ref('users').orderByChild('balance').limitToLast(10).once('value', (snap) => {
-                let players = [];
-                snap.forEach(child => { players.push(child.val()); });
-                players.sort((a, b) => b.balance - a.balance);
-                let html = '';
-                players.forEach((p, index) => {
-                    const isMe = (p.name === uName);
-                    html += `<div class="card" style="${isMe ? 'border: 1px solid var(--gold); background: #252b3a;' : ''}">
-                        <span><b>#${index + 1}</b> ${p.name}</span>
-                        <b style="color:var(--gold)">${format(p.balance)}</b>
-                    </div>`;
-                });
-                listDiv.innerHTML = html;
-            });
-        }
-
-        function claimDaily() {
-            balance += 500;
-            db.ref('users/' + uid).update({ balance: balance, lastClaim: new Date().toDateString() });
-            document.getElementById("daily-reward-box").style.display = 'none';
-            tg.showAlert("500 BDC Reward Collected!");
+            document.getElementById("task-badge").style.display = hasNew ? 'block' : 'none';
         }
 
         function updateUI() {
@@ -227,7 +217,6 @@
             document.getElementById("rank-display").innerText = rank;
             document.getElementById("level-text").innerText = "Level " + level;
             document.getElementById("btn-lvl-text").innerText = "LVL " + level;
-            
             document.getElementById("p-initial").innerText = uName.charAt(0);
             document.getElementById("p-name").innerText = uName;
             document.getElementById("p-id").innerText = "ID: " + uid;
@@ -235,32 +224,67 @@
             document.getElementById("p-bal").innerText = format(balance);
             document.getElementById("p-lvl").innerText = level;
             document.getElementById("p-energy").innerText = maxEnergy;
-
             document.getElementById("bot-info").innerText = `Level ${botLevel} (Cost: ${format((botLevel+1)*10000)})`;
             document.getElementById("tap-upgrade-info").innerText = `Level ${level} (Cost: ${format(level*2000)})`;
             document.getElementById("energy-lv-info").innerText = `Max: ${maxEnergy} (Cost: ${format(maxEnergy*5)})`;
 
             if(botLevel > 0) {
-                document.getElementById("bot-claim-box").style.display = 'flex';
-                document.getElementById("bot-stored").innerText = format(botStored) + " BDC";
+                document.getElementById("bot-ui-container").style.display = 'flex';
+                document.getElementById("bot-stored-val").innerText = format(botStored);
+                document.getElementById("bot-claim-btn").style.display = botStored >= (botLevel * 10) ? 'block' : 'none';
             }
+        }
 
+        function renderTasks(category) {
+            const listDiv = document.getElementById("task-list-dynamic");
             let tHTML = '';
-            let hasNewTask = false;
-            DYNAMIC_CONFIG.tasks.forEach(t => {
-                const done = localStorage.getItem('task_'+t.id);
-                if(!done) hasNewTask = true;
-                
-                tHTML += `
-                <div class="card">
-                    <div><b>${t.name}</b><br><small>+${format(t.reward)}</small></div>
-                    <button class="btn-action ${done?'done':''}" onclick="doTask('${t.link}', ${t.reward}, '${t.id}')">
-                        ${done ? 'Done' : 'Claim'}
-                    </button>
-                </div>`;
-            });
-            document.getElementById("task-list-dynamic").innerHTML = tHTML;
-            document.getElementById("task-badge").style.display = hasNewTask ? 'block' : 'none';
+            if (category === 'daily') {
+                tHTML = '<div class="daily-grid">';
+                const dayCount = parseInt(localStorage.getItem('daily_day_count') || '0');
+                const lastClaim = localStorage.getItem('last_daily_claim_date');
+                const today = new Date().toDateString();
+                for (let i = 1; i <= 30; i++) {
+                    let canClaim = (i === dayCount + 1 && lastClaim !== today);
+                    let done = (i <= dayCount);
+                    let reward = DAILY_REWARDS[i-1];
+                    let activeClass = canClaim ? 'daily-active' : '';
+                    
+                    tHTML += `
+                        <div class="daily-item ${activeClass}" 
+                             onclick="${canClaim ? `claimDailyCheckin(${i}, ${reward})` : ''}" 
+                             style="background:${done ? "#2d3343" : (canClaim ? "var(--gold)" : "#1c212e")}; color:${canClaim ? 'black' : 'white'}; ${canClaim ? '' : 'opacity:0.6'}">
+                            Day ${i}<br><b>${format(reward)}</b><br>
+                            <small>${done ? '✅' : (canClaim ? 'Claim' : 'Lock')}</small>
+                        </div>`;
+                }
+                tHTML += '</div>';
+            } else {
+                const tasks = TASK_CATEGORIES[category] || [];
+                tasks.forEach(t => {
+                    if (!localStorage.getItem('task_' + t.id)) {
+                        tHTML += `<div class="card"><div><b>${t.name}</b><br><small>+${format(t.reward)} BDC</small></div><button class="btn-action" onclick="doTask('${t.link}', ${t.reward}, '${t.id}', '${category}')">Claim</button></div>`;
+                    }
+                });
+                if (tHTML === '') tHTML = '<p style="text-align:center; color:gray; margin-top:20px;">No tasks left!</p>';
+            }
+            listDiv.innerHTML = tHTML;
+            checkTaskNotification();
+        }
+
+        function claimDailyCheckin(day, reward) {
+            balance += reward;
+            localStorage.setItem('daily_day_count', day);
+            localStorage.setItem('last_daily_claim_date', new Date().toDateString());
+            save(); updateUI(); renderTasks('daily');
+            tg.showAlert(`Day ${day} Reward: ${format(reward)} BDC claimed!`);
+        }
+
+        function doTask(url, r, k, cat) {
+            tg.openLink(url);
+            balance += r;
+            localStorage.setItem('task_'+k, 'done');
+            save(); updateUI(); renderTasks(cat);
+            tg.showAlert(`Task Reward ${format(r)} BDC added!`);
         }
 
         document.getElementById("tap-btn").addEventListener("touchstart", (e) => {
@@ -282,56 +306,52 @@
             if(energy < maxEnergy) { energy += 0.5; updateUI(); }
             if(botLevel > 0) {
                 let cap = botLevel * 500;
-                if(botStored < cap) { botStored += (botLevel * 0.2); save(); }
+                if(botStored < cap) { botStored += (botLevel * 0.2); save(); updateUI(); }
             }
         }, 1000);
 
-        function doTask(url, r, k) {
-            if(localStorage.getItem('task_'+k)) return;
-            tg.openLink(url);
-            balance += r;
-            save();
-            localStorage.setItem('task_'+k, 'done');
-            updateUI();
-            tg.showAlert(`Reward ${format(r)} BDC added!`);
-        }
-
         function buyBot() {
             let cost = (botLevel + 1) * 10000;
-            if(balance >= cost) { balance -= cost; botLevel++; save(); updateUI(); tg.showAlert("Bot Upgraded!"); } 
-            else { tg.showAlert("Not enough BDC!"); }
+            if(balance >= cost) { 
+                balance -= cost; botLevel++; save(); updateUI(); tg.showAlert("Bot Upgraded!"); 
+            } else {
+                tg.showAlert("Insufficient coins! You need more BDC.");
+            }
         }
         function upgradeTap() {
             let cost = level * 2000;
-            if(balance >= cost) { balance -= cost; level++; save(); updateUI(); tg.showAlert("Tap Upgraded!"); } 
-            else { tg.showAlert("Not enough BDC!"); }
+            if(balance >= cost) { 
+                balance -= cost; level++; save(); updateUI(); tg.showAlert("Tap Upgraded!"); 
+            } else {
+                tg.showAlert("Insufficient coins! You need more BDC.");
+            }
         }
         function upgradeEnergy() {
             let cost = maxEnergy * 5;
-            if(balance >= cost) { balance -= cost; maxEnergy += 500; save(); updateUI(); tg.showAlert("Energy Increased!"); } 
-            else { tg.showAlert("Not enough BDC!"); }
+            if(balance >= cost) { 
+                balance -= cost; maxEnergy += 500; save(); updateUI(); tg.showAlert("Energy Increased!"); 
+            } else {
+                tg.showAlert("Insufficient coins! You need more BDC.");
+            }
         }
 
         function save() {
-            db.ref('users/' + uid).update({
-                balance: balance,
-                level: level,
-                botLevel: botLevel,
-                botStored: botStored,
-                maxEnergy: maxEnergy,
-                energy: energy,
-                lastSeen: Date.now()
-            });
+            db.ref('users/' + uid).update({ balance, level, botLevel, botStored, maxEnergy, energy, lastSeen: Date.now() });
         }
 
         function showPage(id) { 
             closeAll(); 
             document.getElementById(id).style.display = 'block'; 
-            if(id==='rank-page') loadLeaderboard(); 
+            if(id === 'tasks-page') renderTasks('daily');
+            if(id === 'rank-page') loadLeaderboard(); 
         }
 
-        function closeAll() { 
-            document.querySelectorAll('.overlay').forEach(p => p.style.display='none'); 
+        function closeAll() { document.querySelectorAll('.overlay').forEach(p => p.style.display='none'); }
+
+        function claimBot() {
+            if (botStored > 0) {
+                balance += botStored; botStored = 0; updateUI(); save(); tg.showAlert("Bot earnings claimed!");
+            }
         }
 
         function invite() {
@@ -339,60 +359,26 @@
             tg.openTelegramLink(`https://t.me/share/url?url=${encodeURIComponent(link)}&text=Join BDC Network!`);
         }
 
-        function claimBot() {
-            if (botStored > 0) {
-                balance += botStored; 
-                botStored = 0; 
-                updateUI(); 
-                save(); 
-                tg.showAlert("Claim Successful!");
-            } else {
-                tg.showAlert("Nothing to claim!");
-            }
+        function loadLeaderboard() {
+            db.ref('users').orderByChild('balance').limitToLast(10).once('value', (snap) => {
+                let players = []; snap.forEach(child => { players.push(child.val()); });
+                players.sort((a, b) => b.balance - a.balance);
+                let html = '';
+                players.forEach((p, i) => {
+                    html += `<div class="card" style="${p.name === uName ? 'border:1px solid var(--gold);' : ''}"><span><b>#${i+1}</b> ${p.name}</span><b>${format(p.balance)}</b></div>`;
+                });
+                document.getElementById("leaderboard-list").innerHTML = html;
+            });
         }
 
-        // --- WALLET SECTION ---
         let tonConnectUI;
-
         async function initTonConnect() {
-            if (tonConnectUI) return;
-            try {
-                tonConnectUI = new TON_CONNECT_UI.TonConnectUI({
-                    manifestUrl: 'https://bdc-game.vercel.app/tonconnect-manifest.json',
-                    buttonRootId: 'ton-connect-button'
-                });
-
-                tonConnectUI.onStatusChange(wallet => {
-                    if (wallet) {
-                        const address = wallet.account.address;
-                        const shortAddr = address.substring(0, 6) + "..." + address.substring(address.length - 4);
-                        document.getElementById("wallet-status").innerText = "Linked: " + shortAddr;
-                        document.getElementById("wallet-status").style.color = "#4caf50";
-                        if (uid) {
-                            db.ref('users/' + uid).update({ walletAddress: address });
-                        }
-                    } else {
-                        document.getElementById("wallet-status").innerText = "Airdrop distributions will be sent here.";
-                        document.getElementById("wallet-status").style.color = "var(--gray)";
-                    }
-                });
-            } catch (e) {
-                console.error("TON Connect Init Error:", e);
-            }
+            tonConnectUI = new TON_CONNECT_UI.TonConnectUI({
+                manifestUrl: 'https://bdc-game.vercel.app/tonconnect-manifest.json',
+                buttonRootId: 'ton-connect-button'
+            });
         }
-
-        // Initialize when the script loads
         initTonConnect();
-        
-        // This function handles manual trigger if the button isn't enough
-        async function connectWallet() {
-            if (!tonConnectUI) await initTonConnect();
-            try {
-                await tonConnectUI.openModal();
-            } catch (err) {
-                tg.showAlert("Please use the 'Connect Wallet' button below.");
-            }
-        }
     </script>
 </body>
 </html>
