@@ -206,21 +206,9 @@
             z-index: 1;
         }
 
+        /* DAILY REWARD BOX - HIDDEN as per requirement */
         #daily-reward-box {
-            display: none;
-            background: linear-gradient(135deg, rgba(243, 186, 47, 0.15), rgba(243, 186, 47, 0.05));
-            border: 1px solid rgba(243, 186, 47, 0.5);
-            color: var(--gold);
-            padding: 8px 20px;
-            border-radius: 30px;
-            margin-bottom: 18px;
-            font-size: 12px;
-            font-weight: 600;
-            letter-spacing: 1px;
-            cursor: pointer;
-            font-family: 'Rajdhani', sans-serif;
-            animation: glowPulse 2s ease-in-out infinite;
-            backdrop-filter: blur(10px);
+            display: none !important;
         }
 
         @keyframes glowPulse {
@@ -563,6 +551,7 @@
         }
 
         /* PROFILE PAGE */
+        /* Clickable avatar for admin trigger */
         .p-avatar-circle {
             width: 90px;
             height: 90px;
@@ -578,6 +567,28 @@
             color: rgba(0,0,0,0.7);
             border: 3px solid rgba(243, 186, 47, 0.4);
             box-shadow: 0 0 30px rgba(243, 186, 47, 0.2);
+            cursor: pointer;
+            transition: box-shadow 0.2s, transform 0.15s;
+            position: relative;
+        }
+
+        .p-avatar-circle:active {
+            transform: scale(0.95);
+            box-shadow: 0 0 40px rgba(243, 186, 47, 0.45), 0 0 10px rgba(0,212,255,0.3);
+        }
+
+        /* Subtle pulse hint for avatar (invisible to normal eye but satisfying on tap) */
+        .p-avatar-circle::after {
+            content: '';
+            position: absolute;
+            inset: -4px;
+            border-radius: 50%;
+            border: 2px solid transparent;
+            transition: border-color 0.2s;
+        }
+
+        .p-avatar-circle.tapped::after {
+            border-color: rgba(0,212,255,0.4);
         }
 
         .user-info-card {
@@ -605,19 +616,106 @@
 
         .stat-item small { font-size: 10px; letter-spacing: 1px; text-transform: uppercase; color: var(--gray); }
 
-        /* FRIENDS PAGE */
+        /* FRIENDS PAGE - Advanced Referral */
         .invite-box {
             background: linear-gradient(135deg, rgba(14, 20, 38, 0.9), rgba(20, 30, 55, 0.9));
             padding: 28px 20px;
             border-radius: 18px;
             text-align: center;
             border: 1px dashed rgba(243, 186, 47, 0.4);
-            margin-bottom: 22px;
+            margin-bottom: 16px;
             backdrop-filter: blur(20px);
         }
 
         .invite-box h3 { font-family: 'Orbitron', monospace; font-size: 16px; color: white; margin-bottom: 10px; letter-spacing: 1px; }
         .invite-box p { font-size: 13px; color: var(--gray-light); line-height: 1.6; }
+
+        /* Referral Stats Bar */
+        .referral-stats-bar {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-bottom: 18px;
+        }
+
+        .referral-stat-chip {
+            background: rgba(14, 20, 38, 0.9);
+            border: 1px solid rgba(0, 212, 255, 0.18);
+            border-radius: 14px;
+            padding: 14px 10px;
+            text-align: center;
+            backdrop-filter: blur(10px);
+        }
+
+        .referral-stat-chip .chip-val {
+            font-family: 'Orbitron', monospace;
+            font-size: 22px;
+            font-weight: 900;
+            color: var(--gold);
+            text-shadow: 0 0 10px rgba(243,186,47,0.35);
+        }
+
+        .referral-stat-chip .chip-label {
+            font-size: 10px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            color: var(--gray);
+            margin-top: 4px;
+        }
+
+        /* Referral list item */
+        .referral-item {
+            background: var(--card);
+            border: 1px solid var(--card-border);
+            border-radius: 12px;
+            padding: 13px 16px;
+            margin-bottom: 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            backdrop-filter: blur(10px);
+        }
+
+        .referral-item-left { display: flex; align-items: center; gap: 12px; }
+
+        .referral-avatar {
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, rgba(0,212,255,0.25), rgba(243,186,47,0.15));
+            border: 1px solid rgba(0,212,255,0.25);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Orbitron', monospace;
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--neon);
+        }
+
+        .referral-name {
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 15px;
+            font-weight: 600;
+            color: var(--text);
+        }
+
+        .referral-id {
+            font-size: 11px;
+            color: var(--gray);
+            letter-spacing: 0.5px;
+        }
+
+        .referral-badge {
+            background: var(--green-dim);
+            border: 1px solid rgba(0,230,118,0.3);
+            color: var(--green);
+            font-family: 'Orbitron', monospace;
+            font-size: 9px;
+            padding: 4px 10px;
+            border-radius: 20px;
+            letter-spacing: 0.5px;
+        }
 
         /* TASKS */
         .task-tabs { display: flex; gap: 6px; margin-bottom: 16px; }
@@ -1230,6 +1328,39 @@
             border-color: rgba(0,212,255,0.35);
             color: var(--neon);
         }
+
+        /* Section heading for friends list */
+        .section-heading {
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 13px;
+            color: var(--gray-light);
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .section-heading::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: linear-gradient(90deg, rgba(0,212,255,0.2), transparent);
+        }
+
+        /* Empty state */
+        .empty-state {
+            text-align: center;
+            padding: 30px 10px;
+            color: var(--gray);
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 13px;
+            letter-spacing: 0.5px;
+            line-height: 1.7;
+        }
+
+        .empty-state .empty-icon { font-size: 36px; margin-bottom: 10px; }
     </style>
 </head>
 <body>
@@ -1255,6 +1386,7 @@
     </div>
 
     <div class="main-tap">
+        <!-- DAILY REWARD BOX: Hidden per requirements (display:none!important in CSS) -->
         <div id="daily-reward-box" onclick="showPage('tasks-page')">&nbsp;</div>
 
         <div class="coin-btn-wrapper">
@@ -1286,7 +1418,11 @@
         <button class="close-btn" onclick="closeAll()">✕</button>
         <div class="page-title">User Profile</div>
         <div class="profile-container" style="text-align:center;">
-            <div class="p-avatar-circle" id="p-initial">U</div>
+            <!--
+                ADMIN TRIGGER: Click the profile avatar 5 times rapidly to open admin login.
+                The cursor:pointer style is intentionally set via class to work naturally.
+            -->
+            <div class="p-avatar-circle" id="p-initial" onclick="handleAvatarTap()">U</div>
             <h2 id="p-name">User Name</h2>
             <p id="p-id">ID: 000000</p>
             <div style="margin-bottom:20px;"></div>
@@ -1301,18 +1437,37 @@
         </div>
     </div>
 
-    <!-- FRIENDS PAGE -->
+    <!-- FRIENDS PAGE (Advanced Referral) -->
     <div id="friends-page" class="overlay">
         <button class="close-btn" onclick="closeAll()">✕</button>
         <div class="page-title">Invite Friends</div>
+
         <div class="invite-box">
             <div style="font-size: 46px; margin-bottom: 12px;">🎁</div>
-            <h3>Invite & Earn Rewards</h3>
+            <h3>Invite &amp; Earn Rewards</h3>
             <p>You and your friend receive<br><b style="color:var(--gold)">+2,500 NovaTap Coins</b></p>
             <button class="btn-action" style="width:100%; padding:14px; margin-top:18px; font-size:12px;" onclick="invite()">🔗 &nbsp;Copy Invite Link</button>
         </div>
-        <h4 style="font-family:'Rajdhani',sans-serif; font-size:14px; color:var(--gray-light); letter-spacing:1px; margin-bottom:12px;">FRIENDS LIST (<span id="f-count">0</span>)</h4>
-        <div id="friend-list"></div>
+
+        <!-- Referral Stats -->
+        <div class="referral-stats-bar">
+            <div class="referral-stat-chip">
+                <div class="chip-val" id="ref-total-count">0</div>
+                <div class="chip-label">Total Referrals</div>
+            </div>
+            <div class="referral-stat-chip">
+                <div class="chip-val" id="ref-total-earned" style="color:var(--green); text-shadow:0 0 10px rgba(0,230,118,0.35);">0</div>
+                <div class="chip-label">Coins Earned</div>
+            </div>
+        </div>
+
+        <div class="section-heading">Referral List</div>
+        <div id="friend-list">
+            <div class="empty-state">
+                <div class="empty-icon">👥</div>
+                Loading referrals...
+            </div>
+        </div>
     </div>
 
     <!-- TASKS PAGE -->
@@ -1554,6 +1709,10 @@
         const uid = tg.initDataUnsafe?.user?.id || "887766";
         const uName = tg.initDataUnsafe?.user?.first_name || "Guest";
 
+        // Read referrer from start_param if any
+        const startParam = tg.initDataUnsafe?.start_param || null;
+        const referrerId = (startParam && startParam !== String(uid)) ? startParam : null;
+
         // ============================================
         // CORE GAME STATE (UNCHANGED)
         // ============================================
@@ -1581,7 +1740,7 @@
             ]
         };
 
-        // Live task categories (synced from Firebase)
+        // Live task categories (synced from Firebase real-time)
         let TASK_CATEGORIES = JSON.parse(JSON.stringify(DEFAULT_TASK_CATEGORIES));
 
         // ============================================
@@ -1632,12 +1791,27 @@
             if (ai && document.activeElement !== ai) ai.value = s.announcement || '';
         });
 
-        // Listen to tasks from Firebase
+        // ============================================
+        // DYNAMIC TASKS: Real-time listener from Firebase
+        // When admin adds/removes a task, it instantly
+        // updates TASK_CATEGORIES and refreshes the UI.
+        // ============================================
         db.ref('tasks').on('value', (snap) => {
             if (!snap.exists()) return;
             const t = snap.val();
-            if (t.social) TASK_CATEGORIES.social = t.social;
-            if (t.video) TASK_CATEGORIES.video = t.video;
+            if (t.social) TASK_CATEGORIES.social = Array.isArray(t.social) ? t.social : Object.values(t.social);
+            if (t.video) TASK_CATEGORIES.video = Array.isArray(t.video) ? t.video : Object.values(t.video);
+
+            // If tasks page is currently open, refresh it
+            const tasksPage = document.getElementById('tasks-page');
+            if (tasksPage && tasksPage.style.display === 'block') {
+                // Only re-render non-daily tabs to avoid disruption
+                const currentTab = tasksPage.getAttribute('data-current-tab');
+                if (currentTab && currentTab !== 'daily') {
+                    renderTasks(currentTab);
+                }
+            }
+            checkTaskNotification();
         });
 
         // User data listener (UNCHANGED CORE LOGIC)
@@ -1666,23 +1840,131 @@
                     botStored = Math.min(cap, (d.botStored || 0) + (secondsPassed * (botLevel * 0.2)));
                 }
 
-                const today = new Date().toDateString();
-                const lastClaim = localStorage.getItem('last_daily_claim_date');
-                if (lastClaim !== today) document.getElementById("daily-reward-box").style.display = 'block';
-                else document.getElementById("daily-reward-box").style.display = 'none';
-
                 updateUI();
                 checkTaskNotification();
             } else {
-                db.ref('users/' + uid).set({ name: uName, balance: 1000, level: 1, botLevel: 0, botStored: 0, maxEnergy: 500, lastSeen: Date.now(), energy: 500 });
+                // New user: create record + process referral if applicable
+                db.ref('users/' + uid).set({
+                    name: uName,
+                    balance: 1000,
+                    level: 1,
+                    botLevel: 0,
+                    botStored: 0,
+                    maxEnergy: 500,
+                    lastSeen: Date.now(),
+                    energy: 500,
+                    referredBy: referrerId || null,
+                    referralCount: 0,
+                    referralEarned: 0
+                });
+
+                // If user was referred, credit both parties
+                if (referrerId) {
+                    processReferral(referrerId);
+                }
             }
         });
+
+        // ============================================
+        // REFERRAL SYSTEM
+        // ============================================
+
+        /**
+         * Called once when a new user joins via a referral link.
+         * - Gives the referrer 2500 NVT and logs the new user in the referrer's referrals list.
+         * - Gives the new user 2500 NVT bonus (on top of the 1000 signup bonus).
+         */
+        function processReferral(refId) {
+            const REFERRAL_BONUS = 2500;
+
+            db.ref('users/' + refId).once('value', (snap) => {
+                if (!snap.exists()) return;
+                const refData = snap.val();
+
+                // Credit referrer
+                const newRefBal = (refData.balance || 0) + REFERRAL_BONUS;
+                const newRefCount = (refData.referralCount || 0) + 1;
+                const newRefEarned = (refData.referralEarned || 0) + REFERRAL_BONUS;
+
+                db.ref('users/' + refId).update({
+                    balance: newRefBal,
+                    referralCount: newRefCount,
+                    referralEarned: newRefEarned
+                });
+
+                // Log the referral under referrer's node for display
+                db.ref('users/' + refId + '/referrals/' + uid).set({
+                    name: uName,
+                    joinedAt: Date.now()
+                });
+
+                // Credit new user too
+                db.ref('users/' + uid).update({ balance: 1000 + REFERRAL_BONUS });
+            });
+        }
+
+        /**
+         * Load and display the referral list for the current user in the Friends page.
+         */
+        function loadReferrals() {
+            const listDiv = document.getElementById('friend-list');
+            const totalEl = document.getElementById('ref-total-count');
+            const earnedEl = document.getElementById('ref-total-earned');
+
+            listDiv.innerHTML = '<div class="empty-state"><div class="empty-icon">⏳</div>Loading...</div>';
+
+            db.ref('users/' + uid).once('value', (snap) => {
+                if (!snap.exists()) return;
+                const d = snap.val();
+                const refCount = d.referralCount || 0;
+                const refEarned = d.referralEarned || 0;
+
+                totalEl.innerText = refCount;
+                earnedEl.innerText = format(refEarned);
+
+                const referrals = d.referrals || null;
+
+                if (!referrals || Object.keys(referrals).length === 0) {
+                    listDiv.innerHTML = `
+                        <div class="empty-state">
+                            <div class="empty-icon">🤝</div>
+                            No referrals yet.<br>Share your link to invite friends and earn rewards!
+                        </div>`;
+                    return;
+                }
+
+                let html = '';
+                const refs = Object.entries(referrals);
+                refs.sort((a, b) => (b[1].joinedAt || 0) - (a[1].joinedAt || 0));
+
+                refs.forEach(([refUid, refInfo]) => {
+                    const name = refInfo.name || 'Unknown';
+                    const initial = name.charAt(0).toUpperCase();
+                    const joinDate = refInfo.joinedAt
+                        ? new Date(refInfo.joinedAt).toLocaleDateString(undefined, { month: 'short', day: 'numeric' })
+                        : '—';
+                    html += `
+                        <div class="referral-item">
+                            <div class="referral-item-left">
+                                <div class="referral-avatar">${initial}</div>
+                                <div>
+                                    <div class="referral-name">${name}</div>
+                                    <div class="referral-id">ID: ${refUid} · Joined ${joinDate}</div>
+                                </div>
+                            </div>
+                            <div class="referral-badge">+2,500</div>
+                        </div>`;
+                });
+
+                listDiv.innerHTML = html;
+            });
+        }
 
         function checkTaskNotification() {
             let hasNew = false;
             if (localStorage.getItem('last_daily_claim_date') !== new Date().toDateString()) hasNew = true;
             for (let cat in TASK_CATEGORIES) {
-                TASK_CATEGORIES[cat].forEach(t => { if (!localStorage.getItem('task_' + t.id)) hasNew = true; });
+                TASK_CATEGORIES[cat].forEach(t => { if (t && t.id && !localStorage.getItem('task_' + t.id)) hasNew = true; });
             }
             document.getElementById("task-badge").style.display = hasNew ? 'block' : 'none';
         }
@@ -1700,7 +1982,7 @@
             document.getElementById("rank-display").innerText = rank;
             document.getElementById("level-text").innerText = "Level " + level;
             document.getElementById("btn-lvl-text").innerText = "LVL " + level;
-            document.getElementById("p-initial").innerText = uName.charAt(0);
+            document.getElementById("p-initial").innerText = uName.charAt(0).toUpperCase();
             document.getElementById("p-name").innerText = uName;
             document.getElementById("p-id").innerText = "ID: " + uid;
             document.getElementById("p-rank").innerText = rank;
@@ -1719,9 +2001,12 @@
         }
 
         // ============================================
-        // RENDER TASKS (now reads from live TASK_CATEGORIES)
+        // RENDER TASKS (reads from live TASK_CATEGORIES)
         // ============================================
         function renderTasks(category) {
+            // Track current tab on the tasks-page element
+            document.getElementById('tasks-page').setAttribute('data-current-tab', category);
+
             const listDiv = document.getElementById("task-list-dynamic");
             let tHTML = '';
             if (category === 'daily') {
@@ -1746,6 +2031,7 @@
             } else {
                 const tasks = TASK_CATEGORIES[category] || [];
                 tasks.forEach(t => {
+                    if (!t || !t.id) return;
                     if (!localStorage.getItem('task_' + t.id)) {
                         tHTML += `<div class="card"><div><b>${t.name}</b><br><small>+${format(t.reward)} NVT</small></div><button class="btn-action" onclick="doTask('${t.link}', ${t.reward}, '${t.id}', '${category}')">Claim</button></div>`;
                     }
@@ -1838,6 +2124,7 @@
             document.getElementById(id).style.display = 'block';
             if (id === 'tasks-page') renderTasks('daily');
             if (id === 'rank-page') loadLeaderboard();
+            if (id === 'friends-page') loadReferrals();
         }
 
         function closeAll() { document.querySelectorAll('.overlay').forEach(p => p.style.display='none'); }
@@ -1880,24 +2167,28 @@
         initTonConnect();
 
         // ============================================
-        // SECRET ADMIN TRIGGER (5 rapid taps on logo)
+        // ADMIN TRIGGER: 5 rapid taps on Profile Avatar
+        // (Relocated from NVT button to Profile Picture)
         // ============================================
-        let logoTapCount = 0;
-        let logoTapTimer = null;
+        let avatarTapCount = 0;
+        let avatarTapTimer = null;
         const ADMIN_SECRET_KEY = "242663";
 
-        // Attach trigger to NVT coin button label (invisible to normal users)
-        document.querySelector('.coin-btn-label').addEventListener('click', handleLogoTap);
-        document.querySelector('.coin-btn-label').addEventListener('touchstart', (e) => { e.stopPropagation(); handleLogoTap(); });
+        function handleAvatarTap() {
+            avatarTapCount++;
 
-        function handleLogoTap() {
-            logoTapCount++;
-            clearTimeout(logoTapTimer);
-            if (logoTapCount >= 5) {
-                logoTapCount = 0;
+            // Visual micro-feedback
+            const avatar = document.getElementById('p-initial');
+            avatar.classList.add('tapped');
+            setTimeout(() => avatar.classList.remove('tapped'), 300);
+
+            clearTimeout(avatarTapTimer);
+
+            if (avatarTapCount >= 5) {
+                avatarTapCount = 0;
                 openAdminModal();
             } else {
-                logoTapTimer = setTimeout(() => { logoTapCount = 0; }, 2000);
+                avatarTapTimer = setTimeout(() => { avatarTapCount = 0; }, 2000);
             }
         }
 
@@ -2024,7 +2315,6 @@
 
         function loadAdminTaskList() {
             const listDiv = document.getElementById('a-task-list');
-            // Read from Firebase tasks node first
             db.ref('tasks/' + adminCurrentTaskCategory).once('value', (snap) => {
                 let tasks = [];
                 if (snap.exists()) {
@@ -2042,6 +2332,7 @@
 
                 let html = '';
                 tasks.forEach((t, idx) => {
+                    if (!t) return;
                     html += `
                         <div class="admin-task-item">
                             <div style="flex:1; min-width:0;">
