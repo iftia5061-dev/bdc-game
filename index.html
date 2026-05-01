@@ -53,7 +53,6 @@
             position: relative;
         }
 
-        /* Animated background mesh */
         body::before {
             content: '';
             position: fixed;
@@ -76,6 +75,51 @@
             background-size: 40px 40px;
             pointer-events: none;
             z-index: 0;
+        }
+
+        /* ANNOUNCEMENT BANNER */
+        #announcement-banner {
+            display: none;
+            background: linear-gradient(135deg, rgba(243,186,47,0.18), rgba(0,212,255,0.10));
+            border-bottom: 1px solid rgba(243,186,47,0.35);
+            padding: 8px 16px;
+            font-size: 12px;
+            font-family: 'Rajdhani', sans-serif;
+            font-weight: 600;
+            color: var(--gold);
+            text-align: center;
+            letter-spacing: 0.5px;
+            position: relative;
+            z-index: 11;
+            animation: glowPulse 3s ease-in-out infinite;
+        }
+
+        /* MAINTENANCE OVERLAY */
+        #maintenance-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(5, 8, 16, 0.97);
+            z-index: 9999;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 16px;
+        }
+        #maintenance-overlay .m-icon { font-size: 60px; }
+        #maintenance-overlay h2 {
+            font-family: 'Orbitron', monospace;
+            color: var(--gold);
+            font-size: 20px;
+            letter-spacing: 2px;
+            text-shadow: 0 0 20px rgba(243,186,47,0.5);
+        }
+        #maintenance-overlay p {
+            color: var(--gray-light);
+            font-size: 14px;
+            text-align: center;
+            max-width: 280px;
+            line-height: 1.6;
         }
 
         /* HEADER */
@@ -325,9 +369,7 @@
             font-family: 'Rajdhani', sans-serif;
         }
 
-        .energy-label span {
-            color: white;
-        }
+        .energy-label span { color: white; }
 
         #level-text {
             font-family: 'Orbitron', monospace;
@@ -473,9 +515,7 @@
             transition: all 0.2s;
         }
 
-        .close-btn:active {
-            background: rgba(255, 77, 109, 0.3);
-        }
+        .close-btn:active { background: rgba(255, 77, 109, 0.3); }
 
         /* CARDS */
         .card {
@@ -492,22 +532,9 @@
             transition: border-color 0.3s;
         }
 
-        .card:active {
-            border-color: rgba(0, 212, 255, 0.35);
-        }
-
-        .card b {
-            font-family: 'Rajdhani', sans-serif;
-            font-size: 15px;
-            font-weight: 600;
-            color: var(--text);
-        }
-
-        .card small {
-            font-size: 12px;
-            color: var(--gray-light);
-            font-weight: 400;
-        }
+        .card:active { border-color: rgba(0, 212, 255, 0.35); }
+        .card b { font-family: 'Rajdhani', sans-serif; font-size: 15px; font-weight: 600; color: var(--text); }
+        .card small { font-size: 12px; color: var(--gray-light); font-weight: 400; }
 
         /* BUTTONS */
         .btn-action {
@@ -525,10 +552,7 @@
             box-shadow: 0 4px 12px rgba(243, 186, 47, 0.25);
         }
 
-        .btn-action:active {
-            transform: scale(0.96);
-            box-shadow: 0 2px 6px rgba(243, 186, 47, 0.3);
-        }
+        .btn-action:active { transform: scale(0.96); box-shadow: 0 2px 6px rgba(243, 186, 47, 0.3); }
 
         .btn-action.done {
             background: rgba(255, 255, 255, 0.05);
@@ -579,12 +603,7 @@
             text-align: center;
         }
 
-        .stat-item small {
-            font-size: 10px;
-            letter-spacing: 1px;
-            text-transform: uppercase;
-            color: var(--gray);
-        }
+        .stat-item small { font-size: 10px; letter-spacing: 1px; text-transform: uppercase; color: var(--gray); }
 
         /* FRIENDS PAGE */
         .invite-box {
@@ -597,26 +616,11 @@
             backdrop-filter: blur(20px);
         }
 
-        .invite-box h3 {
-            font-family: 'Orbitron', monospace;
-            font-size: 16px;
-            color: white;
-            margin-bottom: 10px;
-            letter-spacing: 1px;
-        }
-
-        .invite-box p {
-            font-size: 13px;
-            color: var(--gray-light);
-            line-height: 1.6;
-        }
+        .invite-box h3 { font-family: 'Orbitron', monospace; font-size: 16px; color: white; margin-bottom: 10px; letter-spacing: 1px; }
+        .invite-box p { font-size: 13px; color: var(--gray-light); line-height: 1.6; }
 
         /* TASKS */
-        .task-tabs {
-            display: flex;
-            gap: 6px;
-            margin-bottom: 16px;
-        }
+        .task-tabs { display: flex; gap: 6px; margin-bottom: 16px; }
 
         .task-tabs .btn-action {
             flex: 1;
@@ -634,12 +638,7 @@
         }
 
         /* DAILY GRID */
-        .daily-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 8px;
-            margin-top: 8px;
-        }
+        .daily-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-top: 8px; }
 
         .daily-item {
             background: rgba(14, 20, 38, 0.8);
@@ -654,10 +653,7 @@
             transition: all 0.3s;
         }
 
-        .daily-item b {
-            font-family: 'Orbitron', monospace;
-            font-size: 9px;
-        }
+        .daily-item b { font-family: 'Orbitron', monospace; font-size: 9px; }
 
         .daily-active {
             border: 1.5px solid var(--gold);
@@ -684,19 +680,10 @@
             backdrop-filter: blur(20px);
         }
 
-        .wallet-connect-box h3 {
-            font-family: 'Orbitron', monospace;
-            font-size: 16px;
-            letter-spacing: 1px;
-            margin-bottom: 10px;
-            color: white;
-        }
+        .wallet-connect-box h3 { font-family: 'Orbitron', monospace; font-size: 16px; letter-spacing: 1px; margin-bottom: 10px; color: white; }
 
         /* LEADERBOARD */
-        #leaderboard-list .card b:first-child {
-            font-family: 'Orbitron', monospace;
-            font-size: 13px;
-        }
+        #leaderboard-list .card b:first-child { font-family: 'Orbitron', monospace; font-size: 13px; }
 
         /* BOTTOM NAV */
         .nav {
@@ -728,10 +715,7 @@
             text-transform: uppercase;
         }
 
-        .nav-item.active {
-            color: var(--neon);
-            text-shadow: 0 0 8px rgba(0, 212, 255, 0.5);
-        }
+        .nav-item.active { color: var(--neon); text-shadow: 0 0 8px rgba(0, 212, 255, 0.5); }
 
         .nav-item.active::before {
             content: '';
@@ -759,25 +743,506 @@
             box-shadow: 0 0 6px var(--red);
         }
 
-        /* PROFILE HEADINGS */
-        #p-name {
-            font-family: 'Orbitron', monospace;
-            font-size: 16px;
-            letter-spacing: 1px;
-            margin: 5px 0 4px;
+        #p-name { font-family: 'Orbitron', monospace; font-size: 16px; letter-spacing: 1px; margin: 5px 0 4px; }
+        #p-id { font-size: 12px; color: var(--gray); letter-spacing: 0.5px; }
+        .overlay::-webkit-scrollbar { display: none; }
+
+        /* ============================================
+           ADMIN PANEL STYLES
+        ============================================ */
+        #admin-key-modal {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(5, 8, 16, 0.92);
+            z-index: 10000;
+            justify-content: center;
+            align-items: center;
+            backdrop-filter: blur(10px);
         }
 
-        #p-id {
+        .admin-modal-box {
+            background: linear-gradient(145deg, #0a1020, #0d1830);
+            border: 1px solid rgba(0,212,255,0.3);
+            border-radius: 20px;
+            padding: 32px 28px;
+            width: 88%;
+            max-width: 340px;
+            box-shadow:
+                0 0 40px rgba(0,212,255,0.12),
+                0 0 80px rgba(243,186,47,0.06),
+                inset 0 1px 0 rgba(255,255,255,0.05);
+            text-align: center;
+            position: relative;
+        }
+
+        .admin-modal-box::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 20%; right: 20%;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--neon), transparent);
+        }
+
+        .admin-shield {
+            font-size: 42px;
+            margin-bottom: 12px;
+            filter: drop-shadow(0 0 12px rgba(0,212,255,0.4));
+        }
+
+        .admin-modal-box h3 {
+            font-family: 'Orbitron', monospace;
+            font-size: 14px;
+            color: var(--neon);
+            letter-spacing: 2px;
+            margin-bottom: 6px;
+            text-shadow: 0 0 12px rgba(0,212,255,0.4);
+        }
+
+        .admin-modal-box p {
             font-size: 12px;
             color: var(--gray);
+            margin-bottom: 20px;
             letter-spacing: 0.5px;
         }
 
-        /* Scrollbar for overlays */
-        .overlay::-webkit-scrollbar { display: none; }
+        .admin-key-input {
+            width: 100%;
+            background: rgba(0, 212, 255, 0.05);
+            border: 1px solid rgba(0, 212, 255, 0.25);
+            border-radius: 10px;
+            padding: 12px 16px;
+            color: var(--neon);
+            font-family: 'Orbitron', monospace;
+            font-size: 18px;
+            letter-spacing: 6px;
+            text-align: center;
+            outline: none;
+            margin-bottom: 16px;
+            transition: border-color 0.3s;
+        }
+
+        .admin-key-input:focus { border-color: rgba(0,212,255,0.6); box-shadow: 0 0 12px rgba(0,212,255,0.15); }
+
+        .admin-key-btns { display: flex; gap: 10px; }
+
+        .admin-key-btns button {
+            flex: 1;
+            padding: 11px;
+            border-radius: 10px;
+            border: none;
+            font-family: 'Orbitron', monospace;
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .admin-key-btns .btn-confirm {
+            background: linear-gradient(135deg, var(--neon), #0090b8);
+            color: #000;
+        }
+
+        .admin-key-btns .btn-cancel {
+            background: rgba(255,255,255,0.05);
+            color: var(--gray-light);
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        #admin-key-error {
+            color: var(--red);
+            font-size: 11px;
+            font-family: 'Orbitron', monospace;
+            margin-top: 10px;
+            display: none;
+            letter-spacing: 1px;
+        }
+
+        /* ADMIN PANEL OVERLAY */
+        #admin-panel {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: var(--dark2);
+            z-index: 9000;
+            overflow-y: auto;
+            scrollbar-width: none;
+            padding-bottom: 30px;
+        }
+
+        #admin-panel::-webkit-scrollbar { display: none; }
+
+        .admin-header {
+            background: linear-gradient(90deg, rgba(8,13,26,0.98), rgba(10,16,32,0.98));
+            border-bottom: 1px solid rgba(0,212,255,0.2);
+            padding: 16px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+            backdrop-filter: blur(20px);
+        }
+
+        .admin-header::after {
+            content: '';
+            position: absolute;
+            bottom: 0; left: 0; right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--neon), var(--gold), transparent);
+        }
+
+        .admin-title {
+            font-family: 'Orbitron', monospace;
+            font-size: 14px;
+            font-weight: 900;
+            letter-spacing: 2px;
+            background: linear-gradient(90deg, var(--neon), var(--gold));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .admin-badge {
+            background: linear-gradient(135deg, rgba(243,186,47,0.2), rgba(0,212,255,0.1));
+            border: 1px solid rgba(243,186,47,0.4);
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-family: 'Orbitron', monospace;
+            font-size: 9px;
+            color: var(--gold);
+            letter-spacing: 1px;
+        }
+
+        .admin-close {
+            background: rgba(255,77,109,0.15);
+            border: 1px solid rgba(255,77,109,0.3);
+            color: var(--red);
+            padding: 6px 14px;
+            border-radius: 8px;
+            font-family: 'Orbitron', monospace;
+            font-size: 10px;
+            cursor: pointer;
+            letter-spacing: 1px;
+        }
+
+        .admin-body { padding: 20px 18px; }
+
+        .admin-section {
+            background: var(--card);
+            border: 1px solid var(--card-border);
+            border-radius: 16px;
+            padding: 18px;
+            margin-bottom: 16px;
+            backdrop-filter: blur(20px);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .admin-section::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, var(--neon), transparent);
+        }
+
+        .admin-section-title {
+            font-family: 'Orbitron', monospace;
+            font-size: 11px;
+            color: var(--neon);
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .admin-section-title span { font-size: 16px; }
+
+        .admin-input {
+            width: 100%;
+            background: rgba(0,212,255,0.04);
+            border: 1px solid rgba(0,212,255,0.15);
+            border-radius: 8px;
+            padding: 10px 14px;
+            color: var(--text);
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 14px;
+            font-weight: 500;
+            outline: none;
+            margin-bottom: 10px;
+            transition: border-color 0.3s;
+            box-sizing: border-box;
+        }
+
+        .admin-input:focus { border-color: rgba(0,212,255,0.4); background: rgba(0,212,255,0.07); }
+        .admin-input::placeholder { color: var(--gray); font-size: 13px; }
+
+        .admin-input-row { display: flex; gap: 8px; align-items: flex-start; }
+        .admin-input-row .admin-input { flex: 1; margin-bottom: 0; }
+
+        .admin-btn {
+            background: linear-gradient(135deg, var(--neon), #0090b8);
+            color: #000;
+            border: none;
+            padding: 10px 16px;
+            border-radius: 8px;
+            font-family: 'Orbitron', monospace;
+            font-size: 9px;
+            font-weight: 700;
+            cursor: pointer;
+            letter-spacing: 0.5px;
+            white-space: nowrap;
+            transition: all 0.2s;
+        }
+
+        .admin-btn:active { transform: scale(0.96); }
+
+        .admin-btn-red {
+            background: linear-gradient(135deg, var(--red), #c0003a);
+            color: white;
+        }
+
+        .admin-btn-gold {
+            background: linear-gradient(135deg, var(--gold), #d4960a);
+            color: #000;
+        }
+
+        .admin-btn-green {
+            background: linear-gradient(135deg, var(--green), #00a050);
+            color: #000;
+        }
+
+        .admin-btn-full {
+            width: 100%;
+            padding: 12px;
+            margin-top: 8px;
+            font-size: 11px;
+        }
+
+        .admin-toggle-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.04);
+        }
+
+        .admin-toggle-row:last-child { border-bottom: none; }
+
+        .admin-toggle-label {
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text);
+        }
+
+        .admin-toggle-sublabel {
+            font-size: 11px;
+            color: var(--gray);
+            margin-top: 2px;
+        }
+
+        /* Toggle Switch */
+        .toggle-switch {
+            position: relative;
+            width: 48px;
+            height: 26px;
+            flex-shrink: 0;
+        }
+
+        .toggle-switch input { opacity: 0; width: 0; height: 0; }
+
+        .toggle-slider {
+            position: absolute;
+            inset: 0;
+            background: rgba(255,255,255,0.1);
+            border-radius: 26px;
+            cursor: pointer;
+            border: 1px solid rgba(255,255,255,0.1);
+            transition: 0.3s;
+        }
+
+        .toggle-slider::before {
+            content: '';
+            position: absolute;
+            width: 18px;
+            height: 18px;
+            left: 3px;
+            top: 3px;
+            background: var(--gray);
+            border-radius: 50%;
+            transition: 0.3s;
+        }
+
+        .toggle-switch input:checked + .toggle-slider { background: rgba(255,77,109,0.3); border-color: rgba(255,77,109,0.5); }
+        .toggle-switch input:checked + .toggle-slider::before { transform: translateX(22px); background: var(--red); box-shadow: 0 0 8px var(--red); }
+
+        /* Task list in admin */
+        .admin-task-item {
+            background: rgba(0,212,255,0.04);
+            border: 1px solid rgba(0,212,255,0.1);
+            border-radius: 10px;
+            padding: 10px 12px;
+            margin-bottom: 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .admin-task-name {
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text);
+            flex: 1;
+        }
+
+        .admin-task-reward {
+            font-family: 'Orbitron', monospace;
+            font-size: 10px;
+            color: var(--gold);
+        }
+
+        /* User search result */
+        #admin-user-result {
+            background: rgba(0,212,255,0.04);
+            border: 1px solid rgba(0,212,255,0.15);
+            border-radius: 12px;
+            padding: 14px;
+            margin-top: 14px;
+            display: none;
+        }
+
+        .admin-user-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .admin-user-row-label {
+            font-size: 11px;
+            color: var(--gray);
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .admin-user-row-val {
+            font-family: 'Orbitron', monospace;
+            font-size: 12px;
+            color: var(--text);
+        }
+
+        /* Stat chips in admin */
+        .admin-stats-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+
+        .admin-stat-chip {
+            background: rgba(0,212,255,0.06);
+            border: 1px solid rgba(0,212,255,0.15);
+            border-radius: 10px;
+            padding: 12px 8px;
+            text-align: center;
+        }
+
+        .admin-stat-chip-val {
+            font-family: 'Orbitron', monospace;
+            font-size: 14px;
+            color: var(--neon);
+            font-weight: 700;
+        }
+
+        .admin-stat-chip-label {
+            font-size: 9px;
+            color: var(--gray);
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            margin-top: 4px;
+        }
+
+        .admin-divider {
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(0,212,255,0.15), transparent);
+            margin: 14px 0;
+        }
+
+        .admin-select {
+            width: 100%;
+            background: rgba(0,212,255,0.04);
+            border: 1px solid rgba(0,212,255,0.15);
+            border-radius: 8px;
+            padding: 10px 14px;
+            color: var(--text);
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 14px;
+            font-weight: 500;
+            outline: none;
+            margin-bottom: 10px;
+            box-sizing: border-box;
+            appearance: none;
+            cursor: pointer;
+        }
+
+        .admin-select option { background: #0a1020; color: var(--text); }
+
+        #admin-status-msg {
+            font-family: 'Orbitron', monospace;
+            font-size: 10px;
+            text-align: center;
+            padding: 8px;
+            border-radius: 6px;
+            margin-top: 8px;
+            display: none;
+            letter-spacing: 1px;
+        }
+
+        .status-ok { background: rgba(0,230,118,0.1); color: var(--green); border: 1px solid rgba(0,230,118,0.25); }
+        .status-err { background: rgba(255,77,109,0.1); color: var(--red); border: 1px solid rgba(255,77,109,0.25); }
+
+        /* Admin tasks tab */
+        .admin-tab-row { display: flex; gap: 6px; margin-bottom: 14px; }
+        .admin-tab {
+            flex: 1;
+            padding: 8px;
+            background: rgba(255,255,255,0.04);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 8px;
+            font-family: 'Orbitron', monospace;
+            font-size: 9px;
+            color: var(--gray-light);
+            cursor: pointer;
+            text-align: center;
+            letter-spacing: 1px;
+            transition: all 0.2s;
+        }
+        .admin-tab.active-tab {
+            background: rgba(0,212,255,0.12);
+            border-color: rgba(0,212,255,0.35);
+            color: var(--neon);
+        }
     </style>
 </head>
 <body>
+
+    <!-- MAINTENANCE OVERLAY -->
+    <div id="maintenance-overlay">
+        <div class="m-icon">🔧</div>
+        <h2>MAINTENANCE MODE</h2>
+        <p>NovaTap is currently under maintenance. We'll be back shortly. Thank you for your patience!</p>
+    </div>
+
+    <!-- ANNOUNCEMENT BANNER -->
+    <div id="announcement-banner"></div>
 
     <div class="header">
         <div id="user-display">Loading...</div>
@@ -899,6 +1364,166 @@
         </div>
     </div>
 
+    <!-- ============================================
+         ADMIN SECRET KEY MODAL
+    ============================================ -->
+    <div id="admin-key-modal">
+        <div class="admin-modal-box">
+            <div class="admin-shield">🛡️</div>
+            <h3>ADMIN ACCESS</h3>
+            <p>Enter the secret key to access the control panel</p>
+            <input type="password" class="admin-key-input" id="admin-key-input" maxlength="10" placeholder="••••••" />
+            <div class="admin-key-btns">
+                <button class="btn-cancel" onclick="closeAdminModal()">CANCEL</button>
+                <button class="btn-confirm" onclick="verifyAdminKey()">CONFIRM</button>
+            </div>
+            <div id="admin-key-error">⚠ UNAUTHORIZED ACCESS</div>
+        </div>
+    </div>
+
+    <!-- ============================================
+         ADMIN CONTROL PANEL
+    ============================================ -->
+    <div id="admin-panel">
+        <div class="admin-header">
+            <div>
+                <div class="admin-title">⚙ ADMIN PANEL</div>
+                <div class="admin-badge">NOVATAP CONTROL</div>
+            </div>
+            <button class="admin-close" onclick="closeAdminPanel()">EXIT ✕</button>
+        </div>
+
+        <div class="admin-body">
+
+            <!-- Live Stats -->
+            <div class="admin-section">
+                <div class="admin-section-title"><span>📊</span> Live Statistics</div>
+                <div class="admin-stats-row">
+                    <div class="admin-stat-chip">
+                        <div class="admin-stat-chip-val" id="a-stat-users">—</div>
+                        <div class="admin-stat-chip-label">Users</div>
+                    </div>
+                    <div class="admin-stat-chip">
+                        <div class="admin-stat-chip-val" id="a-stat-total">—</div>
+                        <div class="admin-stat-chip-label">Total NVT</div>
+                    </div>
+                    <div class="admin-stat-chip">
+                        <div class="admin-stat-chip-val" id="a-stat-rate">—</div>
+                        <div class="admin-stat-chip-label">Mine Rate</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Announcement -->
+            <div class="admin-section">
+                <div class="admin-section-title"><span>📢</span> Global Announcement</div>
+                <input type="text" class="admin-input" id="a-announcement" placeholder="Enter announcement message for all users..." />
+                <div style="display:flex; gap:8px;">
+                    <button class="admin-btn admin-btn-gold admin-btn-full" style="flex:2;" onclick="setAnnouncement()">BROADCAST</button>
+                    <button class="admin-btn admin-btn-red admin-btn-full" style="flex:1;" onclick="clearAnnouncement()">CLEAR</button>
+                </div>
+            </div>
+
+            <!-- Global Settings -->
+            <div class="admin-section">
+                <div class="admin-section-title"><span>⚙️</span> Global Settings</div>
+                <div class="admin-toggle-row">
+                    <div>
+                        <div class="admin-toggle-label">Maintenance Mode</div>
+                        <div class="admin-toggle-sublabel">Locks app for all users</div>
+                    </div>
+                    <label class="toggle-switch">
+                        <input type="checkbox" id="a-maintenance-toggle" onchange="toggleMaintenance()">
+                        <span class="toggle-slider"></span>
+                    </label>
+                </div>
+                <div class="admin-divider"></div>
+                <div class="admin-toggle-row" style="display:block;">
+                    <div class="admin-toggle-label" style="margin-bottom:8px;">Global Mining Rate Multiplier</div>
+                    <div class="admin-input-row">
+                        <input type="number" class="admin-input" id="a-mining-rate" placeholder="e.g. 1.5 (default: 1)" min="0.1" max="100" step="0.1" style="margin-bottom:0;" />
+                        <button class="admin-btn" onclick="saveMiningRate()">SET</button>
+                    </div>
+                    <div style="font-size:11px; color:var(--gray); margin-top:6px;">Multiplies all tap earnings. 1 = normal, 2 = double.</div>
+                </div>
+                <div class="admin-divider"></div>
+                <div class="admin-toggle-row" style="display:block;">
+                    <div class="admin-toggle-label" style="margin-bottom:8px;">Global Energy Limit Cap</div>
+                    <div class="admin-input-row">
+                        <input type="number" class="admin-input" id="a-energy-cap" placeholder="e.g. 5000 (default: 500)" min="500" step="500" style="margin-bottom:0;" />
+                        <button class="admin-btn" onclick="saveEnergyCap()">SET</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Task Management -->
+            <div class="admin-section">
+                <div class="admin-section-title"><span>📋</span> Task Management</div>
+                <div class="admin-tab-row">
+                    <div class="admin-tab active-tab" id="tab-social" onclick="switchAdminTaskTab('social')">SOCIAL</div>
+                    <div class="admin-tab" id="tab-video" onclick="switchAdminTaskTab('video')">VIDEO</div>
+                </div>
+                <div id="a-task-category-label" style="font-size:11px; color:var(--gray); margin-bottom:12px; letter-spacing:1px;">SOCIAL TASKS</div>
+
+                <!-- Add New Task -->
+                <input type="text" class="admin-input" id="a-task-name" placeholder="Task Title (e.g. Follow Twitter)" />
+                <input type="url" class="admin-input" id="a-task-link" placeholder="Task Link (https://...)" />
+                <div class="admin-input-row" style="margin-bottom:10px;">
+                    <input type="number" class="admin-input" id="a-task-reward" placeholder="Reward (NVT)" min="1" style="margin-bottom:0;" />
+                    <button class="admin-btn admin-btn-green" onclick="addTask()">ADD</button>
+                </div>
+
+                <div class="admin-divider"></div>
+
+                <!-- Existing Tasks List -->
+                <div id="a-task-list"></div>
+            </div>
+
+            <!-- User Management -->
+            <div class="admin-section">
+                <div class="admin-section-title"><span>👤</span> User Management</div>
+                <div class="admin-input-row" style="margin-bottom:10px;">
+                    <input type="text" class="admin-input" id="a-user-search" placeholder="Enter User ID..." style="margin-bottom:0;" />
+                    <button class="admin-btn" onclick="searchUser()">SEARCH</button>
+                </div>
+
+                <div id="admin-user-result">
+                    <div class="admin-user-row">
+                        <div class="admin-user-row-label">Name</div>
+                        <div class="admin-user-row-val" id="a-u-name">—</div>
+                    </div>
+                    <div class="admin-user-row">
+                        <div class="admin-user-row-label">User ID</div>
+                        <div class="admin-user-row-val" id="a-u-id">—</div>
+                    </div>
+                    <div class="admin-user-row">
+                        <div class="admin-user-row-label">Balance</div>
+                        <div class="admin-user-row-val" id="a-u-bal">—</div>
+                    </div>
+                    <div class="admin-user-row">
+                        <div class="admin-user-row-label">Level</div>
+                        <div class="admin-user-row-val" id="a-u-lvl">—</div>
+                    </div>
+                    <div class="admin-user-row">
+                        <div class="admin-user-row-label">Status</div>
+                        <div class="admin-user-row-val" id="a-u-status">—</div>
+                    </div>
+                    <div class="admin-divider"></div>
+                    <input type="number" class="admin-input" id="a-u-new-bal" placeholder="Set New Balance..." min="0" />
+                    <div style="display:flex; gap:8px;">
+                        <button class="admin-btn admin-btn-gold" style="flex:1; padding:10px;" onclick="setUserBalance()">SET BAL</button>
+                        <button class="admin-btn admin-btn-red" style="flex:1; padding:10px;" onclick="blockUser()">BLOCK</button>
+                        <button class="admin-btn admin-btn-green" style="flex:1; padding:10px;" onclick="unblockUser()">UNBLOCK</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Status message -->
+            <div id="admin-status-msg"></div>
+
+        </div>
+    </div>
+
     <div class="nav">
         <div class="nav-item active" onclick="closeAll()">Home</div>
         <div class="nav-item" onclick="showPage('tasks-page')"><span id="task-badge" class="badge"></span>Tasks</div>
@@ -910,6 +1535,9 @@
     </div>
 
     <script>
+        // ============================================
+        // FIREBASE CONFIGURATION
+        // ============================================
         const firebaseConfig = {
             apiKey: "AIzaSyD3vuw74WjiWytZMbVrtNzn7igIyjRMC1c",
             authDomain: "bdc-network.firebaseapp.com",
@@ -926,11 +1554,16 @@
         const uid = tg.initDataUnsafe?.user?.id || "887766";
         const uName = tg.initDataUnsafe?.user?.first_name || "Guest";
 
+        // ============================================
+        // CORE GAME STATE (UNCHANGED)
+        // ============================================
         let balance = 0, energy = 500, maxEnergy = 500, level = 1, botLevel = 0, botStored = 0;
+        let globalMiningRate = 1; // Admin-controlled multiplier
 
         const DAILY_REWARDS = Array.from({length: 30}, (_, i) => Math.floor(200 + (i * (29800/29))));
 
-        const TASK_CATEGORIES = {
+        // Default tasks (fallback if Firebase /tasks not set)
+        const DEFAULT_TASK_CATEGORIES = {
             social: [
                 { name: "Follow Facebook", reward: 1000, link: "https://www.facebook.com/profile.php?id=61587487880831", id: "fb_01" },
                 { name: "Instagram Profile", reward: 1000, link: "https://www.instagram.com/asportcricx?igsh=MXBxeHduano1NmN2YQ==", id: "ig_01" },
@@ -942,21 +1575,84 @@
             video: [
                 { name: "FB Reel", reward: 100, link: "https://www.facebook.com/reel/911261561459485/?app=fbl", id: "vid_01" },
                 { name: "FB Reel", reward: 100, link: "https://www.facebook.com/reel/911261561459485/?app=fbl", id: "vid_02" },
-                { name: "Instagram Reel", reward: 300, link: "https://www.instagram.com/reel/DURDQIGEw6S/?igsh=YXZoMWpsOWQwOTd3", id: "vid_02" },
+                { name: "Instagram Reel", reward: 300, link: "https://www.instagram.com/reel/DURDQIGEw6S/?igsh=YXZoMWpsOWQwOTd3", id: "vid_03" },
                 { name: "Twitter Reel", reward: 300, link: "https://x.com/i/status/2018397320791077140", id: "vid_04" },
-                { name: "YouTube Reel", reward: 300, link: "https://youtube.com/shorts/ACHRUfJNVdE?si=tGuL6yiTcIPt1AAc", id: "vid_01" }
+                { name: "YouTube Reel", reward: 300, link: "https://youtube.com/shorts/ACHRUfJNVdE?si=tGuL6yiTcIPt1AAc", id: "vid_05" }
             ]
         };
 
+        // Live task categories (synced from Firebase)
+        let TASK_CATEGORIES = JSON.parse(JSON.stringify(DEFAULT_TASK_CATEGORIES));
+
+        // ============================================
+        // FORMAT HELPER (UNCHANGED)
+        // ============================================
         function format(n) {
             if (n >= 1000000) return (n / 1000000).toFixed(2) + 'M';
             if (n >= 1000) return (n / 1000).toFixed(1) + 'K';
             return Math.floor(n);
         }
 
+        // ============================================
+        // FIREBASE REAL-TIME LISTENERS
+        // ============================================
+
+        // Listen to global settings (admin-controlled)
+        db.ref('settings').on('value', (snap) => {
+            if (!snap.exists()) return;
+            const s = snap.val();
+
+            // Maintenance mode
+            if (s.maintenance === true) {
+                document.getElementById('maintenance-overlay').style.display = 'flex';
+            } else {
+                document.getElementById('maintenance-overlay').style.display = 'none';
+            }
+
+            // Announcement
+            const banner = document.getElementById('announcement-banner');
+            if (s.announcement && s.announcement.trim() !== '') {
+                banner.innerText = '📣 ' + s.announcement;
+                banner.style.display = 'block';
+            } else {
+                banner.style.display = 'none';
+            }
+
+            // Mining rate
+            if (s.miningRate) globalMiningRate = parseFloat(s.miningRate) || 1;
+
+            // Sync admin toggle state if panel open
+            const tog = document.getElementById('a-maintenance-toggle');
+            if (tog) tog.checked = (s.maintenance === true);
+            const mri = document.getElementById('a-mining-rate');
+            if (mri && document.activeElement !== mri) mri.value = s.miningRate || 1;
+            const eci = document.getElementById('a-energy-cap');
+            if (eci && document.activeElement !== eci) eci.value = s.energyCap || 500;
+            const ai = document.getElementById('a-announcement');
+            if (ai && document.activeElement !== ai) ai.value = s.announcement || '';
+        });
+
+        // Listen to tasks from Firebase
+        db.ref('tasks').on('value', (snap) => {
+            if (!snap.exists()) return;
+            const t = snap.val();
+            if (t.social) TASK_CATEGORIES.social = t.social;
+            if (t.video) TASK_CATEGORIES.video = t.video;
+        });
+
+        // User data listener (UNCHANGED CORE LOGIC)
         db.ref('users/' + uid).on('value', (snap) => {
-            if(snap.exists()){
+            if (snap.exists()) {
                 const d = snap.val();
+
+                // Check if user is blocked
+                if (d.blocked === true) {
+                    document.getElementById('maintenance-overlay').style.display = 'flex';
+                    document.getElementById('maintenance-overlay').querySelector('h2').innerText = 'ACCESS BLOCKED';
+                    document.getElementById('maintenance-overlay').querySelector('p').innerText = 'Your account has been suspended. Contact support.';
+                    return;
+                }
+
                 balance = d.balance || 0;
                 level = d.level || 1;
                 botLevel = d.botLevel || 0;
@@ -965,14 +1661,14 @@
                 let now = Date.now();
                 let secondsPassed = Math.floor((now - lastSeen) / 1000);
                 energy = Math.min(maxEnergy, (d.energy || 0) + (secondsPassed * 1.5));
-                if(botLevel > 0) {
+                if (botLevel > 0) {
                     let cap = botLevel * 500;
                     botStored = Math.min(cap, (d.botStored || 0) + (secondsPassed * (botLevel * 0.2)));
                 }
 
                 const today = new Date().toDateString();
                 const lastClaim = localStorage.getItem('last_daily_claim_date');
-                if(lastClaim !== today) document.getElementById("daily-reward-box").style.display = 'block';
+                if (lastClaim !== today) document.getElementById("daily-reward-box").style.display = 'block';
                 else document.getElementById("daily-reward-box").style.display = 'none';
 
                 updateUI();
@@ -991,6 +1687,9 @@
             document.getElementById("task-badge").style.display = hasNew ? 'block' : 'none';
         }
 
+        // ============================================
+        // UPDATE UI (UNCHANGED)
+        // ============================================
         function updateUI() {
             const rank = balance < 10000 ? "Bronze" : (balance < 50000 ? "Silver" : "Gold");
             document.getElementById("coin-count").innerText = format(balance);
@@ -1012,13 +1711,16 @@
             document.getElementById("tap-upgrade-info").innerText = `Level ${level} (Cost: ${format(level*2000)})`;
             document.getElementById("energy-lv-info").innerText = `Max: ${maxEnergy} (Cost: ${format(maxEnergy*5)})`;
 
-            if(botLevel > 0) {
+            if (botLevel > 0) {
                 document.getElementById("bot-ui-container").style.display = 'flex';
                 document.getElementById("bot-stored-val").innerText = format(botStored);
                 document.getElementById("bot-claim-btn").style.display = botStored >= (botLevel * 10) ? 'block' : 'none';
             }
         }
 
+        // ============================================
+        // RENDER TASKS (now reads from live TASK_CATEGORIES)
+        // ============================================
         function renderTasks(category) {
             const listDiv = document.getElementById("task-list-dynamic");
             let tHTML = '';
@@ -1032,7 +1734,6 @@
                     let done = (i <= dayCount);
                     let reward = DAILY_REWARDS[i-1];
                     let activeClass = canClaim ? 'daily-active' : '';
-
                     tHTML += `
                         <div class="daily-item ${activeClass}"
                              onclick="${canClaim ? `claimDailyCheckin(${i}, ${reward})` : ''}"
@@ -1071,10 +1772,13 @@
             tg.showAlert(`Task Reward ${format(r)} NVT added!`);
         }
 
+        // ============================================
+        // TAP MECHANIC (applies globalMiningRate)
+        // ============================================
         document.getElementById("tap-btn").addEventListener("touchstart", (e) => {
             e.preventDefault();
-            let earn = level * 2;
-            if(energy >= earn) {
+            let earn = Math.floor(level * 2 * globalMiningRate);
+            if (energy >= earn) {
                 balance += earn; energy -= earn;
                 const t = e.touches[0];
                 const el = document.createElement("div");
@@ -1087,16 +1791,19 @@
         });
 
         setInterval(() => {
-            if(energy < maxEnergy) { energy += 0.5; updateUI(); }
-            if(botLevel > 0) {
+            if (energy < maxEnergy) { energy += 0.5; updateUI(); }
+            if (botLevel > 0) {
                 let cap = botLevel * 500;
-                if(botStored < cap) { botStored += (botLevel * 0.2); save(); updateUI(); }
+                if (botStored < cap) { botStored += (botLevel * 0.2); save(); updateUI(); }
             }
         }, 1000);
 
+        // ============================================
+        // BOOST FUNCTIONS (UNCHANGED)
+        // ============================================
         function buyBot() {
             let cost = (botLevel + 1) * 10000;
-            if(balance >= cost) {
+            if (balance >= cost) {
                 balance -= cost; botLevel++; save(); updateUI(); tg.showAlert("Bot Upgraded!");
             } else {
                 tg.showAlert("Insufficient coins! You need more NVT.");
@@ -1104,7 +1811,7 @@
         }
         function upgradeTap() {
             let cost = level * 2000;
-            if(balance >= cost) {
+            if (balance >= cost) {
                 balance -= cost; level++; save(); updateUI(); tg.showAlert("Tap Upgraded!");
             } else {
                 tg.showAlert("Insufficient coins! You need more NVT.");
@@ -1112,7 +1819,7 @@
         }
         function upgradeEnergy() {
             let cost = maxEnergy * 5;
-            if(balance >= cost) {
+            if (balance >= cost) {
                 balance -= cost; maxEnergy += 500; save(); updateUI(); tg.showAlert("Energy Increased!");
             } else {
                 tg.showAlert("Insufficient coins! You need more NVT.");
@@ -1123,11 +1830,14 @@
             db.ref('users/' + uid).update({ balance, level, botLevel, botStored, maxEnergy, energy, lastSeen: Date.now() });
         }
 
+        // ============================================
+        // NAVIGATION (UNCHANGED)
+        // ============================================
         function showPage(id) {
             closeAll();
             document.getElementById(id).style.display = 'block';
-            if(id === 'tasks-page') renderTasks('daily');
-            if(id === 'rank-page') loadLeaderboard();
+            if (id === 'tasks-page') renderTasks('daily');
+            if (id === 'rank-page') loadLeaderboard();
         }
 
         function closeAll() { document.querySelectorAll('.overlay').forEach(p => p.style.display='none'); }
@@ -1157,6 +1867,9 @@
             });
         }
 
+        // ============================================
+        // TON CONNECT (UNCHANGED)
+        // ============================================
         let tonConnectUI;
         async function initTonConnect() {
             tonConnectUI = new TON_CONNECT_UI.TonConnectUI({
@@ -1165,6 +1878,283 @@
             });
         }
         initTonConnect();
+
+        // ============================================
+        // SECRET ADMIN TRIGGER (5 rapid taps on logo)
+        // ============================================
+        let logoTapCount = 0;
+        let logoTapTimer = null;
+        const ADMIN_SECRET_KEY = "242663";
+
+        // Attach trigger to NVT coin button label (invisible to normal users)
+        document.querySelector('.coin-btn-label').addEventListener('click', handleLogoTap);
+        document.querySelector('.coin-btn-label').addEventListener('touchstart', (e) => { e.stopPropagation(); handleLogoTap(); });
+
+        function handleLogoTap() {
+            logoTapCount++;
+            clearTimeout(logoTapTimer);
+            if (logoTapCount >= 5) {
+                logoTapCount = 0;
+                openAdminModal();
+            } else {
+                logoTapTimer = setTimeout(() => { logoTapCount = 0; }, 2000);
+            }
+        }
+
+        function openAdminModal() {
+            document.getElementById('admin-key-input').value = '';
+            document.getElementById('admin-key-error').style.display = 'none';
+            document.getElementById('admin-key-modal').style.display = 'flex';
+        }
+
+        function closeAdminModal() {
+            document.getElementById('admin-key-modal').style.display = 'none';
+        }
+
+        function verifyAdminKey() {
+            const entered = document.getElementById('admin-key-input').value.trim();
+            if (entered === ADMIN_SECRET_KEY) {
+                closeAdminModal();
+                openAdminPanel();
+            } else {
+                const errEl = document.getElementById('admin-key-error');
+                errEl.style.display = 'block';
+                document.getElementById('admin-key-input').style.borderColor = 'rgba(255,77,109,0.6)';
+                setTimeout(() => {
+                    errEl.style.display = 'none';
+                    document.getElementById('admin-key-input').style.borderColor = 'rgba(0,212,255,0.25)';
+                }, 2500);
+            }
+        }
+
+        document.getElementById('admin-key-input').addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') verifyAdminKey();
+        });
+
+        // ============================================
+        // ADMIN PANEL FUNCTIONS
+        // ============================================
+        let adminCurrentTaskCategory = 'social';
+
+        function openAdminPanel() {
+            document.getElementById('admin-panel').style.display = 'block';
+            loadAdminStats();
+            loadAdminTaskList();
+        }
+
+        function closeAdminPanel() {
+            document.getElementById('admin-panel').style.display = 'none';
+        }
+
+        function showAdminStatus(msg, ok = true) {
+            const el = document.getElementById('admin-status-msg');
+            el.innerText = msg;
+            el.className = ok ? 'status-ok' : 'status-err';
+            el.style.display = 'block';
+            setTimeout(() => { el.style.display = 'none'; }, 3000);
+        }
+
+        // Load live stats
+        function loadAdminStats() {
+            db.ref('users').once('value', (snap) => {
+                let userCount = 0, totalCoins = 0;
+                snap.forEach(child => {
+                    const d = child.val();
+                    userCount++;
+                    totalCoins += (d.balance || 0);
+                });
+                document.getElementById('a-stat-users').innerText = userCount;
+                document.getElementById('a-stat-total').innerText = format(totalCoins);
+            });
+            db.ref('settings/miningRate').once('value', (snap) => {
+                document.getElementById('a-stat-rate').innerText = (snap.val() || 1) + 'x';
+            });
+        }
+
+        // ---- ANNOUNCEMENT ----
+        function setAnnouncement() {
+            const msg = document.getElementById('a-announcement').value.trim();
+            db.ref('settings/announcement').set(msg).then(() => {
+                showAdminStatus('✅ Announcement broadcasted!');
+            }).catch(() => showAdminStatus('❌ Failed to broadcast', false));
+        }
+
+        function clearAnnouncement() {
+            db.ref('settings/announcement').set('').then(() => {
+                document.getElementById('a-announcement').value = '';
+                showAdminStatus('✅ Announcement cleared!');
+            });
+        }
+
+        // ---- MAINTENANCE ----
+        function toggleMaintenance() {
+            const isOn = document.getElementById('a-maintenance-toggle').checked;
+            db.ref('settings/maintenance').set(isOn).then(() => {
+                showAdminStatus(isOn ? '🔧 Maintenance Mode ON' : '✅ Maintenance Mode OFF');
+            });
+        }
+
+        // ---- MINING RATE ----
+        function saveMiningRate() {
+            const rate = parseFloat(document.getElementById('a-mining-rate').value);
+            if (isNaN(rate) || rate <= 0) { showAdminStatus('❌ Invalid rate value', false); return; }
+            db.ref('settings/miningRate').set(rate).then(() => {
+                document.getElementById('a-stat-rate').innerText = rate + 'x';
+                showAdminStatus('✅ Mining Rate set to ' + rate + 'x');
+            });
+        }
+
+        // ---- ENERGY CAP ----
+        function saveEnergyCap() {
+            const cap = parseInt(document.getElementById('a-energy-cap').value);
+            if (isNaN(cap) || cap < 500) { showAdminStatus('❌ Minimum energy cap is 500', false); return; }
+            db.ref('settings/energyCap').set(cap).then(() => {
+                showAdminStatus('✅ Energy Cap set to ' + cap);
+            });
+        }
+
+        // ---- TASK MANAGEMENT ----
+        function switchAdminTaskTab(cat) {
+            adminCurrentTaskCategory = cat;
+            document.querySelectorAll('.admin-tab').forEach(t => t.classList.remove('active-tab'));
+            document.getElementById('tab-' + cat).classList.add('active-tab');
+            document.getElementById('a-task-category-label').innerText = cat.toUpperCase() + ' TASKS';
+            loadAdminTaskList();
+        }
+
+        function loadAdminTaskList() {
+            const listDiv = document.getElementById('a-task-list');
+            // Read from Firebase tasks node first
+            db.ref('tasks/' + adminCurrentTaskCategory).once('value', (snap) => {
+                let tasks = [];
+                if (snap.exists()) {
+                    const val = snap.val();
+                    if (Array.isArray(val)) tasks = val;
+                    else tasks = Object.values(val);
+                } else {
+                    tasks = DEFAULT_TASK_CATEGORIES[adminCurrentTaskCategory] || [];
+                }
+
+                if (tasks.length === 0) {
+                    listDiv.innerHTML = '<p style="color:var(--gray); font-size:12px; text-align:center; padding:10px 0;">No tasks yet.</p>';
+                    return;
+                }
+
+                let html = '';
+                tasks.forEach((t, idx) => {
+                    html += `
+                        <div class="admin-task-item">
+                            <div style="flex:1; min-width:0;">
+                                <div class="admin-task-name">${t.name}</div>
+                                <div style="font-size:10px; color:var(--gray); overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">${t.link}</div>
+                            </div>
+                            <div class="admin-task-reward">+${format(t.reward)}</div>
+                            <button class="admin-btn admin-btn-red" style="padding:6px 10px; font-size:9px; margin-left:6px;" onclick="removeTask(${idx})">✕</button>
+                        </div>`;
+                });
+                listDiv.innerHTML = html;
+            });
+        }
+
+        function addTask() {
+            const name = document.getElementById('a-task-name').value.trim();
+            const link = document.getElementById('a-task-link').value.trim();
+            const reward = parseInt(document.getElementById('a-task-reward').value);
+
+            if (!name || !link || isNaN(reward) || reward < 1) {
+                showAdminStatus('❌ Fill all task fields correctly', false); return;
+            }
+
+            const newId = adminCurrentTaskCategory + '_' + Date.now();
+            const newTask = { name, link, reward, id: newId };
+
+            db.ref('tasks/' + adminCurrentTaskCategory).once('value', (snap) => {
+                let tasks = [];
+                if (snap.exists()) {
+                    const val = snap.val();
+                    tasks = Array.isArray(val) ? val : Object.values(val);
+                } else {
+                    tasks = [...(DEFAULT_TASK_CATEGORIES[adminCurrentTaskCategory] || [])];
+                }
+                tasks.push(newTask);
+                db.ref('tasks/' + adminCurrentTaskCategory).set(tasks).then(() => {
+                    document.getElementById('a-task-name').value = '';
+                    document.getElementById('a-task-link').value = '';
+                    document.getElementById('a-task-reward').value = '';
+                    showAdminStatus('✅ Task added successfully!');
+                    loadAdminTaskList();
+                });
+            });
+        }
+
+        function removeTask(idx) {
+            db.ref('tasks/' + adminCurrentTaskCategory).once('value', (snap) => {
+                let tasks = [];
+                if (snap.exists()) {
+                    const val = snap.val();
+                    tasks = Array.isArray(val) ? val : Object.values(val);
+                } else {
+                    tasks = [...(DEFAULT_TASK_CATEGORIES[adminCurrentTaskCategory] || [])];
+                }
+                tasks.splice(idx, 1);
+                db.ref('tasks/' + adminCurrentTaskCategory).set(tasks).then(() => {
+                    showAdminStatus('✅ Task removed!');
+                    loadAdminTaskList();
+                });
+            });
+        }
+
+        // ---- USER MANAGEMENT ----
+        let adminCurrentUserId = null;
+
+        function searchUser() {
+            const searchId = document.getElementById('a-user-search').value.trim();
+            if (!searchId) { showAdminStatus('❌ Enter a User ID', false); return; }
+
+            db.ref('users/' + searchId).once('value', (snap) => {
+                if (!snap.exists()) {
+                    showAdminStatus('❌ User not found', false);
+                    document.getElementById('admin-user-result').style.display = 'none';
+                    return;
+                }
+                const d = snap.val();
+                adminCurrentUserId = searchId;
+
+                document.getElementById('a-u-name').innerText = d.name || '—';
+                document.getElementById('a-u-id').innerText = searchId;
+                document.getElementById('a-u-bal').innerText = format(d.balance || 0) + ' NVT';
+                document.getElementById('a-u-lvl').innerText = 'Level ' + (d.level || 1);
+                document.getElementById('a-u-status').innerText = d.blocked ? '🔴 BLOCKED' : '🟢 ACTIVE';
+                document.getElementById('a-u-new-bal').value = '';
+                document.getElementById('admin-user-result').style.display = 'block';
+            });
+        }
+
+        function setUserBalance() {
+            if (!adminCurrentUserId) return;
+            const newBal = parseInt(document.getElementById('a-u-new-bal').value);
+            if (isNaN(newBal) || newBal < 0) { showAdminStatus('❌ Invalid balance', false); return; }
+            db.ref('users/' + adminCurrentUserId).update({ balance: newBal }).then(() => {
+                document.getElementById('a-u-bal').innerText = format(newBal) + ' NVT';
+                showAdminStatus('✅ Balance updated to ' + format(newBal) + ' NVT');
+            });
+        }
+
+        function blockUser() {
+            if (!adminCurrentUserId) return;
+            db.ref('users/' + adminCurrentUserId).update({ blocked: true }).then(() => {
+                document.getElementById('a-u-status').innerText = '🔴 BLOCKED';
+                showAdminStatus('⛔ User blocked!');
+            });
+        }
+
+        function unblockUser() {
+            if (!adminCurrentUserId) return;
+            db.ref('users/' + adminCurrentUserId).update({ blocked: false }).then(() => {
+                document.getElementById('a-u-status').innerText = '🟢 ACTIVE';
+                showAdminStatus('✅ User unblocked!');
+            });
+        }
     </script>
 </body>
 </html>
