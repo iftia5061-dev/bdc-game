@@ -31,6 +31,8 @@
             --green: #00e676;
             --green-dim: rgba(0, 230, 118, 0.15);
             --red: #ff4d6d;
+            --crc: #ffd700;
+            --crc-dim: rgba(255, 215, 0, 0.15);
             --text: #e8eaf6;
         }
 
@@ -159,41 +161,66 @@
             text-shadow: 0 0 8px rgba(243, 186, 47, 0.4);
         }
 
-        /* BALANCE SECTION */
+        /* DUAL BALANCE SECTION */
         .balance-section {
             text-align: center;
-            padding: 18px 0 10px;
+            padding: 12px 18px 6px;
             position: relative;
             z-index: 1;
         }
 
-        .balance-label {
-            font-size: 11px;
-            letter-spacing: 3px;
+        .dual-balance-row {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            align-items: stretch;
+        }
+
+        .balance-chip {
+            flex: 1;
+            background: var(--card);
+            border-radius: 14px;
+            padding: 10px 12px;
+            border: 1px solid var(--card-border);
+            backdrop-filter: blur(20px);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 2px;
+        }
+
+        .balance-chip.nvt-chip {
+            border-color: rgba(243, 186, 47, 0.3);
+            background: linear-gradient(135deg, rgba(243,186,47,0.06), rgba(14,20,38,0.9));
+        }
+
+        .balance-chip.crc-chip {
+            border-color: rgba(255, 215, 0, 0.4);
+            background: linear-gradient(135deg, rgba(255,215,0,0.08), rgba(14,20,38,0.9));
+        }
+
+        .balance-chip-label {
+            font-size: 9px;
+            letter-spacing: 2px;
             text-transform: uppercase;
             color: var(--gray);
-            margin-bottom: 6px;
-            font-family: 'Rajdhani', sans-serif;
-            font-weight: 500;
+            font-weight: 600;
         }
 
-        .coin-val {
+        .balance-chip-val {
             font-family: 'Orbitron', monospace;
-            font-size: 38px;
+            font-size: 20px;
             font-weight: 900;
-            color: white;
             display: flex;
             align-items: center;
-            justify-content: center;
-            gap: 10px;
-            text-shadow: 0 0 30px rgba(243, 186, 47, 0.3);
-            letter-spacing: -1px;
+            gap: 5px;
         }
 
-        .coin-val .coin-icon {
-            font-size: 30px;
-            filter: drop-shadow(0 0 8px rgba(243, 186, 47, 0.6));
-        }
+        .nvt-chip .balance-chip-val { color: var(--gold); text-shadow: 0 0 14px rgba(243,186,47,0.4); }
+        .crc-chip .balance-chip-val { color: var(--crc); text-shadow: 0 0 14px rgba(255,215,0,0.5); }
+
+        .coin-icon-nvt { font-size: 16px; filter: drop-shadow(0 0 6px rgba(243,186,47,0.7)); }
+        .coin-icon-crc { font-size: 16px; filter: drop-shadow(0 0 6px rgba(255,215,0,0.8)); }
 
         /* MAIN TAP AREA */
         .main-tap {
@@ -206,10 +233,7 @@
             z-index: 1;
         }
 
-        /* DAILY REWARD BOX - HIDDEN as per requirement */
-        #daily-reward-box {
-            display: none !important;
-        }
+        #daily-reward-box { display: none !important; }
 
         @keyframes glowPulse {
             0%, 100% { box-shadow: 0 0 10px rgba(243, 186, 47, 0.2); }
@@ -256,6 +280,7 @@
             to { transform: rotate(360deg); }
         }
 
+        /* AVATAR BUTTON - no text, with scale animation and energy-zero state */
         .coin-btn {
             width: 200px;
             height: 200px;
@@ -267,7 +292,7 @@
             cursor: pointer;
             border: none;
             position: relative;
-            transition: transform 0.1s;
+            transition: transform 0.12s cubic-bezier(0.34,1.56,0.64,1), filter 0.4s ease, box-shadow 0.2s;
             background:
                 radial-gradient(circle at 35% 35%, rgba(255, 224, 102, 0.9) 0%, rgba(243, 186, 47, 0.8) 30%, rgba(160, 110, 0, 0.9) 70%, rgba(100, 70, 0, 1) 100%);
             box-shadow:
@@ -276,6 +301,15 @@
                 0 0 80px rgba(243, 186, 47, 0.1),
                 inset 0 2px 4px rgba(255, 255, 255, 0.3),
                 inset 0 -2px 6px rgba(0, 0, 0, 0.4);
+            overflow: hidden;
+        }
+
+        /* Avatar image / emoji inside button */
+        .coin-btn .avatar-img {
+            font-size: 80px;
+            line-height: 1;
+            pointer-events: none;
+            transition: transform 0.12s cubic-bezier(0.34,1.56,0.64,1);
         }
 
         .coin-btn::before {
@@ -290,31 +324,30 @@
             pointer-events: none;
         }
 
-        .coin-btn:active {
-            transform: scale(0.93);
+        /* Scale-up tap animation */
+        .coin-btn.tapping {
+            transform: scale(1.12);
             box-shadow:
-                0 0 0 3px rgba(243, 186, 47, 0.5),
-                0 0 60px rgba(243, 186, 47, 0.4),
+                0 0 0 4px rgba(243, 186, 47, 0.6),
+                0 0 70px rgba(243, 186, 47, 0.5),
                 inset 0 2px 4px rgba(255, 255, 255, 0.2),
                 inset 0 -2px 6px rgba(0, 0, 0, 0.5);
         }
 
-        .coin-btn-label {
-            font-family: 'Orbitron', monospace;
-            font-size: 28px;
-            font-weight: 900;
-            color: rgba(0, 0, 0, 0.85);
-            text-shadow: 0 1px 2px rgba(255,255,255,0.2);
-            line-height: 1;
+        /* Energy = 0 state: shrink + grayscale */
+        .coin-btn.no-energy {
+            transform: scale(0.82) !important;
+            filter: grayscale(1) brightness(0.55) !important;
+            cursor: not-allowed;
+            box-shadow: 0 0 0 2px rgba(255,255,255,0.1) !important;
+            animation: deadShake 0.4s ease;
         }
 
-        #btn-lvl-text {
-            font-family: 'Orbitron', monospace;
-            font-size: 11px;
-            font-weight: 600;
-            color: rgba(0, 0, 0, 0.6);
-            letter-spacing: 2px;
-            margin-top: 4px;
+        @keyframes deadShake {
+            0% { transform: scale(0.82) rotate(0deg); }
+            25% { transform: scale(0.82) rotate(-3deg); }
+            75% { transform: scale(0.82) rotate(3deg); }
+            100% { transform: scale(0.82) rotate(0deg); }
         }
 
         /* TAP ANIMATION */
@@ -337,10 +370,7 @@
         }
 
         /* ENERGY BAR */
-        .stat-box {
-            width: 88%;
-            margin: 0;
-        }
+        .stat-box { width: 88%; margin: 0; }
 
         .energy-header {
             display: flex;
@@ -352,11 +382,7 @@
             letter-spacing: 0.5px;
         }
 
-        .energy-label {
-            color: var(--neon);
-            font-family: 'Rajdhani', sans-serif;
-        }
-
+        .energy-label { color: var(--neon); font-family: 'Rajdhani', sans-serif; }
         .energy-label span { color: white; }
 
         #level-text {
@@ -449,7 +475,7 @@
             box-shadow: 0 4px 12px rgba(0, 230, 118, 0.3);
         }
 
-        /* OVERLAYS (PAGES) */
+        /* OVERLAYS */
         .overlay {
             display: none;
             position: fixed;
@@ -516,7 +542,6 @@
             align-items: center;
             border: 1px solid var(--card-border);
             backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
             transition: border-color 0.3s;
         }
 
@@ -540,7 +565,7 @@
             box-shadow: 0 4px 12px rgba(243, 186, 47, 0.25);
         }
 
-        .btn-action:active { transform: scale(0.96); box-shadow: 0 2px 6px rgba(243, 186, 47, 0.3); }
+        .btn-action:active { transform: scale(0.96); }
 
         .btn-action.done {
             background: rgba(255, 255, 255, 0.05);
@@ -550,8 +575,95 @@
             border: 1px solid rgba(255,255,255,0.07);
         }
 
+        /* =====================
+           CONVERSION SECTION
+        ===================== */
+        .conversion-box {
+            background: linear-gradient(135deg, rgba(14,20,38,0.95), rgba(20,10,40,0.95));
+            border: 1px solid rgba(255, 215, 0, 0.35);
+            border-radius: 18px;
+            padding: 20px 18px;
+            margin-bottom: 16px;
+            backdrop-filter: blur(20px);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .conversion-box::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--crc), transparent);
+        }
+
+        .conversion-title {
+            font-family: 'Orbitron', monospace;
+            font-size: 13px;
+            color: var(--crc);
+            letter-spacing: 2px;
+            margin-bottom: 14px;
+            text-shadow: 0 0 12px rgba(255,215,0,0.4);
+        }
+
+        .conversion-rate-info {
+            background: rgba(255,215,0,0.07);
+            border: 1px solid rgba(255,215,0,0.2);
+            border-radius: 10px;
+            padding: 10px 14px;
+            margin-bottom: 14px;
+            font-size: 13px;
+            color: var(--gray-light);
+        }
+
+        .conversion-rate-info b { color: var(--crc); font-family: 'Orbitron', monospace; font-size: 12px; }
+
+        .conversion-input-row { display: flex; gap: 8px; align-items: center; margin-bottom: 10px; }
+
+        .conversion-input {
+            flex: 1;
+            background: rgba(255,215,0,0.04);
+            border: 1px solid rgba(255,215,0,0.25);
+            border-radius: 10px;
+            padding: 10px 14px;
+            color: var(--crc);
+            font-family: 'Orbitron', monospace;
+            font-size: 14px;
+            outline: none;
+            transition: border-color 0.3s;
+        }
+
+        .conversion-input:focus { border-color: rgba(255,215,0,0.6); }
+        .conversion-input::placeholder { color: rgba(255,215,0,0.3); font-size: 12px; }
+
+        .btn-convert {
+            background: linear-gradient(135deg, var(--crc), #c8a800);
+            color: #000;
+            border: none;
+            padding: 10px 18px;
+            border-radius: 10px;
+            font-family: 'Orbitron', monospace;
+            font-size: 10px;
+            font-weight: 900;
+            cursor: pointer;
+            letter-spacing: 0.5px;
+            white-space: nowrap;
+            box-shadow: 0 4px 16px rgba(255,215,0,0.3);
+            transition: all 0.2s;
+        }
+
+        .btn-convert:active { transform: scale(0.95); }
+
+        .conversion-preview {
+            text-align: center;
+            font-size: 12px;
+            color: var(--gray);
+            margin-top: 6px;
+        }
+
+        .conversion-preview b { color: var(--crc); font-family: 'Orbitron', monospace; }
+
         /* PROFILE PAGE */
-        /* Clickable avatar for admin trigger */
         .p-avatar-circle {
             width: 90px;
             height: 90px;
@@ -572,12 +684,8 @@
             position: relative;
         }
 
-        .p-avatar-circle:active {
-            transform: scale(0.95);
-            box-shadow: 0 0 40px rgba(243, 186, 47, 0.45), 0 0 10px rgba(0,212,255,0.3);
-        }
+        .p-avatar-circle:active { transform: scale(0.95); }
 
-        /* Subtle pulse hint for avatar (invisible to normal eye but satisfying on tap) */
         .p-avatar-circle::after {
             content: '';
             position: absolute;
@@ -587,9 +695,7 @@
             transition: border-color 0.2s;
         }
 
-        .p-avatar-circle.tapped::after {
-            border-color: rgba(0,212,255,0.4);
-        }
+        .p-avatar-circle.tapped::after { border-color: rgba(0,212,255,0.4); }
 
         .user-info-card {
             background: var(--card);
@@ -600,11 +706,7 @@
             backdrop-filter: blur(20px);
         }
 
-        .stat-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 10px;
-        }
+        .stat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
 
         .stat-item {
             background: rgba(255,255,255,0.03);
@@ -616,7 +718,7 @@
 
         .stat-item small { font-size: 10px; letter-spacing: 1px; text-transform: uppercase; color: var(--gray); }
 
-        /* FRIENDS PAGE - Advanced Referral */
+        /* FRIENDS PAGE */
         .invite-box {
             background: linear-gradient(135deg, rgba(14, 20, 38, 0.9), rgba(20, 30, 55, 0.9));
             padding: 28px 20px;
@@ -630,7 +732,44 @@
         .invite-box h3 { font-family: 'Orbitron', monospace; font-size: 16px; color: white; margin-bottom: 10px; letter-spacing: 1px; }
         .invite-box p { font-size: 13px; color: var(--gray-light); line-height: 1.6; }
 
-        /* Referral Stats Bar */
+        /* Tiered referral reward display */
+        .tiered-rewards {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 8px;
+            margin: 14px 0 0;
+        }
+
+        .tier-chip {
+            background: rgba(14,20,38,0.9);
+            border-radius: 10px;
+            padding: 10px 6px;
+            text-align: center;
+            border: 1px solid rgba(255,255,255,0.07);
+        }
+
+        .tier-chip.t1 { border-color: rgba(200,200,200,0.3); }
+        .tier-chip.t2 { border-color: rgba(192,192,192,0.4); }
+        .tier-chip.t3 { border-color: rgba(243,186,47,0.5); }
+
+        .tier-chip .tier-n {
+            font-family: 'Orbitron', monospace;
+            font-size: 9px;
+            color: var(--gray);
+            letter-spacing: 1px;
+            margin-bottom: 4px;
+        }
+
+        .tier-chip .tier-val {
+            font-family: 'Orbitron', monospace;
+            font-size: 13px;
+            font-weight: 900;
+        }
+
+        .tier-chip.t1 .tier-val { color: #c0c0c0; }
+        .tier-chip.t2 .tier-val { color: #d0d0d0; }
+        .tier-chip.t3 .tier-val { color: var(--gold); }
+
         .referral-stats-bar {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -663,7 +802,6 @@
             margin-top: 4px;
         }
 
-        /* Referral list item */
         .referral-item {
             background: var(--card);
             border: 1px solid var(--card-border);
@@ -693,21 +831,10 @@
             color: var(--neon);
         }
 
-        .referral-name {
-            font-family: 'Rajdhani', sans-serif;
-            font-size: 15px;
-            font-weight: 600;
-            color: var(--text);
-        }
-
-        .referral-id {
-            font-size: 11px;
-            color: var(--gray);
-            letter-spacing: 0.5px;
-        }
+        .referral-name { font-family: 'Rajdhani', sans-serif; font-size: 15px; font-weight: 600; color: var(--text); }
+        .referral-id { font-size: 11px; color: var(--gray); letter-spacing: 0.5px; }
 
         .referral-badge {
-            background: var(--green-dim);
             border: 1px solid rgba(0,230,118,0.3);
             color: var(--green);
             font-family: 'Orbitron', monospace;
@@ -716,6 +843,10 @@
             border-radius: 20px;
             letter-spacing: 0.5px;
         }
+
+        .referral-badge.tier1 { background: rgba(192,192,192,0.1); border-color: rgba(192,192,192,0.3); color: #c0c0c0; }
+        .referral-badge.tier2 { background: rgba(192,192,192,0.13); border-color: rgba(192,192,192,0.4); color: #d8d8d8; }
+        .referral-badge.tier3 { background: var(--gold-dim); border-color: rgba(243,186,47,0.4); color: var(--gold); }
 
         /* TASKS */
         .task-tabs { display: flex; gap: 6px; margin-bottom: 16px; }
@@ -730,12 +861,6 @@
             border: 1px solid rgba(255,255,255,0.08);
         }
 
-        .task-tabs .btn-action:active {
-            background: linear-gradient(135deg, var(--gold), #d4960a);
-            color: #000;
-        }
-
-        /* DAILY GRID */
         .daily-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-top: 8px; }
 
         .daily-item {
@@ -767,6 +892,27 @@
             100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(243,186,47,0); }
         }
 
+        /* AIRDROP TAB */
+        #airdrop-page .airdrop-hero {
+            text-align: center;
+            padding: 30px 20px;
+            background: linear-gradient(135deg, rgba(14,20,38,0.95), rgba(20,10,40,0.95));
+            border-radius: 18px;
+            border: 1px solid rgba(255,215,0,0.3);
+            margin-bottom: 16px;
+        }
+
+        #airdrop-page .airdrop-hero h3 {
+            font-family: 'Orbitron', monospace;
+            font-size: 18px;
+            color: var(--crc);
+            letter-spacing: 2px;
+            margin-bottom: 10px;
+            text-shadow: 0 0 20px rgba(255,215,0,0.5);
+        }
+
+        #airdrop-page .airdrop-hero p { color: var(--gray-light); font-size: 13px; line-height: 1.7; }
+
         /* WALLET PAGE */
         .wallet-connect-box {
             text-align: center;
@@ -795,8 +941,11 @@
             position: relative;
             z-index: 50;
             backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
+            overflow-x: auto;
+            scrollbar-width: none;
         }
+
+        .nav::-webkit-scrollbar { display: none; }
 
         .nav-item {
             text-align: center;
@@ -807,6 +956,7 @@
             letter-spacing: 0.5px;
             cursor: pointer;
             flex: 1;
+            min-width: 50px;
             transition: all 0.3s;
             padding: 12px 4px;
             position: relative;
@@ -828,6 +978,8 @@
             box-shadow: 0 0 8px var(--neon);
         }
 
+        .nav-item.hidden-nav { display: none; }
+
         .badge {
             position: absolute;
             top: 8px;
@@ -843,10 +995,40 @@
 
         #p-name { font-family: 'Orbitron', monospace; font-size: 16px; letter-spacing: 1px; margin: 5px 0 4px; }
         #p-id { font-size: 12px; color: var(--gray); letter-spacing: 0.5px; }
-        .overlay::-webkit-scrollbar { display: none; }
+
+        .section-heading {
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 13px;
+            color: var(--gray-light);
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .section-heading::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: linear-gradient(90deg, rgba(0,212,255,0.2), transparent);
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 30px 10px;
+            color: var(--gray);
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 13px;
+            letter-spacing: 0.5px;
+            line-height: 1.7;
+        }
+
+        .empty-state .empty-icon { font-size: 36px; margin-bottom: 10px; }
 
         /* ============================================
-           ADMIN PANEL STYLES
+           ADMIN KEY MODAL
         ============================================ */
         #admin-key-modal {
             display: none;
@@ -866,10 +1048,7 @@
             padding: 32px 28px;
             width: 88%;
             max-width: 340px;
-            box-shadow:
-                0 0 40px rgba(0,212,255,0.12),
-                0 0 80px rgba(243,186,47,0.06),
-                inset 0 1px 0 rgba(255,255,255,0.05);
+            box-shadow: 0 0 40px rgba(0,212,255,0.12), 0 0 80px rgba(243,186,47,0.06), inset 0 1px 0 rgba(255,255,255,0.05);
             text-align: center;
             position: relative;
         }
@@ -882,11 +1061,7 @@
             background: linear-gradient(90deg, transparent, var(--neon), transparent);
         }
 
-        .admin-shield {
-            font-size: 42px;
-            margin-bottom: 12px;
-            filter: drop-shadow(0 0 12px rgba(0,212,255,0.4));
-        }
+        .admin-shield { font-size: 42px; margin-bottom: 12px; filter: drop-shadow(0 0 12px rgba(0,212,255,0.4)); }
 
         .admin-modal-box h3 {
             font-family: 'Orbitron', monospace;
@@ -897,12 +1072,7 @@
             text-shadow: 0 0 12px rgba(0,212,255,0.4);
         }
 
-        .admin-modal-box p {
-            font-size: 12px;
-            color: var(--gray);
-            margin-bottom: 20px;
-            letter-spacing: 0.5px;
-        }
+        .admin-modal-box p { font-size: 12px; color: var(--gray); margin-bottom: 20px; letter-spacing: 0.5px; }
 
         .admin-key-input {
             width: 100%;
@@ -937,16 +1107,8 @@
             transition: all 0.2s;
         }
 
-        .admin-key-btns .btn-confirm {
-            background: linear-gradient(135deg, var(--neon), #0090b8);
-            color: #000;
-        }
-
-        .admin-key-btns .btn-cancel {
-            background: rgba(255,255,255,0.05);
-            color: var(--gray-light);
-            border: 1px solid rgba(255,255,255,0.1);
-        }
+        .admin-key-btns .btn-confirm { background: linear-gradient(135deg, var(--neon), #0090b8); color: #000; }
+        .admin-key-btns .btn-cancel { background: rgba(255,255,255,0.05); color: var(--gray-light); border: 1px solid rgba(255,255,255,0.1); }
 
         #admin-key-error {
             color: var(--red);
@@ -957,7 +1119,9 @@
             letter-spacing: 1px;
         }
 
-        /* ADMIN PANEL OVERLAY */
+        /* ============================================
+           ADMIN PANEL
+        ============================================ */
         #admin-panel {
             display: none;
             position: fixed;
@@ -1099,28 +1263,12 @@
         }
 
         .admin-btn:active { transform: scale(0.96); }
+        .admin-btn-red { background: linear-gradient(135deg, var(--red), #c0003a); color: white; }
+        .admin-btn-gold { background: linear-gradient(135deg, var(--gold), #d4960a); color: #000; }
+        .admin-btn-green { background: linear-gradient(135deg, var(--green), #00a050); color: #000; }
+        .admin-btn-crc { background: linear-gradient(135deg, var(--crc), #c8a800); color: #000; }
 
-        .admin-btn-red {
-            background: linear-gradient(135deg, var(--red), #c0003a);
-            color: white;
-        }
-
-        .admin-btn-gold {
-            background: linear-gradient(135deg, var(--gold), #d4960a);
-            color: #000;
-        }
-
-        .admin-btn-green {
-            background: linear-gradient(135deg, var(--green), #00a050);
-            color: #000;
-        }
-
-        .admin-btn-full {
-            width: 100%;
-            padding: 12px;
-            margin-top: 8px;
-            font-size: 11px;
-        }
+        .admin-btn-full { width: 100%; padding: 12px; margin-top: 8px; font-size: 11px; }
 
         .admin-toggle-row {
             display: flex;
@@ -1131,28 +1279,10 @@
         }
 
         .admin-toggle-row:last-child { border-bottom: none; }
+        .admin-toggle-label { font-family: 'Rajdhani', sans-serif; font-size: 14px; font-weight: 600; color: var(--text); }
+        .admin-toggle-sublabel { font-size: 11px; color: var(--gray); margin-top: 2px; }
 
-        .admin-toggle-label {
-            font-family: 'Rajdhani', sans-serif;
-            font-size: 14px;
-            font-weight: 600;
-            color: var(--text);
-        }
-
-        .admin-toggle-sublabel {
-            font-size: 11px;
-            color: var(--gray);
-            margin-top: 2px;
-        }
-
-        /* Toggle Switch */
-        .toggle-switch {
-            position: relative;
-            width: 48px;
-            height: 26px;
-            flex-shrink: 0;
-        }
-
+        .toggle-switch { position: relative; width: 48px; height: 26px; flex-shrink: 0; }
         .toggle-switch input { opacity: 0; width: 0; height: 0; }
 
         .toggle-slider {
@@ -1180,7 +1310,10 @@
         .toggle-switch input:checked + .toggle-slider { background: rgba(255,77,109,0.3); border-color: rgba(255,77,109,0.5); }
         .toggle-switch input:checked + .toggle-slider::before { transform: translateX(22px); background: var(--red); box-shadow: 0 0 8px var(--red); }
 
-        /* Task list in admin */
+        /* Green toggle variant for airdrop */
+        .toggle-green input:checked + .toggle-slider { background: rgba(0,230,118,0.3); border-color: rgba(0,230,118,0.5); }
+        .toggle-green input:checked + .toggle-slider::before { background: var(--green); box-shadow: 0 0 8px var(--green); }
+
         .admin-task-item {
             background: rgba(0,212,255,0.04);
             border: 1px solid rgba(0,212,255,0.1);
@@ -1193,21 +1326,9 @@
             gap: 8px;
         }
 
-        .admin-task-name {
-            font-family: 'Rajdhani', sans-serif;
-            font-size: 13px;
-            font-weight: 600;
-            color: var(--text);
-            flex: 1;
-        }
+        .admin-task-name { font-family: 'Rajdhani', sans-serif; font-size: 13px; font-weight: 600; color: var(--text); flex: 1; }
+        .admin-task-reward { font-family: 'Orbitron', monospace; font-size: 10px; color: var(--gold); }
 
-        .admin-task-reward {
-            font-family: 'Orbitron', monospace;
-            font-size: 10px;
-            color: var(--gold);
-        }
-
-        /* User search result */
         #admin-user-result {
             background: rgba(0,212,255,0.04);
             border: 1px solid rgba(0,212,255,0.15);
@@ -1224,26 +1345,10 @@
             margin-bottom: 10px;
         }
 
-        .admin-user-row-label {
-            font-size: 11px;
-            color: var(--gray);
-            letter-spacing: 1px;
-            text-transform: uppercase;
-        }
+        .admin-user-row-label { font-size: 11px; color: var(--gray); letter-spacing: 1px; text-transform: uppercase; }
+        .admin-user-row-val { font-family: 'Orbitron', monospace; font-size: 12px; color: var(--text); }
 
-        .admin-user-row-val {
-            font-family: 'Orbitron', monospace;
-            font-size: 12px;
-            color: var(--text);
-        }
-
-        /* Stat chips in admin */
-        .admin-stats-row {
-            display: grid;
-            grid-template-columns: 1fr 1fr 1fr;
-            gap: 8px;
-            margin-bottom: 16px;
-        }
+        .admin-stats-row { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; margin-bottom: 16px; }
 
         .admin-stat-chip {
             background: rgba(0,212,255,0.06);
@@ -1253,45 +1358,33 @@
             text-align: center;
         }
 
-        .admin-stat-chip-val {
-            font-family: 'Orbitron', monospace;
-            font-size: 14px;
-            color: var(--neon);
-            font-weight: 700;
-        }
+        .admin-stat-chip-val { font-family: 'Orbitron', monospace; font-size: 14px; color: var(--neon); font-weight: 700; }
+        .admin-stat-chip-label { font-size: 9px; color: var(--gray); letter-spacing: 1px; text-transform: uppercase; margin-top: 4px; }
 
-        .admin-stat-chip-label {
-            font-size: 9px;
-            color: var(--gray);
-            letter-spacing: 1px;
-            text-transform: uppercase;
-            margin-top: 4px;
-        }
+        .admin-divider { height: 1px; background: linear-gradient(90deg, transparent, rgba(0,212,255,0.15), transparent); margin: 14px 0; }
 
-        .admin-divider {
-            height: 1px;
-            background: linear-gradient(90deg, transparent, rgba(0,212,255,0.15), transparent);
-            margin: 14px 0;
-        }
+        .admin-tab-row { display: flex; gap: 6px; margin-bottom: 14px; }
 
-        .admin-select {
-            width: 100%;
-            background: rgba(0,212,255,0.04);
-            border: 1px solid rgba(0,212,255,0.15);
+        .admin-tab {
+            flex: 1;
+            padding: 8px;
+            background: rgba(255,255,255,0.04);
+            border: 1px solid rgba(255,255,255,0.08);
             border-radius: 8px;
-            padding: 10px 14px;
-            color: var(--text);
-            font-family: 'Rajdhani', sans-serif;
-            font-size: 14px;
-            font-weight: 500;
-            outline: none;
-            margin-bottom: 10px;
-            box-sizing: border-box;
-            appearance: none;
+            font-family: 'Orbitron', monospace;
+            font-size: 9px;
+            color: var(--gray-light);
             cursor: pointer;
+            text-align: center;
+            letter-spacing: 1px;
+            transition: all 0.2s;
         }
 
-        .admin-select option { background: #0a1020; color: var(--text); }
+        .admin-tab.active-tab {
+            background: rgba(0,212,255,0.12);
+            border-color: rgba(0,212,255,0.35);
+            color: var(--neon);
+        }
 
         #admin-status-msg {
             font-family: 'Orbitron', monospace;
@@ -1307,60 +1400,11 @@
         .status-ok { background: rgba(0,230,118,0.1); color: var(--green); border: 1px solid rgba(0,230,118,0.25); }
         .status-err { background: rgba(255,77,109,0.1); color: var(--red); border: 1px solid rgba(255,77,109,0.25); }
 
-        /* Admin tasks tab */
-        .admin-tab-row { display: flex; gap: 6px; margin-bottom: 14px; }
-        .admin-tab {
-            flex: 1;
-            padding: 8px;
-            background: rgba(255,255,255,0.04);
-            border: 1px solid rgba(255,255,255,0.08);
-            border-radius: 8px;
-            font-family: 'Orbitron', monospace;
-            font-size: 9px;
-            color: var(--gray-light);
-            cursor: pointer;
-            text-align: center;
-            letter-spacing: 1px;
-            transition: all 0.2s;
-        }
-        .admin-tab.active-tab {
-            background: rgba(0,212,255,0.12);
-            border-color: rgba(0,212,255,0.35);
-            color: var(--neon);
-        }
-
-        /* Section heading for friends list */
-        .section-heading {
-            font-family: 'Rajdhani', sans-serif;
-            font-size: 13px;
-            color: var(--gray-light);
-            letter-spacing: 1.5px;
-            text-transform: uppercase;
-            margin-bottom: 12px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .section-heading::after {
-            content: '';
-            flex: 1;
-            height: 1px;
-            background: linear-gradient(90deg, rgba(0,212,255,0.2), transparent);
-        }
-
-        /* Empty state */
-        .empty-state {
-            text-align: center;
-            padding: 30px 10px;
-            color: var(--gray);
-            font-family: 'Rajdhani', sans-serif;
-            font-size: 13px;
-            letter-spacing: 0.5px;
-            line-height: 1.7;
-        }
-
-        .empty-state .empty-icon { font-size: 36px; margin-bottom: 10px; }
+        /* Dual balance edit in admin */
+        .admin-dual-input-row { display: flex; gap: 8px; margin-bottom: 10px; }
+        .admin-dual-input-row .admin-input { margin-bottom: 0; flex: 1; }
+        .admin-dual-input-row .admin-input.crc-input { border-color: rgba(255,215,0,0.25); color: var(--crc); }
+        .admin-dual-input-row .admin-input.crc-input:focus { border-color: rgba(255,215,0,0.5); background: rgba(255,215,0,0.05); }
     </style>
 </head>
 <body>
@@ -1380,21 +1424,31 @@
         <div id="rank-display">Bronze</div>
     </div>
 
+    <!-- DUAL BALANCE -->
     <div class="balance-section">
-        <div class="balance-label">Total NovaTap Balance</div>
-        <div class="coin-val"><span class="coin-icon">🪙</span><span id="coin-count">0</span></div>
+        <div class="dual-balance-row">
+            <div class="balance-chip nvt-chip">
+                <div class="balance-chip-label">NovaTap</div>
+                <div class="balance-chip-val"><span class="coin-icon-nvt">🪙</span><span id="coin-count">0</span></div>
+                <div style="font-size:9px; color:var(--gray); letter-spacing:1px;">NVT</div>
+            </div>
+            <div class="balance-chip crc-chip">
+                <div class="balance-chip-label">Core Coin</div>
+                <div class="balance-chip-val"><span class="coin-icon-crc">🌕</span><span id="crc-count">0</span></div>
+                <div style="font-size:9px; color:var(--gray); letter-spacing:1px;">CRC</div>
+            </div>
+        </div>
     </div>
 
     <div class="main-tap">
-        <!-- DAILY REWARD BOX: Hidden per requirements (display:none!important in CSS) -->
-        <div id="daily-reward-box" onclick="showPage('tasks-page')">&nbsp;</div>
+        <div id="daily-reward-box">&nbsp;</div>
 
         <div class="coin-btn-wrapper">
             <div class="coin-btn-ring2"></div>
             <div class="coin-btn-ring"></div>
+            <!-- Avatar: no text, only emoji -->
             <div class="coin-btn" id="tap-btn">
-                <span class="coin-btn-label">NVT</span>
-                <span id="btn-lvl-text">LVL 1</span>
+                <span class="avatar-img">⛏️</span>
             </div>
         </div>
 
@@ -1418,10 +1472,6 @@
         <button class="close-btn" onclick="closeAll()">✕</button>
         <div class="page-title">User Profile</div>
         <div class="profile-container" style="text-align:center;">
-            <!--
-                ADMIN TRIGGER: Click the profile avatar 5 times rapidly to open admin login.
-                The cursor:pointer style is intentionally set via class to work naturally.
-            -->
             <div class="p-avatar-circle" id="p-initial" onclick="handleAvatarTap()">U</div>
             <h2 id="p-name">User Name</h2>
             <p id="p-id">ID: 000000</p>
@@ -1429,27 +1479,45 @@
             <div class="user-info-card">
                 <div class="stat-grid">
                     <div class="stat-item"><small>Current Rank</small><br><b id="p-rank" style="color:var(--gold); font-size:18px; font-family:'Orbitron',monospace;">Bronze</b></div>
-                    <div class="stat-item"><small>Total Balance</small><br><b id="p-bal" style="color:white; font-size:18px; font-family:'Orbitron',monospace;">0</b></div>
+                    <div class="stat-item"><small>NVT Balance</small><br><b id="p-bal" style="color:white; font-size:18px; font-family:'Orbitron',monospace;">0</b></div>
+                    <div class="stat-item"><small>CRC Balance</small><br><b id="p-crc-bal" style="color:var(--crc); font-size:18px; font-family:'Orbitron',monospace;">0</b></div>
                     <div class="stat-item"><small>Mining Level</small><br><b id="p-lvl" style="color:var(--neon); font-size:18px; font-family:'Orbitron',monospace;">1</b></div>
                     <div class="stat-item"><small>Energy Limit</small><br><b id="p-energy" style="color:var(--green); font-size:18px; font-family:'Orbitron',monospace;">500</b></div>
+                    <div class="stat-item"><small>Referrals</small><br><b id="p-refs" style="color:var(--neon); font-size:18px; font-family:'Orbitron',monospace;">0</b></div>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- FRIENDS PAGE (Advanced Referral) -->
+    <!-- FRIENDS PAGE -->
     <div id="friends-page" class="overlay">
         <button class="close-btn" onclick="closeAll()">✕</button>
         <div class="page-title">Invite Friends</div>
 
         <div class="invite-box">
             <div style="font-size: 46px; margin-bottom: 12px;">🎁</div>
-            <h3>Invite &amp; Earn Rewards</h3>
-            <p>You and your friend receive<br><b style="color:var(--gold)">+2,500 NovaTap Coins</b></p>
+            <h3>Tiered Referral Rewards</h3>
+            <p>Earn more for each friend you bring!</p>
+            <div class="tiered-rewards">
+                <div class="tier-chip t1">
+                    <div class="tier-n">1ST FRIEND</div>
+                    <div class="tier-val">500</div>
+                    <div style="font-size:9px; color:var(--gray); margin-top:2px;">NVT</div>
+                </div>
+                <div class="tier-chip t2">
+                    <div class="tier-n">2ND FRIEND</div>
+                    <div class="tier-val">700</div>
+                    <div style="font-size:9px; color:var(--gray); margin-top:2px;">NVT</div>
+                </div>
+                <div class="tier-chip t3">
+                    <div class="tier-n">3RD FRIEND</div>
+                    <div class="tier-val">1500</div>
+                    <div style="font-size:9px; color:var(--gray); margin-top:2px;">NVT</div>
+                </div>
+            </div>
             <button class="btn-action" style="width:100%; padding:14px; margin-top:18px; font-size:12px;" onclick="invite()">🔗 &nbsp;Copy Invite Link</button>
         </div>
 
-        <!-- Referral Stats -->
         <div class="referral-stats-bar">
             <div class="referral-stat-chip">
                 <div class="chip-val" id="ref-total-count">0</div>
@@ -1482,6 +1550,40 @@
         <div id="task-list-dynamic"></div>
     </div>
 
+    <!-- CONVERT PAGE -->
+    <div id="convert-page" class="overlay">
+        <button class="close-btn" onclick="closeAll()">✕</button>
+        <div class="page-title">NVT → CRC Convert</div>
+
+        <div class="conversion-box">
+            <div class="conversion-title">🌕 CORE COIN EXCHANGE</div>
+            <div class="conversion-rate-info">
+                Exchange Rate: <b id="conv-rate-display">Loading...</b><br>
+                <span style="font-size:11px; color:var(--gray);">Rate is set by admin and may change anytime.</span>
+            </div>
+            <div style="font-size:11px; color:var(--gray-light); margin-bottom:12px;">Enter the amount of NVT you want to spend:</div>
+            <div class="conversion-input-row">
+                <input type="number" class="conversion-input" id="convert-nvt-input" placeholder="NVT amount..." min="1" oninput="previewConversion()" />
+                <button class="btn-convert" onclick="doConversion()">CONVERT</button>
+            </div>
+            <div class="conversion-preview" id="conv-preview">
+                You will receive: <b id="conv-preview-crc">—</b> CRC
+            </div>
+        </div>
+
+        <div style="background:var(--card); border:1px solid var(--card-border); border-radius:14px; padding:16px; margin-top:12px;">
+            <div style="font-size:11px; color:var(--gray); letter-spacing:1px; text-transform:uppercase; margin-bottom:12px;">Your Balances</div>
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+                <span style="color:var(--gray-light);">🪙 NVT Balance</span>
+                <span style="font-family:'Orbitron',monospace; color:var(--gold); font-size:13px;" id="conv-nvt-bal">0</span>
+            </div>
+            <div style="display:flex; justify-content:space-between; align-items:center;">
+                <span style="color:var(--gray-light);">🌕 CRC Balance</span>
+                <span style="font-family:'Orbitron',monospace; color:var(--crc); font-size:13px;" id="conv-crc-bal">0</span>
+            </div>
+        </div>
+    </div>
+
     <!-- RANK PAGE -->
     <div id="rank-page" class="overlay">
         <button class="close-btn" onclick="closeAll()">✕</button>
@@ -1499,6 +1601,27 @@
             <p id="wallet-status" style="color:var(--gray-light); margin-bottom:22px; font-size:13px; line-height:1.6;">Airdrop distributions will be sent here.</p>
             <div id="ton-connect-button" style="display:flex; justify-content:center;"></div>
         </div>
+    </div>
+
+    <!-- AIRDROP PAGE -->
+    <div id="airdrop-page" class="overlay">
+        <button class="close-btn" onclick="closeAll()">✕</button>
+        <div class="page-title">Airdrop</div>
+        <div class="airdrop-hero">
+            <div style="font-size:52px; margin-bottom:14px;">🪂</div>
+            <h3>CRC AIRDROP</h3>
+            <p>Hold CRC coins in your balance to qualify for the upcoming airdrop. The more CRC you hold, the bigger your share!</p>
+            <div style="margin-top:18px; padding:14px; background:rgba(255,215,0,0.07); border-radius:12px; border:1px solid rgba(255,215,0,0.2);">
+                <div style="font-size:10px; color:var(--gray); letter-spacing:1px; text-transform:uppercase; margin-bottom:6px;">Your CRC Snapshot</div>
+                <div style="font-family:'Orbitron',monospace; font-size:28px; color:var(--crc); font-weight:900;" id="airdrop-crc-display">0</div>
+                <div style="font-size:11px; color:var(--gray); margin-top:4px;">CRC</div>
+            </div>
+        </div>
+        <div class="card" style="flex-direction:column; align-items:flex-start; gap:8px;">
+            <b>📋 How to qualify?</b>
+            <small>1. Convert NVT to CRC via the Convert tab.<br>2. Keep your CRC balance above 0 during snapshot.<br>3. Connect your TON wallet to receive distribution.</small>
+        </div>
+        <button class="btn-action" style="width:100%; padding:14px; margin-top:6px;" onclick="showPage('convert-page')">🌕 Get CRC Coins</button>
     </div>
 
     <!-- BOOST PAGE -->
@@ -1519,9 +1642,7 @@
         </div>
     </div>
 
-    <!-- ============================================
-         ADMIN SECRET KEY MODAL
-    ============================================ -->
+    <!-- ADMIN KEY MODAL -->
     <div id="admin-key-modal">
         <div class="admin-modal-box">
             <div class="admin-shield">🛡️</div>
@@ -1536,9 +1657,7 @@
         </div>
     </div>
 
-    <!-- ============================================
-         ADMIN CONTROL PANEL
-    ============================================ -->
+    <!-- ADMIN CONTROL PANEL -->
     <div id="admin-panel">
         <div class="admin-header">
             <div>
@@ -1572,7 +1691,7 @@
             <!-- Announcement -->
             <div class="admin-section">
                 <div class="admin-section-title"><span>📢</span> Global Announcement</div>
-                <input type="text" class="admin-input" id="a-announcement" placeholder="Enter announcement message for all users..." />
+                <input type="text" class="admin-input" id="a-announcement" placeholder="Enter announcement message..." />
                 <div style="display:flex; gap:8px;">
                     <button class="admin-btn admin-btn-gold admin-btn-full" style="flex:2;" onclick="setAnnouncement()">BROADCAST</button>
                     <button class="admin-btn admin-btn-red admin-btn-full" style="flex:1;" onclick="clearAnnouncement()">CLEAR</button>
@@ -1582,32 +1701,66 @@
             <!-- Global Settings -->
             <div class="admin-section">
                 <div class="admin-section-title"><span>⚙️</span> Global Settings</div>
+
+                <!-- Maintenance Mode -->
                 <div class="admin-toggle-row">
                     <div>
                         <div class="admin-toggle-label">Maintenance Mode</div>
-                        <div class="admin-toggle-sublabel">Locks app for all users</div>
+                        <div class="admin-toggle-sublabel">Locks app (Admin UID bypasses this)</div>
                     </div>
                     <label class="toggle-switch">
                         <input type="checkbox" id="a-maintenance-toggle" onchange="toggleMaintenance()">
                         <span class="toggle-slider"></span>
                     </label>
                 </div>
+
                 <div class="admin-divider"></div>
+
+                <!-- Airdrop Tab Toggle -->
+                <div class="admin-toggle-row">
+                    <div>
+                        <div class="admin-toggle-label">Show Airdrop Tab</div>
+                        <div class="admin-toggle-sublabel">Toggle Airdrop nav item visibility</div>
+                    </div>
+                    <label class="toggle-switch toggle-green">
+                        <input type="checkbox" id="a-airdrop-toggle" onchange="toggleAirdropTab()">
+                        <span class="toggle-slider"></span>
+                    </label>
+                </div>
+
+                <div class="admin-divider"></div>
+
+                <!-- Mining Rate -->
                 <div class="admin-toggle-row" style="display:block;">
                     <div class="admin-toggle-label" style="margin-bottom:8px;">Global Mining Rate Multiplier</div>
                     <div class="admin-input-row">
-                        <input type="number" class="admin-input" id="a-mining-rate" placeholder="e.g. 1.5 (default: 1)" min="0.1" max="100" step="0.1" style="margin-bottom:0;" />
+                        <input type="number" class="admin-input" id="a-mining-rate" placeholder="e.g. 1.5" min="0.1" max="100" step="0.1" style="margin-bottom:0;" />
                         <button class="admin-btn" onclick="saveMiningRate()">SET</button>
                     </div>
-                    <div style="font-size:11px; color:var(--gray); margin-top:6px;">Multiplies all tap earnings. 1 = normal, 2 = double.</div>
+                    <div style="font-size:11px; color:var(--gray); margin-top:6px;">1 = normal, 2 = double earnings per tap.</div>
                 </div>
+
                 <div class="admin-divider"></div>
+
+                <!-- Energy Cap -->
                 <div class="admin-toggle-row" style="display:block;">
                     <div class="admin-toggle-label" style="margin-bottom:8px;">Global Energy Limit Cap</div>
                     <div class="admin-input-row">
-                        <input type="number" class="admin-input" id="a-energy-cap" placeholder="e.g. 5000 (default: 500)" min="500" step="500" style="margin-bottom:0;" />
+                        <input type="number" class="admin-input" id="a-energy-cap" placeholder="e.g. 5000" min="500" step="500" style="margin-bottom:0;" />
                         <button class="admin-btn" onclick="saveEnergyCap()">SET</button>
                     </div>
+                </div>
+
+                <div class="admin-divider"></div>
+
+                <!-- CRC Exchange Rate -->
+                <div class="admin-toggle-row" style="display:block;">
+                    <div class="admin-toggle-label" style="margin-bottom:8px;">🌕 NVT → CRC Exchange Rate</div>
+                    <div class="admin-input-row">
+                        <input type="number" class="admin-input" id="a-exchange-rate" placeholder="NVT per 1 CRC (e.g. 1000)" min="1" step="1" style="margin-bottom:0;" />
+                        <button class="admin-btn admin-btn-crc" onclick="saveExchangeRate()">SET</button>
+                    </div>
+                    <div style="font-size:11px; color:var(--gray); margin-top:6px;">How many NVT it costs to get 1 CRC.</div>
                 </div>
             </div>
 
@@ -1619,22 +1772,17 @@
                     <div class="admin-tab" id="tab-video" onclick="switchAdminTaskTab('video')">VIDEO</div>
                 </div>
                 <div id="a-task-category-label" style="font-size:11px; color:var(--gray); margin-bottom:12px; letter-spacing:1px;">SOCIAL TASKS</div>
-
-                <!-- Add New Task -->
-                <input type="text" class="admin-input" id="a-task-name" placeholder="Task Title (e.g. Follow Twitter)" />
+                <input type="text" class="admin-input" id="a-task-name" placeholder="Task Title" />
                 <input type="url" class="admin-input" id="a-task-link" placeholder="Task Link (https://...)" />
                 <div class="admin-input-row" style="margin-bottom:10px;">
                     <input type="number" class="admin-input" id="a-task-reward" placeholder="Reward (NVT)" min="1" style="margin-bottom:0;" />
                     <button class="admin-btn admin-btn-green" onclick="addTask()">ADD</button>
                 </div>
-
                 <div class="admin-divider"></div>
-
-                <!-- Existing Tasks List -->
                 <div id="a-task-list"></div>
             </div>
 
-            <!-- User Management -->
+            <!-- User Management (Pro: edit NVT + CRC) -->
             <div class="admin-section">
                 <div class="admin-section-title"><span>👤</span> User Management</div>
                 <div class="admin-input-row" style="margin-bottom:10px;">
@@ -1652,8 +1800,12 @@
                         <div class="admin-user-row-val" id="a-u-id">—</div>
                     </div>
                     <div class="admin-user-row">
-                        <div class="admin-user-row-label">Balance</div>
+                        <div class="admin-user-row-label">NVT Balance</div>
                         <div class="admin-user-row-val" id="a-u-bal">—</div>
+                    </div>
+                    <div class="admin-user-row">
+                        <div class="admin-user-row-label">CRC Balance</div>
+                        <div class="admin-user-row-val" id="a-u-crc">—</div>
                     </div>
                     <div class="admin-user-row">
                         <div class="admin-user-row-label">Level</div>
@@ -1664,24 +1816,31 @@
                         <div class="admin-user-row-val" id="a-u-status">—</div>
                     </div>
                     <div class="admin-divider"></div>
-                    <input type="number" class="admin-input" id="a-u-new-bal" placeholder="Set New Balance..." min="0" />
-                    <div style="display:flex; gap:8px;">
-                        <button class="admin-btn admin-btn-gold" style="flex:1; padding:10px;" onclick="setUserBalance()">SET BAL</button>
+                    <!-- Dual balance edit -->
+                    <div style="font-size:10px; color:var(--gray); letter-spacing:1px; text-transform:uppercase; margin-bottom:8px;">Edit Balances</div>
+                    <div class="admin-dual-input-row">
+                        <input type="number" class="admin-input" id="a-u-new-bal" placeholder="New NVT balance..." min="0" />
+                        <input type="number" class="admin-input crc-input" id="a-u-new-crc" placeholder="New CRC..." min="0" />
+                    </div>
+                    <div style="display:flex; gap:8px; flex-wrap:wrap;">
+                        <button class="admin-btn admin-btn-gold" style="flex:1; padding:10px;" onclick="setUserBalance()">SET NVT</button>
+                        <button class="admin-btn admin-btn-crc" style="flex:1; padding:10px;" onclick="setUserCRC()">SET CRC</button>
                         <button class="admin-btn admin-btn-red" style="flex:1; padding:10px;" onclick="blockUser()">BLOCK</button>
                         <button class="admin-btn admin-btn-green" style="flex:1; padding:10px;" onclick="unblockUser()">UNBLOCK</button>
                     </div>
                 </div>
             </div>
 
-            <!-- Status message -->
             <div id="admin-status-msg"></div>
-
         </div>
     </div>
 
+    <!-- BOTTOM NAV -->
     <div class="nav">
         <div class="nav-item active" onclick="closeAll()">Home</div>
         <div class="nav-item" onclick="showPage('tasks-page')"><span id="task-badge" class="badge"></span>Tasks</div>
+        <div class="nav-item" onclick="showPage('convert-page')">Convert</div>
+        <div class="nav-item" id="nav-airdrop" onclick="showPage('airdrop-page')" style="display:none;">Airdrop</div>
         <div class="nav-item" onclick="showPage('boost-page')">Boost</div>
         <div class="nav-item" onclick="showPage('rank-page')">Rank</div>
         <div class="nav-item" onclick="showPage('friends-page')">Friends</div>
@@ -1691,7 +1850,7 @@
 
     <script>
         // ============================================
-        // FIREBASE CONFIGURATION
+        // FIREBASE CONFIG (UNCHANGED)
         // ============================================
         const firebaseConfig = {
             apiKey: "AIzaSyD3vuw74WjiWytZMbVrtNzn7igIyjRMC1c",
@@ -1708,20 +1867,29 @@
 
         const uid = tg.initDataUnsafe?.user?.id || "887766";
         const uName = tg.initDataUnsafe?.user?.first_name || "Guest";
-
-        // Read referrer from start_param if any
         const startParam = tg.initDataUnsafe?.start_param || null;
         const referrerId = (startParam && startParam !== String(uid)) ? startParam : null;
 
         // ============================================
-        // CORE GAME STATE (UNCHANGED)
+        // ADMIN UID — change this to your real UID
+        // Even if maintenance is ON, this UID sees the app
         // ============================================
-        let balance = 0, energy = 500, maxEnergy = 500, level = 1, botLevel = 0, botStored = 0;
-        let globalMiningRate = 1; // Admin-controlled multiplier
+        const ADMIN_UID = "887766"; // <-- set your admin UID here
+        const ADMIN_SECRET_KEY = "242663";
+
+        // ============================================
+        // CORE GAME STATE
+        // ============================================
+        let balance = 0, crcBalance = 0, energy = 500, maxEnergy = 500;
+        let level = 1, botLevel = 0, botStored = 0;
+        let globalMiningRate = 1;
+        let exchangeRate = 1000; // NVT per 1 CRC (fetched from Firebase)
+
+        // Tiered referral bonuses
+        const REFERRAL_TIERS = [500, 700, 1500]; // 1st, 2nd, 3rd friend
 
         const DAILY_REWARDS = Array.from({length: 30}, (_, i) => Math.floor(200 + (i * (29800/29))));
 
-        // Default tasks (fallback if Firebase /tasks not set)
         const DEFAULT_TASK_CATEGORIES = {
             social: [
                 { name: "Follow Facebook", reward: 1000, link: "https://www.facebook.com/profile.php?id=61587487880831", id: "fb_01" },
@@ -1733,18 +1901,17 @@
             ],
             video: [
                 { name: "FB Reel", reward: 100, link: "https://www.facebook.com/reel/911261561459485/?app=fbl", id: "vid_01" },
-                { name: "FB Reel", reward: 100, link: "https://www.facebook.com/reel/911261561459485/?app=fbl", id: "vid_02" },
+                { name: "FB Reel #2", reward: 100, link: "https://www.facebook.com/reel/911261561459485/?app=fbl", id: "vid_02" },
                 { name: "Instagram Reel", reward: 300, link: "https://www.instagram.com/reel/DURDQIGEw6S/?igsh=YXZoMWpsOWQwOTd3", id: "vid_03" },
                 { name: "Twitter Reel", reward: 300, link: "https://x.com/i/status/2018397320791077140", id: "vid_04" },
-                { name: "YouTube Reel", reward: 300, link: "https://youtube.com/shorts/ACHRUfJNVdE?si=tGuL6yiTcIPt1AAc", id: "vid_05" }
+                { name: "YouTube Short", reward: 300, link: "https://youtube.com/shorts/ACHRUfJNVdE?si=tGuL6yiTcIPt1AAc", id: "vid_05" }
             ]
         };
 
-        // Live task categories (synced from Firebase real-time)
         let TASK_CATEGORIES = JSON.parse(JSON.stringify(DEFAULT_TASK_CATEGORIES));
 
         // ============================================
-        // FORMAT HELPER (UNCHANGED)
+        // FORMAT HELPER
         // ============================================
         function format(n) {
             if (n >= 1000000) return (n / 1000000).toFixed(2) + 'M';
@@ -1756,14 +1923,15 @@
         // FIREBASE REAL-TIME LISTENERS
         // ============================================
 
-        // Listen to global settings (admin-controlled)
         db.ref('settings').on('value', (snap) => {
             if (!snap.exists()) return;
             const s = snap.val();
 
-            // Maintenance mode
-            if (s.maintenance === true) {
+            // Maintenance: bypass for admin UID
+            if (s.maintenance === true && String(uid) !== String(ADMIN_UID)) {
                 document.getElementById('maintenance-overlay').style.display = 'flex';
+                document.getElementById('maintenance-overlay').querySelector('h2').innerText = 'MAINTENANCE MODE';
+                document.getElementById('maintenance-overlay').querySelector('p').innerText = 'NovaTap is currently under maintenance. We\'ll be back shortly!';
             } else {
                 document.getElementById('maintenance-overlay').style.display = 'none';
             }
@@ -1780,46 +1948,49 @@
             // Mining rate
             if (s.miningRate) globalMiningRate = parseFloat(s.miningRate) || 1;
 
-            // Sync admin toggle state if panel open
+            // Exchange rate
+            if (s.exchangeRate) {
+                exchangeRate = parseFloat(s.exchangeRate) || 1000;
+                updateConversionDisplay();
+            }
+
+            // Airdrop tab visibility
+            const navAirdrop = document.getElementById('nav-airdrop');
+            if (navAirdrop) navAirdrop.style.display = (s.showAirdrop === true) ? 'flex' : 'none';
+
+            // Sync admin panel inputs
             const tog = document.getElementById('a-maintenance-toggle');
             if (tog) tog.checked = (s.maintenance === true);
+            const airdropTog = document.getElementById('a-airdrop-toggle');
+            if (airdropTog) airdropTog.checked = (s.showAirdrop === true);
             const mri = document.getElementById('a-mining-rate');
             if (mri && document.activeElement !== mri) mri.value = s.miningRate || 1;
             const eci = document.getElementById('a-energy-cap');
             if (eci && document.activeElement !== eci) eci.value = s.energyCap || 500;
+            const eri = document.getElementById('a-exchange-rate');
+            if (eri && document.activeElement !== eri) eri.value = s.exchangeRate || 1000;
             const ai = document.getElementById('a-announcement');
             if (ai && document.activeElement !== ai) ai.value = s.announcement || '';
         });
 
-        // ============================================
-        // DYNAMIC TASKS: Real-time listener from Firebase
-        // When admin adds/removes a task, it instantly
-        // updates TASK_CATEGORIES and refreshes the UI.
-        // ============================================
         db.ref('tasks').on('value', (snap) => {
             if (!snap.exists()) return;
             const t = snap.val();
             if (t.social) TASK_CATEGORIES.social = Array.isArray(t.social) ? t.social : Object.values(t.social);
             if (t.video) TASK_CATEGORIES.video = Array.isArray(t.video) ? t.video : Object.values(t.video);
 
-            // If tasks page is currently open, refresh it
             const tasksPage = document.getElementById('tasks-page');
             if (tasksPage && tasksPage.style.display === 'block') {
-                // Only re-render non-daily tabs to avoid disruption
                 const currentTab = tasksPage.getAttribute('data-current-tab');
-                if (currentTab && currentTab !== 'daily') {
-                    renderTasks(currentTab);
-                }
+                if (currentTab && currentTab !== 'daily') renderTasks(currentTab);
             }
             checkTaskNotification();
         });
 
-        // User data listener (UNCHANGED CORE LOGIC)
         db.ref('users/' + uid).on('value', (snap) => {
             if (snap.exists()) {
                 const d = snap.val();
 
-                // Check if user is blocked
                 if (d.blocked === true) {
                     document.getElementById('maintenance-overlay').style.display = 'flex';
                     document.getElementById('maintenance-overlay').querySelector('h2').innerText = 'ACCESS BLOCKED';
@@ -1828,13 +1999,16 @@
                 }
 
                 balance = d.balance || 0;
+                crcBalance = d.crcBalance || 0;
                 level = d.level || 1;
                 botLevel = d.botLevel || 0;
                 maxEnergy = d.maxEnergy || 500;
+
                 let lastSeen = d.lastSeen || Date.now();
                 let now = Date.now();
                 let secondsPassed = Math.floor((now - lastSeen) / 1000);
                 energy = Math.min(maxEnergy, (d.energy || 0) + (secondsPassed * 1.5));
+
                 if (botLevel > 0) {
                     let cap = botLevel * 500;
                     botStored = Math.min(cap, (d.botStored || 0) + (secondsPassed * (botLevel * 0.2)));
@@ -1843,10 +2017,10 @@
                 updateUI();
                 checkTaskNotification();
             } else {
-                // New user: create record + process referral if applicable
                 db.ref('users/' + uid).set({
                     name: uName,
                     balance: 1000,
+                    crcBalance: 0,
                     level: 1,
                     botLevel: 0,
                     botStored: 0,
@@ -1858,32 +2032,33 @@
                     referralEarned: 0
                 });
 
-                // If user was referred, credit both parties
-                if (referrerId) {
-                    processReferral(referrerId);
-                }
+                if (referrerId) processReferral(referrerId);
             }
         });
 
         // ============================================
-        // REFERRAL SYSTEM
+        // TIERED REFERRAL SYSTEM
         // ============================================
 
         /**
-         * Called once when a new user joins via a referral link.
-         * - Gives the referrer 2500 NVT and logs the new user in the referrer's referrals list.
-         * - Gives the new user 2500 NVT bonus (on top of the 1000 signup bonus).
+         * Tiered referral: 1st friend = 500, 2nd = 700, 3rd = 1500
+         * After 3rd, all get the 3rd-tier value (1500) as a cap.
          */
         function processReferral(refId) {
-            const REFERRAL_BONUS = 2500;
-
             db.ref('users/' + refId).once('value', (snap) => {
                 if (!snap.exists()) return;
                 const refData = snap.val();
 
-                // Credit referrer
+                const currentCount = refData.referralCount || 0;
+                // Determine bonus based on which friend this is (1-indexed)
+                const friendNumber = currentCount + 1;
+                let REFERRAL_BONUS;
+                if (friendNumber === 1) REFERRAL_BONUS = REFERRAL_TIERS[0];      // 500
+                else if (friendNumber === 2) REFERRAL_BONUS = REFERRAL_TIERS[1]; // 700
+                else REFERRAL_BONUS = REFERRAL_TIERS[2];                          // 1500 (3rd+)
+
                 const newRefBal = (refData.balance || 0) + REFERRAL_BONUS;
-                const newRefCount = (refData.referralCount || 0) + 1;
+                const newRefCount = currentCount + 1;
                 const newRefEarned = (refData.referralEarned || 0) + REFERRAL_BONUS;
 
                 db.ref('users/' + refId).update({
@@ -1892,20 +2067,18 @@
                     referralEarned: newRefEarned
                 });
 
-                // Log the referral under referrer's node for display
                 db.ref('users/' + refId + '/referrals/' + uid).set({
                     name: uName,
-                    joinedAt: Date.now()
+                    joinedAt: Date.now(),
+                    tier: friendNumber,
+                    bonus: REFERRAL_BONUS
                 });
 
-                // Credit new user too
-                db.ref('users/' + uid).update({ balance: 1000 + REFERRAL_BONUS });
+                // New user gets a flat 500 NVT signup bonus on top of 1000
+                db.ref('users/' + uid).update({ balance: 1500 });
             });
         }
 
-        /**
-         * Load and display the referral list for the current user in the Friends page.
-         */
         function loadReferrals() {
             const listDiv = document.getElementById('friend-list');
             const totalEl = document.getElementById('ref-total-count');
@@ -1925,11 +2098,7 @@
                 const referrals = d.referrals || null;
 
                 if (!referrals || Object.keys(referrals).length === 0) {
-                    listDiv.innerHTML = `
-                        <div class="empty-state">
-                            <div class="empty-icon">🤝</div>
-                            No referrals yet.<br>Share your link to invite friends and earn rewards!
-                        </div>`;
+                    listDiv.innerHTML = `<div class="empty-state"><div class="empty-icon">🤝</div>No referrals yet.<br>Share your link to invite friends!</div>`;
                     return;
                 }
 
@@ -1940,9 +2109,12 @@
                 refs.forEach(([refUid, refInfo]) => {
                     const name = refInfo.name || 'Unknown';
                     const initial = name.charAt(0).toUpperCase();
-                    const joinDate = refInfo.joinedAt
-                        ? new Date(refInfo.joinedAt).toLocaleDateString(undefined, { month: 'short', day: 'numeric' })
-                        : '—';
+                    const joinDate = refInfo.joinedAt ? new Date(refInfo.joinedAt).toLocaleDateString(undefined, { month: 'short', day: 'numeric' }) : '—';
+                    const tier = refInfo.tier || 1;
+                    const bonus = refInfo.bonus || REFERRAL_TIERS[0];
+                    const tierClass = tier === 1 ? 'tier1' : (tier === 2 ? 'tier2' : 'tier3');
+                    const tierLabel = tier === 1 ? '1ST' : (tier === 2 ? '2ND' : '3RD+');
+
                     html += `
                         <div class="referral-item">
                             <div class="referral-item-left">
@@ -1952,7 +2124,10 @@
                                     <div class="referral-id">ID: ${refUid} · Joined ${joinDate}</div>
                                 </div>
                             </div>
-                            <div class="referral-badge">+2,500</div>
+                            <div>
+                                <div class="referral-badge ${tierClass}" style="margin-bottom:3px;">${tierLabel}</div>
+                                <div style="font-family:'Orbitron',monospace; font-size:9px; color:var(--gold); text-align:center;">+${format(bonus)}</div>
+                            </div>
                         </div>`;
                 });
 
@@ -1970,25 +2145,91 @@
         }
 
         // ============================================
-        // UPDATE UI (UNCHANGED)
+        // CONVERSION FEATURE (NVT → CRC)
+        // ============================================
+        function updateConversionDisplay() {
+            const rateEl = document.getElementById('conv-rate-display');
+            if (rateEl) rateEl.innerText = format(exchangeRate) + ' NVT = 1 CRC';
+
+            const nvtBalEl = document.getElementById('conv-nvt-bal');
+            if (nvtBalEl) nvtBalEl.innerText = format(balance);
+            const crcBalEl = document.getElementById('conv-crc-bal');
+            if (crcBalEl) crcBalEl.innerText = format(crcBalance);
+
+            const airdropCrc = document.getElementById('airdrop-crc-display');
+            if (airdropCrc) airdropCrc.innerText = format(crcBalance);
+
+            previewConversion();
+        }
+
+        function previewConversion() {
+            const nvtInput = parseFloat(document.getElementById('convert-nvt-input')?.value || '0');
+            const previewEl = document.getElementById('conv-preview-crc');
+            if (!previewEl) return;
+            if (!nvtInput || nvtInput <= 0 || isNaN(nvtInput)) {
+                previewEl.innerText = '—';
+                return;
+            }
+            const crcToGet = Math.floor(nvtInput / exchangeRate);
+            previewEl.innerText = format(crcToGet);
+        }
+
+        function doConversion() {
+            const nvtInput = parseFloat(document.getElementById('convert-nvt-input').value || '0');
+            if (!nvtInput || nvtInput <= 0 || isNaN(nvtInput)) {
+                tg.showAlert('Enter a valid NVT amount to convert.'); return;
+            }
+            if (nvtInput > balance) {
+                tg.showAlert('Insufficient NVT balance!'); return;
+            }
+            const crcToGet = Math.floor(nvtInput / exchangeRate);
+            if (crcToGet < 1) {
+                tg.showAlert(`Minimum conversion is ${format(exchangeRate)} NVT for 1 CRC.`); return;
+            }
+
+            balance -= nvtInput;
+            crcBalance += crcToGet;
+            save();
+            updateUI();
+            updateConversionDisplay();
+            document.getElementById('convert-nvt-input').value = '';
+            document.getElementById('conv-preview-crc').innerText = '—';
+            tg.showAlert(`✅ Converted ${format(nvtInput)} NVT → ${format(crcToGet)} CRC!`);
+        }
+
+        // ============================================
+        // UPDATE UI
         // ============================================
         function updateUI() {
             const rank = balance < 10000 ? "Bronze" : (balance < 50000 ? "Silver" : "Gold");
             document.getElementById("coin-count").innerText = format(balance);
+            document.getElementById("crc-count").innerText = format(crcBalance);
             document.getElementById("energy-val").innerText = Math.floor(energy);
             document.getElementById("max-energy-text").innerText = maxEnergy;
             document.getElementById("bar-fill").style.width = (energy / maxEnergy) * 100 + "%";
             document.getElementById("user-display").innerText = "Hi, " + uName;
             document.getElementById("rank-display").innerText = rank;
             document.getElementById("level-text").innerText = "Level " + level;
-            document.getElementById("btn-lvl-text").innerText = "LVL " + level;
+
+            // Avatar energy state
+            const tapBtn = document.getElementById("tap-btn");
+            if (energy <= 0) {
+                tapBtn.classList.add('no-energy');
+            } else {
+                tapBtn.classList.remove('no-energy');
+            }
+
+            // Profile
             document.getElementById("p-initial").innerText = uName.charAt(0).toUpperCase();
             document.getElementById("p-name").innerText = uName;
             document.getElementById("p-id").innerText = "ID: " + uid;
             document.getElementById("p-rank").innerText = rank;
             document.getElementById("p-bal").innerText = format(balance);
+            document.getElementById("p-crc-bal").innerText = format(crcBalance);
             document.getElementById("p-lvl").innerText = level;
             document.getElementById("p-energy").innerText = maxEnergy;
+
+            // Boost info
             document.getElementById("bot-info").innerText = `Level ${botLevel} (Cost: ${format((botLevel+1)*10000)})`;
             document.getElementById("tap-upgrade-info").innerText = `Level ${level} (Cost: ${format(level*2000)})`;
             document.getElementById("energy-lv-info").innerText = `Max: ${maxEnergy} (Cost: ${format(maxEnergy*5)})`;
@@ -1998,15 +2239,16 @@
                 document.getElementById("bot-stored-val").innerText = format(botStored);
                 document.getElementById("bot-claim-btn").style.display = botStored >= (botLevel * 10) ? 'block' : 'none';
             }
+
+            // Sync conversion display
+            updateConversionDisplay();
         }
 
         // ============================================
-        // RENDER TASKS (reads from live TASK_CATEGORIES)
+        // RENDER TASKS
         // ============================================
         function renderTasks(category) {
-            // Track current tab on the tasks-page element
             document.getElementById('tasks-page').setAttribute('data-current-tab', category);
-
             const listDiv = document.getElementById("task-list-dynamic");
             let tHTML = '';
             if (category === 'daily') {
@@ -2019,13 +2261,7 @@
                     let done = (i <= dayCount);
                     let reward = DAILY_REWARDS[i-1];
                     let activeClass = canClaim ? 'daily-active' : '';
-                    tHTML += `
-                        <div class="daily-item ${activeClass}"
-                             onclick="${canClaim ? `claimDailyCheckin(${i}, ${reward})` : ''}"
-                             style="${done ? 'background:rgba(0,212,255,0.08); border-color:rgba(0,212,255,0.2); color:var(--neon);' : (canClaim ? '' : 'opacity:0.5')}">
-                            Day ${i}<br><b>${format(reward)}</b><br>
-                            <small>${done ? '✅' : (canClaim ? 'Claim' : '🔒')}</small>
-                        </div>`;
+                    tHTML += `<div class="daily-item ${activeClass}" onclick="${canClaim ? `claimDailyCheckin(${i}, ${reward})` : ''}" style="${done ? 'background:rgba(0,212,255,0.08); border-color:rgba(0,212,255,0.2); color:var(--neon);' : (canClaim ? '' : 'opacity:0.5')}">Day ${i}<br><b>${format(reward)}</b><br><small>${done ? '✅' : (canClaim ? 'Claim' : '🔒')}</small></div>`;
                 }
                 tHTML += '</div>';
             } else {
@@ -2036,7 +2272,7 @@
                         tHTML += `<div class="card"><div><b>${t.name}</b><br><small>+${format(t.reward)} NVT</small></div><button class="btn-action" onclick="doTask('${t.link}', ${t.reward}, '${t.id}', '${category}')">Claim</button></div>`;
                     }
                 });
-                if (tHTML === '') tHTML = '<p style="text-align:center; color:var(--gray); margin-top:40px; font-family:Rajdhani,sans-serif; letter-spacing:1px;">No tasks left! 🎉</p>';
+                if (tHTML === '') tHTML = '<p style="text-align:center; color:var(--gray); margin-top:40px; font-family:Rajdhani,sans-serif;">No tasks left! 🎉</p>';
             }
             listDiv.innerHTML = tHTML;
             checkTaskNotification();
@@ -2059,20 +2295,54 @@
         }
 
         // ============================================
-        // TAP MECHANIC (applies globalMiningRate)
+        // TAP MECHANIC — Scale-up animation + energy state
         // ============================================
-        document.getElementById("tap-btn").addEventListener("touchstart", (e) => {
+        const tapBtn = document.getElementById("tap-btn");
+
+        tapBtn.addEventListener("touchstart", (e) => {
             e.preventDefault();
+            const btn = document.getElementById("tap-btn");
+
+            if (energy <= 0) {
+                btn.classList.add('no-energy');
+                return;
+            }
+
             let earn = Math.floor(level * 2 * globalMiningRate);
             if (energy >= earn) {
-                balance += earn; energy -= earn;
+                balance += earn;
+                energy -= earn;
+
+                // Scale-up animation
+                btn.classList.add('tapping');
+                setTimeout(() => btn.classList.remove('tapping'), 160);
+
+                // Floating +N animation
                 const t = e.touches[0];
                 const el = document.createElement("div");
-                el.className = "tap-anim"; el.innerText = "+" + earn;
-                el.style.left = t.clientX + "px"; el.style.top = t.clientY + "px";
+                el.className = "tap-anim";
+                el.innerText = "+" + earn;
+                el.style.left = t.clientX + "px";
+                el.style.top = t.clientY + "px";
                 document.body.appendChild(el);
                 setTimeout(() => el.remove(), 800);
-                updateUI(); save();
+
+                updateUI();
+                save();
+            }
+        });
+
+        // Also handle click for desktop testing
+        tapBtn.addEventListener("click", () => {
+            if (energy <= 0) return;
+            let earn = Math.floor(level * 2 * globalMiningRate);
+            if (energy >= earn) {
+                balance += earn;
+                energy -= earn;
+                tapBtn.classList.add('tapping');
+                setTimeout(() => tapBtn.classList.remove('tapping'), 160);
+                updateUI();
+                save();
             }
         });
 
@@ -2085,39 +2355,30 @@
         }, 1000);
 
         // ============================================
-        // BOOST FUNCTIONS (UNCHANGED)
+        // BOOST FUNCTIONS
         // ============================================
         function buyBot() {
             let cost = (botLevel + 1) * 10000;
-            if (balance >= cost) {
-                balance -= cost; botLevel++; save(); updateUI(); tg.showAlert("Bot Upgraded!");
-            } else {
-                tg.showAlert("Insufficient coins! You need more NVT.");
-            }
+            if (balance >= cost) { balance -= cost; botLevel++; save(); updateUI(); tg.showAlert("Bot Upgraded!"); }
+            else { tg.showAlert("Insufficient coins!"); }
         }
         function upgradeTap() {
             let cost = level * 2000;
-            if (balance >= cost) {
-                balance -= cost; level++; save(); updateUI(); tg.showAlert("Tap Upgraded!");
-            } else {
-                tg.showAlert("Insufficient coins! You need more NVT.");
-            }
+            if (balance >= cost) { balance -= cost; level++; save(); updateUI(); tg.showAlert("Tap Upgraded!"); }
+            else { tg.showAlert("Insufficient coins!"); }
         }
         function upgradeEnergy() {
             let cost = maxEnergy * 5;
-            if (balance >= cost) {
-                balance -= cost; maxEnergy += 500; save(); updateUI(); tg.showAlert("Energy Increased!");
-            } else {
-                tg.showAlert("Insufficient coins! You need more NVT.");
-            }
+            if (balance >= cost) { balance -= cost; maxEnergy += 500; save(); updateUI(); tg.showAlert("Energy Increased!"); }
+            else { tg.showAlert("Insufficient coins!"); }
         }
 
         function save() {
-            db.ref('users/' + uid).update({ balance, level, botLevel, botStored, maxEnergy, energy, lastSeen: Date.now() });
+            db.ref('users/' + uid).update({ balance, crcBalance, level, botLevel, botStored, maxEnergy, energy, lastSeen: Date.now(), name: uName });
         }
 
         // ============================================
-        // NAVIGATION (UNCHANGED)
+        // NAVIGATION
         // ============================================
         function showPage(id) {
             closeAll();
@@ -2125,14 +2386,16 @@
             if (id === 'tasks-page') renderTasks('daily');
             if (id === 'rank-page') loadLeaderboard();
             if (id === 'friends-page') loadReferrals();
+            if (id === 'convert-page') updateConversionDisplay();
+            if (id === 'airdrop-page') { document.getElementById('airdrop-crc-display').innerText = format(crcBalance); }
         }
 
-        function closeAll() { document.querySelectorAll('.overlay').forEach(p => p.style.display='none'); }
+        function closeAll() {
+            document.querySelectorAll('.overlay').forEach(p => p.style.display='none');
+        }
 
         function claimBot() {
-            if (botStored > 0) {
-                balance += botStored; botStored = 0; updateUI(); save(); tg.showAlert("Bot earnings claimed!");
-            }
+            if (botStored > 0) { balance += botStored; botStored = 0; updateUI(); save(); tg.showAlert("Bot earnings claimed!"); }
         }
 
         function invite() {
@@ -2142,20 +2405,21 @@
 
         function loadLeaderboard() {
             db.ref('users').orderByChild('balance').limitToLast(10).once('value', (snap) => {
-                let players = []; snap.forEach(child => { players.push(child.val()); });
+                let players = [];
+                snap.forEach(child => { players.push(child.val()); });
                 players.sort((a, b) => b.balance - a.balance);
                 let html = '';
                 players.forEach((p, i) => {
                     const medals = ['🥇','🥈','🥉'];
                     const medal = medals[i] || `#${i+1}`;
-                    html += `<div class="card" style="${p.name === uName ? 'border-color:rgba(243,186,47,0.4); background:rgba(243,186,47,0.05);' : ''}"><span><b>${medal} ${p.name}</b></span><b style="font-family:'Orbitron',monospace; font-size:13px; color:var(--gold)">${format(p.balance)}</b></div>`;
+                    html += `<div class="card" style="${p.name === uName ? 'border-color:rgba(243,186,47,0.4); background:rgba(243,186,47,0.05);' : ''}"><span><b>${medal} ${p.name || 'Unknown'}</b></span><b style="font-family:'Orbitron',monospace; font-size:13px; color:var(--gold)">${format(p.balance)}</b></div>`;
                 });
                 document.getElementById("leaderboard-list").innerHTML = html;
             });
         }
 
         // ============================================
-        // TON CONNECT (UNCHANGED)
+        // TON CONNECT
         // ============================================
         let tonConnectUI;
         async function initTonConnect() {
@@ -2168,22 +2432,16 @@
 
         // ============================================
         // ADMIN TRIGGER: 5 rapid taps on Profile Avatar
-        // (Relocated from NVT button to Profile Picture)
         // ============================================
         let avatarTapCount = 0;
         let avatarTapTimer = null;
-        const ADMIN_SECRET_KEY = "242663";
 
         function handleAvatarTap() {
             avatarTapCount++;
-
-            // Visual micro-feedback
             const avatar = document.getElementById('p-initial');
             avatar.classList.add('tapped');
             setTimeout(() => avatar.classList.remove('tapped'), 300);
-
             clearTimeout(avatarTapTimer);
-
             if (avatarTapCount >= 5) {
                 avatarTapCount = 0;
                 openAdminModal();
@@ -2245,15 +2503,10 @@
             setTimeout(() => { el.style.display = 'none'; }, 3000);
         }
 
-        // Load live stats
         function loadAdminStats() {
             db.ref('users').once('value', (snap) => {
                 let userCount = 0, totalCoins = 0;
-                snap.forEach(child => {
-                    const d = child.val();
-                    userCount++;
-                    totalCoins += (d.balance || 0);
-                });
+                snap.forEach(child => { const d = child.val(); userCount++; totalCoins += (d.balance || 0); });
                 document.getElementById('a-stat-users').innerText = userCount;
                 document.getElementById('a-stat-total').innerText = format(totalCoins);
             });
@@ -2265,15 +2518,13 @@
         // ---- ANNOUNCEMENT ----
         function setAnnouncement() {
             const msg = document.getElementById('a-announcement').value.trim();
-            db.ref('settings/announcement').set(msg).then(() => {
-                showAdminStatus('✅ Announcement broadcasted!');
-            }).catch(() => showAdminStatus('❌ Failed to broadcast', false));
+            db.ref('settings/announcement').set(msg).then(() => showAdminStatus('✅ Announcement broadcasted!')).catch(() => showAdminStatus('❌ Failed', false));
         }
 
         function clearAnnouncement() {
             db.ref('settings/announcement').set('').then(() => {
                 document.getElementById('a-announcement').value = '';
-                showAdminStatus('✅ Announcement cleared!');
+                showAdminStatus('✅ Cleared!');
             });
         }
 
@@ -2281,14 +2532,22 @@
         function toggleMaintenance() {
             const isOn = document.getElementById('a-maintenance-toggle').checked;
             db.ref('settings/maintenance').set(isOn).then(() => {
-                showAdminStatus(isOn ? '🔧 Maintenance Mode ON' : '✅ Maintenance Mode OFF');
+                showAdminStatus(isOn ? '🔧 Maintenance ON (You bypass as Admin)' : '✅ Maintenance OFF');
+            });
+        }
+
+        // ---- AIRDROP TAB TOGGLE ----
+        function toggleAirdropTab() {
+            const isOn = document.getElementById('a-airdrop-toggle').checked;
+            db.ref('settings/showAirdrop').set(isOn).then(() => {
+                showAdminStatus(isOn ? '✅ Airdrop Tab Shown' : '🔒 Airdrop Tab Hidden');
             });
         }
 
         // ---- MINING RATE ----
         function saveMiningRate() {
             const rate = parseFloat(document.getElementById('a-mining-rate').value);
-            if (isNaN(rate) || rate <= 0) { showAdminStatus('❌ Invalid rate value', false); return; }
+            if (isNaN(rate) || rate <= 0) { showAdminStatus('❌ Invalid rate', false); return; }
             db.ref('settings/miningRate').set(rate).then(() => {
                 document.getElementById('a-stat-rate').innerText = rate + 'x';
                 showAdminStatus('✅ Mining Rate set to ' + rate + 'x');
@@ -2298,9 +2557,18 @@
         // ---- ENERGY CAP ----
         function saveEnergyCap() {
             const cap = parseInt(document.getElementById('a-energy-cap').value);
-            if (isNaN(cap) || cap < 500) { showAdminStatus('❌ Minimum energy cap is 500', false); return; }
-            db.ref('settings/energyCap').set(cap).then(() => {
-                showAdminStatus('✅ Energy Cap set to ' + cap);
+            if (isNaN(cap) || cap < 500) { showAdminStatus('❌ Min 500', false); return; }
+            db.ref('settings/energyCap').set(cap).then(() => showAdminStatus('✅ Energy Cap: ' + cap));
+        }
+
+        // ---- EXCHANGE RATE ----
+        function saveExchangeRate() {
+            const rate = parseFloat(document.getElementById('a-exchange-rate').value);
+            if (isNaN(rate) || rate < 1) { showAdminStatus('❌ Invalid exchange rate', false); return; }
+            db.ref('settings/exchangeRate').set(rate).then(() => {
+                exchangeRate = rate;
+                updateConversionDisplay();
+                showAdminStatus('✅ Exchange Rate: ' + format(rate) + ' NVT = 1 CRC');
             });
         }
 
@@ -2319,8 +2587,7 @@
                 let tasks = [];
                 if (snap.exists()) {
                     const val = snap.val();
-                    if (Array.isArray(val)) tasks = val;
-                    else tasks = Object.values(val);
+                    tasks = Array.isArray(val) ? val : Object.values(val);
                 } else {
                     tasks = DEFAULT_TASK_CATEGORIES[adminCurrentTaskCategory] || [];
                 }
@@ -2333,15 +2600,7 @@
                 let html = '';
                 tasks.forEach((t, idx) => {
                     if (!t) return;
-                    html += `
-                        <div class="admin-task-item">
-                            <div style="flex:1; min-width:0;">
-                                <div class="admin-task-name">${t.name}</div>
-                                <div style="font-size:10px; color:var(--gray); overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">${t.link}</div>
-                            </div>
-                            <div class="admin-task-reward">+${format(t.reward)}</div>
-                            <button class="admin-btn admin-btn-red" style="padding:6px 10px; font-size:9px; margin-left:6px;" onclick="removeTask(${idx})">✕</button>
-                        </div>`;
+                    html += `<div class="admin-task-item"><div style="flex:1; min-width:0;"><div class="admin-task-name">${t.name}</div><div style="font-size:10px; color:var(--gray); overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">${t.link}</div></div><div class="admin-task-reward">+${format(t.reward)}</div><button class="admin-btn admin-btn-red" style="padding:6px 10px; font-size:9px; margin-left:6px;" onclick="removeTask(${idx})">✕</button></div>`;
                 });
                 listDiv.innerHTML = html;
             });
@@ -2351,28 +2610,19 @@
             const name = document.getElementById('a-task-name').value.trim();
             const link = document.getElementById('a-task-link').value.trim();
             const reward = parseInt(document.getElementById('a-task-reward').value);
-
-            if (!name || !link || isNaN(reward) || reward < 1) {
-                showAdminStatus('❌ Fill all task fields correctly', false); return;
-            }
-
+            if (!name || !link || isNaN(reward) || reward < 1) { showAdminStatus('❌ Fill all fields', false); return; }
             const newId = adminCurrentTaskCategory + '_' + Date.now();
             const newTask = { name, link, reward, id: newId };
-
             db.ref('tasks/' + adminCurrentTaskCategory).once('value', (snap) => {
                 let tasks = [];
-                if (snap.exists()) {
-                    const val = snap.val();
-                    tasks = Array.isArray(val) ? val : Object.values(val);
-                } else {
-                    tasks = [...(DEFAULT_TASK_CATEGORIES[adminCurrentTaskCategory] || [])];
-                }
+                if (snap.exists()) { const val = snap.val(); tasks = Array.isArray(val) ? val : Object.values(val); }
+                else { tasks = [...(DEFAULT_TASK_CATEGORIES[adminCurrentTaskCategory] || [])]; }
                 tasks.push(newTask);
                 db.ref('tasks/' + adminCurrentTaskCategory).set(tasks).then(() => {
                     document.getElementById('a-task-name').value = '';
                     document.getElementById('a-task-link').value = '';
                     document.getElementById('a-task-reward').value = '';
-                    showAdminStatus('✅ Task added successfully!');
+                    showAdminStatus('✅ Task added!');
                     loadAdminTaskList();
                 });
             });
@@ -2381,12 +2631,8 @@
         function removeTask(idx) {
             db.ref('tasks/' + adminCurrentTaskCategory).once('value', (snap) => {
                 let tasks = [];
-                if (snap.exists()) {
-                    const val = snap.val();
-                    tasks = Array.isArray(val) ? val : Object.values(val);
-                } else {
-                    tasks = [...(DEFAULT_TASK_CATEGORIES[adminCurrentTaskCategory] || [])];
-                }
+                if (snap.exists()) { const val = snap.val(); tasks = Array.isArray(val) ? val : Object.values(val); }
+                else { tasks = [...(DEFAULT_TASK_CATEGORIES[adminCurrentTaskCategory] || [])]; }
                 tasks.splice(idx, 1);
                 db.ref('tasks/' + adminCurrentTaskCategory).set(tasks).then(() => {
                     showAdminStatus('✅ Task removed!');
@@ -2395,13 +2641,12 @@
             });
         }
 
-        // ---- USER MANAGEMENT ----
+        // ---- USER MANAGEMENT (Pro: NVT + CRC edit) ----
         let adminCurrentUserId = null;
 
         function searchUser() {
             const searchId = document.getElementById('a-user-search').value.trim();
             if (!searchId) { showAdminStatus('❌ Enter a User ID', false); return; }
-
             db.ref('users/' + searchId).once('value', (snap) => {
                 if (!snap.exists()) {
                     showAdminStatus('❌ User not found', false);
@@ -2410,13 +2655,14 @@
                 }
                 const d = snap.val();
                 adminCurrentUserId = searchId;
-
                 document.getElementById('a-u-name').innerText = d.name || '—';
                 document.getElementById('a-u-id').innerText = searchId;
                 document.getElementById('a-u-bal').innerText = format(d.balance || 0) + ' NVT';
+                document.getElementById('a-u-crc').innerText = format(d.crcBalance || 0) + ' CRC';
                 document.getElementById('a-u-lvl').innerText = 'Level ' + (d.level || 1);
                 document.getElementById('a-u-status').innerText = d.blocked ? '🔴 BLOCKED' : '🟢 ACTIVE';
                 document.getElementById('a-u-new-bal').value = '';
+                document.getElementById('a-u-new-crc').value = '';
                 document.getElementById('admin-user-result').style.display = 'block';
             });
         }
@@ -2424,10 +2670,20 @@
         function setUserBalance() {
             if (!adminCurrentUserId) return;
             const newBal = parseInt(document.getElementById('a-u-new-bal').value);
-            if (isNaN(newBal) || newBal < 0) { showAdminStatus('❌ Invalid balance', false); return; }
+            if (isNaN(newBal) || newBal < 0) { showAdminStatus('❌ Invalid NVT balance', false); return; }
             db.ref('users/' + adminCurrentUserId).update({ balance: newBal }).then(() => {
                 document.getElementById('a-u-bal').innerText = format(newBal) + ' NVT';
-                showAdminStatus('✅ Balance updated to ' + format(newBal) + ' NVT');
+                showAdminStatus('✅ NVT Balance set to ' + format(newBal));
+            });
+        }
+
+        function setUserCRC() {
+            if (!adminCurrentUserId) return;
+            const newCRC = parseInt(document.getElementById('a-u-new-crc').value);
+            if (isNaN(newCRC) || newCRC < 0) { showAdminStatus('❌ Invalid CRC balance', false); return; }
+            db.ref('users/' + adminCurrentUserId).update({ crcBalance: newCRC }).then(() => {
+                document.getElementById('a-u-crc').innerText = format(newCRC) + ' CRC';
+                showAdminStatus('✅ CRC Balance set to ' + format(newCRC));
             });
         }
 
