@@ -37,9 +37,7 @@
             --surface: rgba(14,20,38,0.85);
             --border: rgba(0,212,255,0.15);
             --nav-h: 80px;
-            /* Dynamic image assets — update these links without touching code */
             --bg-image: none;
-            --avatar-url: '';
         }
         [data-theme="light"] {
             --dark: #f0f4ff;
@@ -72,7 +70,7 @@
         body::before {
             content:'';
             position:fixed; inset:0;
-            background: var(--bg-image, radial-gradient(ellipse 80% 40% at 50% -10%, rgba(0,212,255,0.08) 0%, transparent 60%), radial-gradient(ellipse 60% 30% at 80% 80%, rgba(243,186,47,0.06) 0%, transparent 60%), radial-gradient(ellipse 50% 50% at 10% 60%, rgba(0,212,255,0.04) 0%, transparent 60%));
+            background: var(--bg-image, radial-gradient(ellipse 80% 40% at 50% -10%, rgba(0,212,255,0.08) 0%, transparent 60%), radial-gradient(ellipse 60% 30% at 80% 80%, rgba(243,186,47,0.06) 0%, transparent 60%));
             background-size: cover;
             background-position: center;
             pointer-events:none; z-index:0;
@@ -84,13 +82,8 @@
             background-size: 40px 40px;
             pointer-events:none; z-index:0;
         }
-        [data-theme="light"] body::before {
-            background: radial-gradient(ellipse 80% 40% at 50% -10%, rgba(0,120,255,0.06) 0%, transparent 60%);
-        }
-        [data-theme="light"] body::after {
-            background-image: linear-gradient(rgba(0,120,255,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(0,120,255,0.04) 1px, transparent 1px);
-            background-size: 40px 40px;
-        }
+        [data-theme="light"] body::before { background: radial-gradient(ellipse 80% 40% at 50% -10%, rgba(0,120,255,0.06) 0%, transparent 60%); }
+        [data-theme="light"] body::after { background-image: linear-gradient(rgba(0,120,255,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(0,120,255,0.04) 1px, transparent 1px); background-size: 40px 40px; }
 
         /* ===== ANNOUNCEMENT BANNER ===== */
         #announcement-banner {
@@ -98,22 +91,16 @@
             background: linear-gradient(135deg, rgba(243,186,47,0.18), rgba(0,212,255,0.10));
             border-bottom: 1px solid rgba(243,186,47,0.35);
             padding: 8px 16px;
-            font-size: 12px;
-            font-weight: 600;
-            color: var(--gold);
-            text-align: center;
-            letter-spacing: 0.5px;
-            position: relative;
-            z-index: 11;
+            font-size: 12px; font-weight: 600; color: var(--gold);
+            text-align: center; letter-spacing: 0.5px;
+            position: relative; z-index: 11;
             animation: glowPulse 3s ease-in-out infinite;
         }
 
         /* ===== MAINTENANCE OVERLAY ===== */
         #maintenance-overlay {
-            display:none;
-            position:fixed; inset:0;
-            background: rgba(5,8,16,0.97);
-            z-index:9999;
+            display:none; position:fixed; inset:0;
+            background: rgba(5,8,16,0.97); z-index:9999;
             flex-direction:column; justify-content:center; align-items:center; gap:16px;
         }
         #maintenance-overlay .m-icon { font-size:60px; }
@@ -126,23 +113,18 @@
             padding: 12px 16px;
             background: rgba(8,13,26,0.85);
             border-bottom: 1px solid rgba(0,212,255,0.1);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
+            backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
             position:relative; z-index:10;
         }
         [data-theme="light"] .header { background: rgba(230,238,255,0.85); border-bottom:1px solid rgba(0,120,200,0.15); }
         .header-left { display:flex; align-items:center; gap:10px; }
-        #user-display {
-            font-family:'Orbitron',monospace; font-weight:700; font-size:12px;
-            color:var(--neon); letter-spacing:0.5px; text-shadow:0 0 12px rgba(0,212,255,0.5);
-        }
+        #user-display { font-family:'Orbitron',monospace; font-weight:700; font-size:12px; color:var(--neon); letter-spacing:0.5px; text-shadow:0 0 12px rgba(0,212,255,0.5); }
         .header-right { display:flex; align-items:center; gap:8px; }
         .header-icon-btn {
             width:36px; height:36px; border-radius:50%;
             display:flex; align-items:center; justify-content:center;
             background: rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.1);
-            cursor:pointer; font-size:15px;
-            transition: all 0.2s; backdrop-filter:blur(10px);
+            cursor:pointer; font-size:15px; transition: all 0.2s; backdrop-filter:blur(10px);
         }
         .header-icon-btn:active { transform:scale(0.9); }
         .rank-badge-header {
@@ -162,11 +144,7 @@
             display:flex; flex-direction:column; align-items:center; gap:2px;
             position:relative; overflow:hidden;
         }
-        .balance-chip::before {
-            content:''; position:absolute; inset:0;
-            background: linear-gradient(135deg, rgba(255,255,255,0.03), transparent);
-            pointer-events:none;
-        }
+        .balance-chip::before { content:''; position:absolute; inset:0; background: linear-gradient(135deg, rgba(255,255,255,0.03), transparent); pointer-events:none; }
         .balance-chip.nvt-chip { border-color:rgba(243,186,47,0.3); background:linear-gradient(135deg, rgba(243,186,47,0.06), rgba(14,20,38,0.9)); }
         .balance-chip.crc-chip { border-color:rgba(255,215,0,0.4); background:linear-gradient(135deg, rgba(255,215,0,0.08), rgba(14,20,38,0.9)); }
         .balance-chip-label { font-size:9px; letter-spacing:2px; text-transform:uppercase; color:var(--gray); font-weight:600; }
@@ -181,19 +159,21 @@
             position:relative; z-index:1; overflow:hidden;
         }
 
-        /* ===== FLOATING ACTION BUTTONS ===== */
+        /* ===== PREMIUM SVG ICON SYSTEM ===== */
+        /* Floating left buttons */
         .floating-actions-left {
             position:absolute; left:12px; top:50%; transform:translateY(-50%);
             display:flex; flex-direction:column; gap:10px; z-index:5;
         }
+        /* Floating right buttons — bot+rank stacked */
         .floating-actions-right {
             position:absolute; right:12px; top:50%; transform:translateY(-50%);
             display:flex; flex-direction:column; gap:10px; z-index:5;
         }
         .float-btn {
-            width:52px; height:52px; border-radius:16px;
+            width:56px; height:56px; border-radius:16px;
             display:flex; flex-direction:column; align-items:center; justify-content:center;
-            cursor:pointer; border:none; gap:2px;
+            cursor:pointer; border:none; gap:3px;
             backdrop-filter:blur(16px); -webkit-backdrop-filter:blur(16px);
             background: rgba(14,20,38,0.7);
             border:1px solid rgba(0,212,255,0.2);
@@ -201,46 +181,40 @@
             transition: all 0.22s cubic-bezier(0.34,1.56,0.64,1);
             position:relative; overflow:hidden;
         }
-        .float-btn::before {
-            content:''; position:absolute; inset:0;
-            background: linear-gradient(135deg, rgba(255,255,255,0.05), transparent);
-            pointer-events:none;
-        }
-        .float-btn:active { transform:scale(0.9); }
-        .float-btn .fb-icon { font-size:20px; }
+        .float-btn::before { content:''; position:absolute; inset:0; background: linear-gradient(135deg, rgba(255,255,255,0.05), transparent); pointer-events:none; }
+        .float-btn:active { transform:scale(0.88); box-shadow:0 2px 8px rgba(0,0,0,0.5); }
+        .float-btn svg { width:24px; height:24px; flex-shrink:0; }
         .float-btn .fb-label { font-family:'Orbitron',monospace; font-size:7px; color:var(--gray-light); letter-spacing:0.5px; text-transform:uppercase; }
-        .float-btn.boost { border-color:rgba(243,186,47,0.4); background:linear-gradient(135deg, rgba(243,186,47,0.12), rgba(14,20,38,0.8)); }
-        .float-btn.convert { border-color:rgba(255,215,0,0.4); background:linear-gradient(135deg, rgba(255,215,0,0.12), rgba(14,20,38,0.8)); }
-        .float-btn.wallet { border-color:rgba(0,212,255,0.4); background:linear-gradient(135deg, rgba(0,212,255,0.12), rgba(14,20,38,0.8)); }
-        .float-btn.rank { border-color:rgba(0,230,118,0.4); background:linear-gradient(135deg, rgba(0,230,118,0.12), rgba(14,20,38,0.8)); }
-        .float-btn.settings { border-color:rgba(160,110,255,0.4); background:linear-gradient(135deg, rgba(160,110,255,0.12), rgba(14,20,38,0.8)); }
-        /* Admin float button — hidden by default, shown via JS for admin UID */
+        .float-btn.boost { border-color:rgba(243,186,47,0.45); background:linear-gradient(135deg, rgba(243,186,47,0.14), rgba(14,20,38,0.85)); }
+        .float-btn.convert { border-color:rgba(255,215,0,0.45); background:linear-gradient(135deg, rgba(255,215,0,0.14), rgba(14,20,38,0.85)); }
+        .float-btn.wallet { border-color:rgba(0,212,255,0.45); background:linear-gradient(135deg, rgba(0,212,255,0.14), rgba(14,20,38,0.85)); }
+        .float-btn.rank { border-color:rgba(0,230,118,0.45); background:linear-gradient(135deg, rgba(0,230,118,0.14), rgba(14,20,38,0.85)); }
+        .float-btn.estates-btn { border-color:rgba(160,110,255,0.45); background:linear-gradient(135deg, rgba(160,110,255,0.14), rgba(14,20,38,0.85)); }
         .float-btn.admin-float { border-color:rgba(255,77,109,0.5); background:linear-gradient(135deg, rgba(255,77,109,0.15), rgba(14,20,38,0.8)); display:none; }
 
-        /* ===== BOT UI ===== */
-        .bot-container {
-            position:absolute; right:76px; top:30%;
-            display:none; flex-direction:column; align-items:center; gap:5px; z-index:5;
+        /* ===== BOT UI — above rank button on right side ===== */
+        /* Bot is now rendered as a compact widget inline in floating-actions-right */
+        .bot-widget {
+            width:56px; background:linear-gradient(135deg, rgba(0,212,255,0.12), rgba(14,20,38,0.85));
+            border-radius:16px; border:1px solid rgba(0,212,255,0.35);
+            display:none; flex-direction:column; align-items:center; justify-content:center;
+            padding:6px 4px; gap:2px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.06);
+            position:relative; overflow:hidden;
         }
-        .bot-icon-box {
-            width:50px; height:50px; background:linear-gradient(135deg, rgba(0,212,255,0.15), rgba(0,212,255,0.05));
-            border-radius:14px; border:1px solid rgba(0,212,255,0.3);
-            display:flex; justify-content:center; align-items:center;
-            font-size:22px; animation:botFloat 3s ease-in-out infinite;
-            backdrop-filter:blur(10px);
-        }
-        @keyframes botFloat { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-8px)} }
-        #bot-stored-val { font-family:'Orbitron',monospace; font-size:9px; color:var(--gold); font-weight:700; }
+        .bot-widget-icon { font-size:20px; animation:botFloat 3s ease-in-out infinite; line-height:1; }
+        @keyframes botFloat { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-4px)} }
+        #bot-stored-val { font-family:'Orbitron',monospace; font-size:8px; color:var(--gold); font-weight:700; }
         .bot-claim-mini {
             background:linear-gradient(135deg, var(--green), #00b050);
-            color:#000; border:none; padding:4px 8px; border-radius:8px;
-            font-size:8px; font-weight:700; cursor:pointer;
-            font-family:'Orbitron',monospace; letter-spacing:0.5px;
-            box-shadow:0 4px 12px rgba(0,230,118,0.3);
+            color:#000; border:none; padding:3px 5px; border-radius:6px;
+            font-size:7px; font-weight:700; cursor:pointer;
+            font-family:'Orbitron',monospace; letter-spacing:0.3px;
+            box-shadow:0 3px 10px rgba(0,230,118,0.3); width:100%;
         }
 
         /* ===== MINING BUTTON ===== */
-        .coin-btn-wrapper { position:relative; margin-bottom:18px; }
+        .coin-btn-wrapper { position:relative; margin-bottom:12px; }
         .coin-btn-ring {
             position:absolute; inset:-12px; border-radius:50%;
             border:1px solid rgba(0,212,255,0.2);
@@ -267,11 +241,12 @@
             overflow:hidden;
         }
         .coin-btn .avatar-img { font-size:72px; line-height:1; pointer-events:none; transition:transform 0.12s; }
-        /* Custom avatar image support */
+        /* Custom avatar image inside tap button */
         .coin-btn .avatar-custom {
-            width:120px; height:120px; border-radius:50%;
+            width:140px; height:140px; border-radius:50%;
             object-fit:cover; pointer-events:none;
-            border:2px solid rgba(243,186,47,0.4);
+            border:3px solid rgba(243,186,47,0.5);
+            box-shadow:0 0 20px rgba(243,186,47,0.3);
         }
         .coin-btn::before {
             content:''; position:absolute; top:15%; left:15%; width:30%; height:25%;
@@ -290,17 +265,33 @@
         }
         @keyframes fadeUp { 0%{opacity:1;transform:translateY(0) scale(1)} 50%{opacity:1;transform:translateY(-60px) scale(1.1)} 100%{opacity:0;transform:translateY(-120px) scale(0.8)} }
 
-        /* ===== ENERGY BAR ===== */
-        .stat-box { width:82%; margin:0; }
-        .energy-header { display:flex; justify-content:space-between; align-items:center; font-size:12px; margin-bottom:8px; font-weight:600; letter-spacing:0.5px; }
-        .energy-label { color:var(--neon); }
-        .energy-label span { color:white; }
-        #level-text { font-family:'Orbitron',monospace; font-size:10px; color:var(--gold); letter-spacing:1px; }
-        .bar-bg { width:100%; height:8px; background:rgba(255,255,255,0.05); border-radius:10px; overflow:hidden; border:1px solid rgba(0,212,255,0.1); position:relative; }
-        #bar-fill { height:100%; background:linear-gradient(90deg, var(--neon), var(--gold)); border-radius:10px; transition:width 0.3s ease; position:relative; }
-        #bar-fill::after { content:''; position:absolute; right:0; top:50%; transform:translateY(-50%); width:6px; height:6px; background:white; border-radius:50%; box-shadow:0 0 8px var(--gold); }
+        /* ===== ENERGY BAR — lowered, bolder/premium ===== */
+        .stat-box { width:82%; margin-top:4px; }
+        .energy-header {
+            display:flex; justify-content:space-between; align-items:center;
+            font-size:13px; margin-bottom:9px; font-weight:700; letter-spacing:0.6px;
+        }
+        .energy-label { color:var(--neon); font-weight:800; letter-spacing:1px; }
+        .energy-label span { color:white; font-weight:800; }
+        #level-text { font-family:'Orbitron',monospace; font-size:11px; color:var(--gold); letter-spacing:1px; font-weight:700; }
+        /* Thicker, more premium bar */
+        .bar-bg {
+            width:100%; height:11px; background:rgba(255,255,255,0.05); border-radius:12px;
+            overflow:visible; border:1px solid rgba(0,212,255,0.15); position:relative;
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.3);
+        }
+        #bar-fill {
+            height:100%; background:linear-gradient(90deg, var(--neon), var(--gold));
+            border-radius:12px; transition:width 0.3s ease; position:relative;
+            box-shadow: 0 0 10px rgba(0,212,255,0.4);
+        }
+        #bar-fill::after {
+            content:''; position:absolute; right:-2px; top:50%; transform:translateY(-50%);
+            width:9px; height:9px; background:white; border-radius:50%;
+            box-shadow:0 0 12px var(--gold), 0 0 20px var(--neon); border:1.5px solid var(--gold);
+        }
 
-        /* ===== BOTTOM NAV (Premium Glassmorphism) ===== */
+        /* ===== BOTTOM NAV ===== */
         .nav {
             background: rgba(8,13,26,0.75);
             display:flex; justify-content:space-around; align-items:center;
@@ -313,8 +304,7 @@
         .nav-item {
             text-align:center; color:var(--gray);
             font-family:'Rajdhani',sans-serif; font-size:10px; font-weight:700;
-            letter-spacing:0.5px; cursor:pointer;
-            flex:1; transition:all 0.3s; padding:14px 4px;
+            letter-spacing:0.5px; cursor:pointer; flex:1; transition:all 0.3s; padding:14px 4px;
             position:relative; text-transform:uppercase;
             display:flex; flex-direction:column; align-items:center; gap:3px;
         }
@@ -387,14 +377,10 @@
         .invite-box p { font-size:13px; color:var(--gray-light); line-height:1.6; }
         .tiered-rewards { display:grid; grid-template-columns:1fr 1fr 1fr; gap:8px; margin:12px 0 0; }
         .tier-chip { background:rgba(14,20,38,0.9); border-radius:10px; padding:10px 6px; text-align:center; border:1px solid rgba(255,255,255,0.07); }
-        .tier-chip.t1 { border-color:rgba(200,200,200,0.3); }
-        .tier-chip.t2 { border-color:rgba(192,192,192,0.4); }
-        .tier-chip.t3 { border-color:rgba(243,186,47,0.5); }
+        .tier-chip.t1 { border-color:rgba(200,200,200,0.3); } .tier-chip.t2 { border-color:rgba(192,192,192,0.4); } .tier-chip.t3 { border-color:rgba(243,186,47,0.5); }
         .tier-chip .tier-n { font-family:'Orbitron',monospace; font-size:9px; color:var(--gray); letter-spacing:1px; margin-bottom:4px; }
         .tier-chip .tier-val { font-family:'Orbitron',monospace; font-size:13px; font-weight:900; }
-        .tier-chip.t1 .tier-val { color:#c0c0c0; }
-        .tier-chip.t2 .tier-val { color:#d0d0d0; }
-        .tier-chip.t3 .tier-val { color:var(--gold); }
+        .tier-chip.t1 .tier-val { color:#c0c0c0; } .tier-chip.t2 .tier-val { color:#d0d0d0; } .tier-chip.t3 .tier-val { color:var(--gold); }
         .referral-stats-bar { display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-bottom:16px; }
         .referral-stat-chip { background:rgba(14,20,38,0.9); border:1px solid rgba(0,212,255,0.18); border-radius:14px; padding:14px 10px; text-align:center; backdrop-filter:blur(10px); }
         .referral-stat-chip .chip-val { font-family:'Orbitron',monospace; font-size:22px; font-weight:900; color:var(--gold); text-shadow:0 0 10px rgba(243,186,47,0.35); }
@@ -419,24 +405,27 @@
         .daily-active { border:1.5px solid var(--gold) !important; animation:pulse 1.5s infinite; cursor:pointer; background:linear-gradient(135deg, rgba(243,186,47,0.15), rgba(243,186,47,0.05)) !important; color:var(--gold) !important; }
         @keyframes pulse { 0%{transform:scale(1); box-shadow:0 0 0 0 rgba(243,186,47,0.3)} 50%{transform:scale(1.04); box-shadow:0 0 12px rgba(243,186,47,0.2)} 100%{transform:scale(1); box-shadow:0 0 0 0 rgba(243,186,47,0)} }
 
-        /* Task verification overlay */
+        /* ===== TASK VERIFICATION OVERLAY — 60s + 3s loading ===== */
         #task-verify-overlay {
             display:none; position:fixed; inset:0;
-            background:rgba(5,8,16,0.9); z-index:5000;
+            background:rgba(5,8,16,0.92); z-index:5000;
             justify-content:center; align-items:center;
             flex-direction:column; gap:16px; backdrop-filter:blur(8px);
         }
         .verify-box {
             background:var(--card); border:1px solid rgba(0,212,255,0.3);
-            border-radius:20px; padding:32px 28px; width:85%; max-width:320px;
-            text-align:center;
+            border-radius:20px; padding:32px 28px; width:85%; max-width:320px; text-align:center;
         }
         .verify-icon { font-size:48px; margin-bottom:12px; }
         .verify-title { font-family:'Orbitron',monospace; font-size:14px; color:var(--neon); letter-spacing:2px; margin-bottom:8px; }
         .verify-sub { font-size:13px; color:var(--gray-light); margin-bottom:20px; line-height:1.6; }
-        .verify-timer { font-family:'Orbitron',monospace; font-size:32px; font-weight:900; color:var(--gold); text-shadow:0 0 20px rgba(243,186,47,0.5); margin-bottom:16px; }
-        .verify-progress { width:100%; height:4px; background:rgba(255,255,255,0.06); border-radius:4px; overflow:hidden; margin-bottom:20px; }
+        .verify-timer { font-family:'Orbitron',monospace; font-size:36px; font-weight:900; color:var(--gold); text-shadow:0 0 20px rgba(243,186,47,0.5); margin-bottom:8px; }
+        .verify-phase-label { font-family:'Orbitron',monospace; font-size:9px; color:var(--gray); letter-spacing:2px; margin-bottom:12px; }
+        .verify-progress { width:100%; height:5px; background:rgba(255,255,255,0.06); border-radius:4px; overflow:hidden; margin-bottom:20px; }
         .verify-progress-fill { height:100%; background:linear-gradient(90deg, var(--neon), var(--gold)); border-radius:4px; transition:width 1s linear; }
+        /* Loading spinner for 3s phase */
+        .verify-spinner { width:48px; height:48px; border:4px solid rgba(0,212,255,0.15); border-top:4px solid var(--neon); border-radius:50%; animation:spin 0.7s linear infinite; margin:0 auto 16px; display:none; }
+        @keyframes spin { to{transform:rotate(360deg)} }
         #verify-claim-btn { display:none; width:100%; }
 
         /* ===== CONVERSION PAGE ===== */
@@ -459,13 +448,14 @@
         #airdrop-page .airdrop-hero::before { content:''; position:absolute; top:0; left:0; right:0; height:2px; background:linear-gradient(90deg, transparent, var(--crc), transparent); }
         #airdrop-page .airdrop-hero h3 { font-family:'Orbitron',monospace; font-size:18px; color:var(--crc); letter-spacing:2px; margin-bottom:10px; text-shadow:0 0 20px rgba(255,215,0,0.5); }
         #airdrop-page .airdrop-hero p { color:var(--gray-light); font-size:13px; line-height:1.7; }
-        /* Locked airdrop state */
         .airdrop-locked-badge { background:rgba(255,77,109,0.12); border:1px solid rgba(255,77,109,0.3); border-radius:12px; padding:10px 16px; margin:14px 0; display:flex; align-items:center; gap:10px; font-size:12px; color:var(--red); font-weight:600; }
+
+        /* ===== RANK PAGE ===== */
+        #leaderboard-list .card b:first-child { font-family:'Orbitron',monospace; font-size:13px; }
 
         /* ===== WALLET PAGE ===== */
         .wallet-connect-box { text-align:center; padding:36px 18px; background:var(--card); border-radius:20px; border:1px solid rgba(0,212,255,0.2); margin:10px 0; backdrop-filter:blur(20px); }
         .wallet-connect-box h3 { font-family:'Orbitron',monospace; font-size:16px; letter-spacing:1px; margin-bottom:10px; color:white; }
-        .wallet-locked-overlay { position:relative; }
         .wallet-lock-banner { background:rgba(255,77,109,0.1); border:1px dashed rgba(255,77,109,0.4); border-radius:12px; padding:14px; margin-bottom:14px; text-align:center; }
         .wallet-lock-banner h4 { font-family:'Orbitron',monospace; font-size:12px; color:var(--red); letter-spacing:1px; margin-bottom:6px; }
         .wallet-lock-banner p { font-size:12px; color:var(--gray-light); line-height:1.6; }
@@ -488,8 +478,54 @@
         .toggle-switch input:checked + .toggle-slider::before { transform:translateX(21px); background:var(--neon); box-shadow:0 0 8px var(--neon); }
         .lang-select { background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.1); border-radius:8px; padding:6px 12px; color:var(--text); font-family:'Rajdhani',sans-serif; font-size:14px; outline:none; cursor:pointer; }
 
-        /* ===== LEADERBOARD ===== */
-        #leaderboard-list .card b:first-child { font-family:'Orbitron',monospace; font-size:13px; }
+        /* ===== ESTATES/GAME PAGE ===== */
+        #estates-page .estate-intro { text-align:center; padding:20px 16px; background:linear-gradient(135deg, rgba(14,20,38,0.95), rgba(40,15,60,0.9)); border-radius:18px; border:1px solid rgba(160,110,255,0.3); margin-bottom:16px; }
+        #estates-page .estate-intro h3 { font-family:'Orbitron',monospace; font-size:15px; color:#a06eff; letter-spacing:2px; margin-bottom:8px; text-shadow:0 0 15px rgba(160,110,255,0.5); }
+        #estates-page .estate-intro p { font-size:12px; color:var(--gray-light); line-height:1.7; }
+        .estate-card {
+            background:linear-gradient(135deg, rgba(14,20,38,0.95), rgba(20,14,38,0.95));
+            border:1px solid rgba(160,110,255,0.25); border-radius:18px; margin-bottom:14px;
+            overflow:hidden; position:relative;
+        }
+        .estate-card-header {
+            padding:16px 16px 12px; display:flex; align-items:center; gap:12px;
+            border-bottom:1px solid rgba(160,110,255,0.12);
+        }
+        .estate-icon-box {
+            width:56px; height:56px; border-radius:14px; flex-shrink:0;
+            display:flex; align-items:center; justify-content:center; font-size:28px;
+            border:2px solid rgba(160,110,255,0.4);
+            background:linear-gradient(135deg, rgba(160,110,255,0.2), rgba(14,20,38,0.9));
+        }
+        .estate-name { font-family:'Orbitron',monospace; font-size:13px; font-weight:700; color:white; }
+        .estate-level-tag { font-family:'Orbitron',monospace; font-size:9px; color:#a06eff; letter-spacing:1px; margin-top:2px; }
+        .estate-card-body { padding:12px 16px 16px; }
+        .estate-rewards-row { display:flex; gap:8px; margin-bottom:12px; }
+        .estate-reward-chip { flex:1; background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.07); border-radius:10px; padding:8px 6px; text-align:center; }
+        .estate-reward-chip .erc-label { font-size:9px; color:var(--gray); letter-spacing:1px; text-transform:uppercase; }
+        .estate-reward-chip .erc-val { font-family:'Orbitron',monospace; font-size:12px; font-weight:700; }
+        .estate-progress-bar { width:100%; height:6px; background:rgba(255,255,255,0.06); border-radius:6px; overflow:hidden; margin-bottom:10px; }
+        .estate-progress-fill { height:100%; background:linear-gradient(90deg, #a06eff, #f3ba2f); border-radius:6px; transition:width 0.5s ease; }
+        .estate-btn-row { display:flex; gap:8px; }
+        .estate-upgrade-btn {
+            flex:1; padding:10px 12px; border-radius:10px; border:none;
+            font-family:'Orbitron',monospace; font-size:9px; font-weight:700; cursor:pointer;
+            letter-spacing:0.5px; transition:all 0.2s;
+            background:linear-gradient(135deg, #a06eff, #6030c0); color:white;
+            box-shadow:0 4px 14px rgba(160,110,255,0.3);
+        }
+        .estate-upgrade-btn:active { transform:scale(0.96); }
+        .estate-upgrade-btn:disabled { background:rgba(255,255,255,0.06); color:var(--gray); cursor:not-allowed; box-shadow:none; }
+        .estate-claim-btn {
+            padding:10px 16px; border-radius:10px; border:none;
+            font-family:'Orbitron',monospace; font-size:9px; font-weight:700; cursor:pointer;
+            letter-spacing:0.5px; transition:all 0.2s;
+            background:linear-gradient(135deg, var(--green), #008040); color:#000;
+            box-shadow:0 4px 14px rgba(0,230,118,0.3); display:none;
+        }
+        .estate-claim-btn:active { transform:scale(0.96); }
+        .estate-timer-label { font-family:'Orbitron',monospace; font-size:11px; color:var(--gold); text-align:center; margin-top:8px; display:none; }
+        .estate-max-badge { font-family:'Orbitron',monospace; font-size:9px; color:var(--gold); letter-spacing:1px; padding:5px 12px; border-radius:20px; background:var(--gold-dim); border:1px solid rgba(243,186,47,0.4); }
 
         /* ===== ADMIN KEY MODAL ===== */
         #admin-key-modal { display:none; position:fixed; inset:0; background:rgba(5,8,16,0.92); z-index:10000; justify-content:center; align-items:center; backdrop-filter:blur(10px); }
@@ -566,1315 +602,1711 @@
         .status-ok { background:rgba(0,230,118,0.1); color:var(--green); border:1px solid rgba(0,230,118,0.25); }
         .status-err { background:rgba(255,77,109,0.1); color:var(--red); border:1px solid rgba(255,77,109,0.25); }
 
+        /* ===== ADMIN USER TABLE ===== */
+        .admin-users-table-wrap { overflow-x:auto; margin-top:12px; }
+        .admin-users-table { width:100%; border-collapse:collapse; font-size:11px; }
+        .admin-users-table th {
+            font-family:'Orbitron',monospace; font-size:8px; color:var(--neon);
+            letter-spacing:1px; text-transform:uppercase; padding:8px 6px;
+            border-bottom:1px solid rgba(0,212,255,0.2); text-align:left;
+            white-space:nowrap;
+        }
+        .admin-users-table td { padding:8px 6px; border-bottom:1px solid rgba(255,255,255,0.04); vertical-align:middle; }
+        .admin-users-table tr:hover td { background:rgba(0,212,255,0.04); }
+        .tbl-name { font-weight:600; color:var(--text); max-width:90px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+        .tbl-id { font-family:'Orbitron',monospace; font-size:9px; color:var(--gray); }
+        .tbl-nvt { font-family:'Orbitron',monospace; font-size:10px; color:var(--gold); }
+        .tbl-crc { font-family:'Orbitron',monospace; font-size:10px; color:var(--crc); }
+        .tbl-edit-btn { background:rgba(0,212,255,0.15); border:1px solid rgba(0,212,255,0.3); color:var(--neon); padding:4px 8px; border-radius:6px; font-family:'Orbitron',monospace; font-size:8px; cursor:pointer; white-space:nowrap; transition:all 0.2s; letter-spacing:0.5px; }
+        .tbl-edit-btn:active { background:rgba(0,212,255,0.3); }
+        /* Inline edit row */
+        .tbl-edit-row td { background:rgba(0,212,255,0.06); }
+        .tbl-inline-input { background:rgba(0,212,255,0.06); border:1px solid rgba(0,212,255,0.25); border-radius:6px; padding:5px 7px; color:var(--text); font-family:'Orbitron',monospace; font-size:10px; width:70px; outline:none; }
+        .tbl-save-btn { background:linear-gradient(135deg, var(--green), #008040); border:none; color:#000; padding:5px 8px; border-radius:6px; font-family:'Orbitron',monospace; font-size:8px; cursor:pointer; font-weight:700; }
+
         @keyframes glowPulse { 0%,100%{box-shadow:0 0 10px rgba(243,186,47,0.2)} 50%{box-shadow:0 0 25px rgba(243,186,47,0.5)} }
     </style>
 </head>
 <body>
-    <!-- MAINTENANCE OVERLAY -->
-    <div id="maintenance-overlay">
-        <div class="m-icon">🔧</div>
-        <h2>MAINTENANCE MODE</h2>
-        <p>NovaTap is currently under maintenance. We'll be back shortly!</p>
+
+<!-- ===== MAINTENANCE OVERLAY ===== -->
+<div id="maintenance-overlay">
+    <div class="m-icon">🔧</div>
+    <h2>MAINTENANCE MODE</h2>
+    <p>NovaTap is currently under maintenance. We'll be back shortly!</p>
+</div>
+
+<!-- ===== ANNOUNCEMENT BANNER ===== -->
+<div id="announcement-banner"></div>
+
+<!-- ===== HEADER ===== -->
+<div class="header">
+    <div class="header-left">
+        <div id="user-display">Loading...</div>
+    </div>
+    <div class="header-right">
+        <div class="rank-badge-header" id="rank-display">Bronze</div>
+        <div class="header-icon-btn" onclick="showPage('settings-page')" title="Settings">⚙️</div>
+        <div class="header-icon-btn" onclick="showPage('profile-page')" title="Profile" id="profile-icon-btn">👤</div>
+    </div>
+</div>
+
+<!-- ===== DUAL BALANCE ===== -->
+<div class="balance-section">
+    <div class="dual-balance-row">
+        <div class="balance-chip nvt-chip">
+            <div class="balance-chip-label">NovaTap</div>
+            <div class="balance-chip-val">🪙 <span id="coin-count">0</span></div>
+            <div style="font-size:9px; color:var(--gray); letter-spacing:1px;">NVT</div>
+        </div>
+        <div class="balance-chip crc-chip">
+            <div class="balance-chip-label">Core Coin</div>
+            <div class="balance-chip-val">🌕 <span id="crc-count">0</span></div>
+            <div style="font-size:9px; color:var(--gray); letter-spacing:1px;">CRC</div>
+        </div>
+    </div>
+</div>
+
+<!-- ===== MAIN TAP AREA ===== -->
+<div class="main-tap">
+
+    <!-- ===== FLOATING LEFT: Boost, Convert, Wallet, Estates ===== -->
+    <div class="floating-actions-left">
+        <!-- BOOST — premium lightning bolt SVG -->
+        <div class="float-btn boost" onclick="showPage('boost-page')">
+            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M13 2L3 14H12L11 22L21 10H12L13 2Z" fill="rgba(243,186,47,0.9)" stroke="rgba(243,186,47,0.6)" stroke-width="1.5" stroke-linejoin="round"/>
+                <path d="M13 2L3 14H12L11 22L21 10H12L13 2Z" fill="url(#boostGrad)"/>
+                <defs>
+                    <linearGradient id="boostGrad" x1="3" y1="2" x2="21" y2="22" gradientUnits="userSpaceOnUse">
+                        <stop offset="0%" stop-color="#ffe066"/>
+                        <stop offset="100%" stop-color="#f3ba2f"/>
+                    </linearGradient>
+                </defs>
+            </svg>
+            <div class="fb-label">Boost</div>
+        </div>
+        <!-- CONVERT — swap arrows SVG -->
+        <div class="float-btn convert" onclick="showPage('convert-page')">
+            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="12" cy="12" r="9" stroke="rgba(255,215,0,0.5)" stroke-width="1.5"/>
+                <path d="M8 10L12 6L16 10" stroke="#ffd700" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M16 14L12 18L8 14" stroke="#ffd700" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <line x1="12" y1="6" x2="12" y2="18" stroke="rgba(255,215,0,0.3)" stroke-width="1.5"/>
+            </svg>
+            <div class="fb-label">Convert</div>
+        </div>
+        <!-- WALLET — premium wallet SVG -->
+        <div class="float-btn wallet" onclick="showPage('wallet-page')">
+            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <rect x="2" y="7" width="20" height="14" rx="3" stroke="#00d4ff" stroke-width="1.5" fill="rgba(0,212,255,0.1)"/>
+                <path d="M2 11H22" stroke="#00d4ff" stroke-width="1.5"/>
+                <path d="M6 3L18 3" stroke="#00d4ff" stroke-width="1.5" stroke-linecap="round"/>
+                <circle cx="16" cy="15" r="2" fill="#00d4ff" opacity="0.8"/>
+            </svg>
+            <div class="fb-label">Wallet</div>
+        </div>
+        <!-- ESTATES — building/castle SVG -->
+        <div class="float-btn estates-btn" onclick="showPage('estates-page')">
+            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <rect x="3" y="12" width="18" height="10" rx="1" fill="rgba(160,110,255,0.2)" stroke="#a06eff" stroke-width="1.5"/>
+                <path d="M3 12L12 4L21 12" stroke="#a06eff" stroke-width="1.5" stroke-linejoin="round"/>
+                <rect x="9" y="16" width="6" height="6" rx="1" fill="rgba(160,110,255,0.4)"/>
+                <rect x="5" y="14" width="3" height="3" rx="0.5" fill="rgba(160,110,255,0.6)"/>
+                <rect x="16" y="14" width="3" height="3" rx="0.5" fill="rgba(160,110,255,0.6)"/>
+                <path d="M8 4V7M12 2V6M16 4V7" stroke="rgba(160,110,255,0.6)" stroke-width="1.5" stroke-linecap="round"/>
+            </svg>
+            <div class="fb-label">Estates</div>
+        </div>
     </div>
 
-    <!-- ANNOUNCEMENT BANNER -->
-    <div id="announcement-banner"></div>
-
-    <!-- HEADER -->
-    <div class="header">
-        <div class="header-left">
-            <div id="user-display">Loading...</div>
-        </div>
-        <div class="header-right">
-            <div class="rank-badge-header" id="rank-display">Bronze</div>
-            <div class="header-icon-btn" onclick="showPage('settings-page')" title="Settings">⚙️</div>
-            <div class="header-icon-btn" onclick="showPage('profile-page')" title="Profile" id="profile-icon-btn">👤</div>
-        </div>
-    </div>
-
-    <!-- DUAL BALANCE -->
-    <div class="balance-section">
-        <div class="dual-balance-row">
-            <div class="balance-chip nvt-chip">
-                <div class="balance-chip-label">NovaTap</div>
-                <div class="balance-chip-val">🪙 <span id="coin-count">0</span></div>
-                <div style="font-size:9px; color:var(--gray); letter-spacing:1px;">NVT</div>
-            </div>
-            <div class="balance-chip crc-chip">
-                <div class="balance-chip-label">Core Coin</div>
-                <div class="balance-chip-val">🌕 <span id="crc-count">0</span></div>
-                <div style="font-size:9px; color:var(--gray); letter-spacing:1px;">CRC</div>
-            </div>
-        </div>
-    </div>
-
-    <!-- MAIN TAP AREA -->
-    <div class="main-tap">
-
-        <!-- Floating Left Actions -->
-        <div class="floating-actions-left">
-            <div class="float-btn boost" onclick="showPage('boost-page')">
-                <div class="fb-icon">⚡</div>
-                <div class="fb-label">Boost</div>
-            </div>
-            <div class="float-btn convert" onclick="showPage('convert-page')">
-                <div class="fb-icon">🔄</div>
-                <div class="fb-label">Convert</div>
-            </div>
-            <div class="float-btn wallet" onclick="showPage('wallet-page')">
-                <div class="fb-icon">👛</div>
-                <div class="fb-label">Wallet</div>
-            </div>
-        </div>
-
-        <!-- Floating Right Actions -->
-        <div class="floating-actions-right">
-            <div class="float-btn rank" onclick="showPage('rank-page')">
-                <div class="fb-icon">🏆</div>
-                <div class="fb-label">Rank</div>
-            </div>
-            <!-- Admin button: hidden by default, shown only for admin UID -->
-            <div class="float-btn admin-float" id="admin-float-btn" onclick="openAdminModal()">
-                <div class="fb-icon">🛡️</div>
-                <div class="fb-label">Admin</div>
-            </div>
-        </div>
-
-        <!-- Bot UI -->
-        <div id="bot-ui-container" class="bot-container">
-            <div class="bot-icon-box">🤖</div>
+    <!-- ===== FLOATING RIGHT: Bot widget (above Rank), Rank, Admin ===== -->
+    <div class="floating-actions-right">
+        <!-- BOT WIDGET — positioned above Rank -->
+        <div class="bot-widget" id="bot-ui-container">
+            <div class="bot-widget-icon">🤖</div>
             <div id="bot-stored-val">0</div>
             <button id="bot-claim-btn" class="bot-claim-mini" onclick="claimBot()" style="display:none;">CLAIM</button>
         </div>
-
-        <!-- Mining Button -->
-        <div class="coin-btn-wrapper">
-            <div class="coin-btn-ring2"></div>
-            <div class="coin-btn-ring"></div>
-            <div class="coin-btn" id="tap-btn">
-                <!-- Custom avatar image or default emoji -->
-                <span class="avatar-img" id="tap-btn-avatar">⛏️</span>
-            </div>
+        <!-- RANK — trophy SVG -->
+        <div class="float-btn rank" onclick="showPage('rank-page')">
+            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M8 3H5C4.4 3 4 3.4 4 4V8C4 10.2 5.8 12 8 12" stroke="#00e676" stroke-width="1.5" stroke-linecap="round"/>
+                <path d="M16 3H19C19.6 3 20 3.4 20 4V8C20 10.2 18.2 12 16 12" stroke="#00e676" stroke-width="1.5" stroke-linecap="round"/>
+                <path d="M12 16V20M9 20H15" stroke="#00e676" stroke-width="1.5" stroke-linecap="round"/>
+                <path d="M8 3H16V12C16 14.2 14.2 16 12 16C9.8 16 8 14.2 8 12V3Z" fill="rgba(0,230,118,0.15)" stroke="#00e676" stroke-width="1.5"/>
+                <path d="M10 8L12 6L14 8L12 10L10 8Z" fill="#00e676" opacity="0.6"/>
+            </svg>
+            <div class="fb-label">Rank</div>
         </div>
-
-        <!-- Energy Bar -->
-        <div class="stat-box">
-            <div class="energy-header">
-                <span class="energy-label">⚡ <span id="energy-val">500</span> / <span id="max-energy-text">500</span></span>
-                <span id="level-text">Level 1</span>
-            </div>
-            <div class="bar-bg"><div id="bar-fill"></div></div>
-        </div>
-    </div>
-
-    <!-- ===== OVERLAYS ===== -->
-
-    <!-- PROFILE PAGE -->
-    <div id="profile-page" class="overlay">
-        <button class="close-btn" onclick="closeAll()">✕</button>
-        <div class="page-title">User Profile</div>
-        <div style="text-align:center;">
-            <div class="p-avatar-circle" id="p-initial" onclick="handleAvatarTap()">U</div>
-            <h2 id="p-name" style="font-family:'Orbitron',monospace; font-size:16px; margin:5px 0 4px; letter-spacing:1px;">User Name</h2>
-            <p id="p-id" style="font-size:12px; color:var(--gray);">ID: 000000</p>
-            <div style="margin-bottom:16px;"></div>
-            <div class="user-info-card">
-                <div class="stat-grid">
-                    <div class="stat-item"><small>Rank</small><br><b id="p-rank" style="color:var(--gold); font-size:18px; font-family:'Orbitron',monospace;">Bronze</b></div>
-                    <div class="stat-item"><small>NVT</small><br><b id="p-bal" style="color:white; font-size:18px; font-family:'Orbitron',monospace;">0</b></div>
-                    <div class="stat-item"><small>CRC</small><br><b id="p-crc-bal" style="color:var(--crc); font-size:18px; font-family:'Orbitron',monospace;">0</b></div>
-                    <div class="stat-item"><small>Level</small><br><b id="p-lvl" style="color:var(--neon); font-size:18px; font-family:'Orbitron',monospace;">1</b></div>
-                    <div class="stat-item"><small>Energy</small><br><b id="p-energy" style="color:var(--green); font-size:18px; font-family:'Orbitron',monospace;">500</b></div>
-                    <div class="stat-item"><small>Referrals</small><br><b id="p-refs" style="color:var(--neon); font-size:18px; font-family:'Orbitron',monospace;">0</b></div>
-                </div>
-            </div>
+        <!-- ADMIN float button — shown only for admin UID -->
+        <div class="float-btn admin-float" id="admin-float-btn" onclick="openAdminModal()">
+            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M12 3L4 7V12C4 16 7.6 19.7 12 21C16.4 19.7 20 16 20 12V7L12 3Z" fill="rgba(255,77,109,0.15)" stroke="#ff4d6d" stroke-width="1.5" stroke-linejoin="round"/>
+                <path d="M9 12L11 14L15 10" stroke="#ff4d6d" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            <div class="fb-label">Admin</div>
         </div>
     </div>
 
-    <!-- FRIENDS PAGE -->
-    <div id="friends-page" class="overlay">
-        <button class="close-btn" onclick="closeAll()">✕</button>
-        <div class="page-title">Invite Friends</div>
-        <div class="invite-box">
-            <div style="font-size:44px; margin-bottom:10px;">🎁</div>
-            <h3>Tiered Referral Rewards</h3>
-            <p>Earn more for each friend you bring!</p>
-            <div class="tiered-rewards">
-                <div class="tier-chip t1"><div class="tier-n">1ST</div><div class="tier-val">500</div><div style="font-size:9px; color:var(--gray); margin-top:2px;">NVT</div></div>
-                <div class="tier-chip t2"><div class="tier-n">2ND</div><div class="tier-val">700</div><div style="font-size:9px; color:var(--gray); margin-top:2px;">NVT</div></div>
-                <div class="tier-chip t3"><div class="tier-n">3RD+</div><div class="tier-val">1500</div><div style="font-size:9px; color:var(--gray); margin-top:2px;">NVT</div></div>
-            </div>
-            <button class="btn-action" style="width:100%; padding:13px; margin-top:16px; font-size:12px;" onclick="invite()">🔗 &nbsp;Copy Invite Link</button>
-        </div>
-        <div class="referral-stats-bar">
-            <div class="referral-stat-chip"><div class="chip-val" id="ref-total-count">0</div><div class="chip-label">Total Referrals</div></div>
-            <div class="referral-stat-chip"><div class="chip-val" id="ref-total-earned" style="color:var(--green);">0</div><div class="chip-label">Coins Earned</div></div>
-        </div>
-        <div class="section-heading">Referral List</div>
-        <div id="friend-list"><div class="empty-state"><div class="empty-icon">⏳</div>Loading...</div></div>
-    </div>
-
-    <!-- TASKS PAGE -->
-    <div id="tasks-page" class="overlay">
-        <button class="close-btn" onclick="closeAll()">✕</button>
-        <div class="page-title">Tasks Center</div>
-        <div class="task-tabs">
-            <button class="tab-btn active" id="tab-daily" onclick="switchTaskTab('daily')">Daily</button>
-            <button class="tab-btn" id="tab-social" onclick="switchTaskTab('social')">Social</button>
-            <button class="tab-btn" id="tab-video" onclick="switchTaskTab('video')">Video</button>
-        </div>
-        <div id="task-list-dynamic"></div>
-    </div>
-
-    <!-- TASK VERIFY OVERLAY -->
-    <div id="task-verify-overlay">
-        <div class="verify-box">
-            <div class="verify-icon">🔍</div>
-            <div class="verify-title">VERIFYING TASK</div>
-            <div class="verify-sub">Please complete the task in the opened link. Claim button unlocks after verification.</div>
-            <div class="verify-timer" id="verify-countdown">3</div>
-            <div class="verify-progress"><div class="verify-progress-fill" id="verify-progress-fill" style="width:100%"></div></div>
-            <button class="btn-action admin-btn-full" id="verify-claim-btn" onclick="finishTaskClaim()" style="display:none;">✅ CLAIM REWARD</button>
-            <button style="width:100%; margin-top:8px; padding:10px; background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.08); border-radius:10px; color:var(--gray); font-family:'Orbitron',monospace; font-size:10px; cursor:pointer;" onclick="cancelTaskVerify()">CANCEL</button>
+    <!-- ===== MINING BUTTON ===== -->
+    <div class="coin-btn-wrapper">
+        <div class="coin-btn-ring2"></div>
+        <div class="coin-btn-ring"></div>
+        <div class="coin-btn" id="tap-btn">
+            <!-- Default avatar; replaced if tapAvatarUrl is set or user provides URL -->
+            <span class="avatar-img" id="tap-btn-avatar">⛏️</span>
         </div>
     </div>
 
-    <!-- CONVERT PAGE -->
-    <div id="convert-page" class="overlay">
-        <button class="close-btn" onclick="closeAll()">✕</button>
-        <div class="page-title">NVT → CRC</div>
-        <div class="conversion-box">
-            <div class="conversion-title">🌕 CORE COIN EXCHANGE</div>
-            <div class="conversion-rate-info">Rate: <b id="conv-rate-display">Loading...</b><br><span style="font-size:11px; color:var(--gray);">Rate set by admin.</span></div>
-            <div style="font-size:11px; color:var(--gray-light); margin-bottom:10px;">Enter NVT amount to convert:</div>
-            <div class="conversion-input-row">
-                <input type="number" class="conversion-input" id="convert-nvt-input" placeholder="NVT amount..." min="1" oninput="previewConversion()" />
-                <button class="btn-convert" onclick="doConversion()">CONVERT</button>
-            </div>
-            <div class="conversion-preview">You will receive: <b id="conv-preview-crc">—</b> CRC</div>
+    <!-- ===== ENERGY BAR — premium, lowered, bolder ===== -->
+    <div class="stat-box">
+        <div class="energy-header">
+            <span class="energy-label">⚡ <span id="energy-val">500</span> / <span id="max-energy-text">500</span></span>
+            <span id="level-text">Level 1</span>
         </div>
-        <div style="background:var(--card); border:1px solid var(--card-border); border-radius:14px; padding:16px;">
-            <div style="font-size:11px; color:var(--gray); letter-spacing:1px; text-transform:uppercase; margin-bottom:10px;">Your Balances</div>
-            <div style="display:flex; justify-content:space-between; margin-bottom:8px;"><span style="color:var(--gray-light);">🪙 NVT</span><span style="font-family:'Orbitron',monospace; color:var(--gold); font-size:13px;" id="conv-nvt-bal">0</span></div>
-            <div style="display:flex; justify-content:space-between;"><span style="color:var(--gray-light);">🌕 CRC</span><span style="font-family:'Orbitron',monospace; color:var(--crc); font-size:13px;" id="conv-crc-bal">0</span></div>
+        <div class="bar-bg"><div id="bar-fill"></div></div>
+    </div>
+</div>
+
+<!-- ================================================================
+     OVERLAYS
+================================================================ -->
+
+<!-- PROFILE PAGE -->
+<div id="profile-page" class="overlay">
+    <button class="close-btn" onclick="closeAll()">✕</button>
+    <div class="page-title">User Profile</div>
+    <div style="text-align:center;">
+        <div class="p-avatar-circle" id="p-initial" onclick="handleAvatarTap()">U</div>
+        <h2 id="p-name" style="font-family:'Orbitron',monospace; font-size:16px; margin:5px 0 4px; letter-spacing:1px;">User Name</h2>
+        <p id="p-id" style="font-size:12px; color:var(--gray);">ID: 000000</p>
+        <div style="margin-bottom:16px;"></div>
+        <div class="user-info-card">
+            <div class="stat-grid">
+                <div class="stat-item"><small>Rank</small><br><b id="p-rank" style="color:var(--gold); font-size:18px; font-family:'Orbitron',monospace;">Bronze</b></div>
+                <div class="stat-item"><small>NVT</small><br><b id="p-bal" style="color:white; font-size:18px; font-family:'Orbitron',monospace;">0</b></div>
+                <div class="stat-item"><small>CRC</small><br><b id="p-crc-bal" style="color:var(--crc); font-size:18px; font-family:'Orbitron',monospace;">0</b></div>
+                <div class="stat-item"><small>Level</small><br><b id="p-lvl" style="color:var(--neon); font-size:18px; font-family:'Orbitron',monospace;">1</b></div>
+                <div class="stat-item"><small>Energy</small><br><b id="p-energy" style="color:var(--green); font-size:18px; font-family:'Orbitron',monospace;">500</b></div>
+                <div class="stat-item"><small>Referrals</small><br><b id="p-refs" style="color:var(--neon); font-size:18px; font-family:'Orbitron',monospace;">0</b></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- FRIENDS PAGE -->
+<div id="friends-page" class="overlay">
+    <button class="close-btn" onclick="closeAll()">✕</button>
+    <div class="page-title">Invite Friends</div>
+    <div class="invite-box">
+        <div style="font-size:44px; margin-bottom:10px;">🎁</div>
+        <h3>Tiered Referral Rewards</h3>
+        <p>Earn more for each friend you bring!</p>
+        <div class="tiered-rewards">
+            <div class="tier-chip t1"><div class="tier-n">1ST</div><div class="tier-val">500</div><div style="font-size:9px; color:var(--gray); margin-top:2px;">NVT</div></div>
+            <div class="tier-chip t2"><div class="tier-n">2ND</div><div class="tier-val">700</div><div style="font-size:9px; color:var(--gray); margin-top:2px;">NVT</div></div>
+            <div class="tier-chip t3"><div class="tier-n">3RD+</div><div class="tier-val">1500</div><div style="font-size:9px; color:var(--gray); margin-top:2px;">NVT</div></div>
+        </div>
+        <button class="btn-action" style="width:100%; padding:13px; margin-top:16px; font-size:12px;" onclick="invite()">🔗 &nbsp;Copy Invite Link</button>
+    </div>
+    <div class="referral-stats-bar">
+        <div class="referral-stat-chip"><div class="chip-val" id="ref-total-count">0</div><div class="chip-label">Total Referrals</div></div>
+        <div class="referral-stat-chip"><div class="chip-val" id="ref-total-earned" style="color:var(--green);">0</div><div class="chip-label">Coins Earned</div></div>
+    </div>
+    <div class="section-heading">Referral List</div>
+    <div id="friend-list"><div class="empty-state"><div class="empty-icon">⏳</div>Loading...</div></div>
+</div>
+
+<!-- TASKS PAGE -->
+<div id="tasks-page" class="overlay">
+    <button class="close-btn" onclick="closeAll()">✕</button>
+    <div class="page-title">Tasks Center</div>
+    <div class="task-tabs">
+        <button class="tab-btn active" id="tab-daily" onclick="switchTaskTab('daily')">Daily</button>
+        <button class="tab-btn" id="tab-social" onclick="switchTaskTab('social')">Social</button>
+        <button class="tab-btn" id="tab-video" onclick="switchTaskTab('video')">Video</button>
+    </div>
+    <div id="task-list-dynamic"></div>
+</div>
+
+<!-- ===== TASK VERIFY OVERLAY — 60s wait + 3s loading spinner ===== -->
+<div id="task-verify-overlay">
+    <div class="verify-box">
+        <div class="verify-icon" id="verify-icon-emoji">🔍</div>
+        <div class="verify-title" id="verify-title-text">VERIFYING TASK</div>
+        <div class="verify-sub" id="verify-sub-text">Complete the task in the opened link. The claim button unlocks after a 60-second verification.</div>
+        <div class="verify-timer" id="verify-countdown">60</div>
+        <div class="verify-phase-label" id="verify-phase-label">WAITING · COMPLETE TASK</div>
+        <div class="verify-progress"><div class="verify-progress-fill" id="verify-progress-fill" style="width:100%"></div></div>
+        <!-- 3-second loading spinner shown after 60s ===== -->
+        <div class="verify-spinner" id="verify-spinner"></div>
+        <button class="btn-action admin-btn-full" id="verify-claim-btn" onclick="finishTaskClaim()" style="display:none;">✅ CLAIM REWARD</button>
+        <button style="width:100%; margin-top:8px; padding:10px; background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.08); border-radius:10px; color:var(--gray); font-family:'Orbitron',monospace; font-size:10px; cursor:pointer;" onclick="cancelTaskVerify()">CANCEL</button>
+    </div>
+</div>
+
+<!-- CONVERT PAGE -->
+<div id="convert-page" class="overlay">
+    <button class="close-btn" onclick="closeAll()">✕</button>
+    <div class="page-title">NVT → CRC</div>
+    <div class="conversion-box">
+        <div class="conversion-title">🌕 CORE COIN EXCHANGE</div>
+        <div class="conversion-rate-info">Rate: <b id="conv-rate-display">Loading...</b><br><span style="font-size:11px; color:var(--gray);">Rate set by admin.</span></div>
+        <div style="font-size:11px; color:var(--gray-light); margin-bottom:10px;">Enter NVT amount to convert:</div>
+        <div class="conversion-input-row">
+            <input type="number" class="conversion-input" id="convert-nvt-input" placeholder="NVT amount..." min="1" oninput="previewConversion()" />
+            <button class="btn-convert" onclick="doConversion()">CONVERT</button>
+        </div>
+        <div class="conversion-preview">You will receive: <b id="conv-preview-crc">—</b> CRC</div>
+    </div>
+    <div style="background:var(--card); border:1px solid var(--card-border); border-radius:14px; padding:16px;">
+        <div style="font-size:11px; color:var(--gray); letter-spacing:1px; text-transform:uppercase; margin-bottom:10px;">Your Balances</div>
+        <div style="display:flex; justify-content:space-between; margin-bottom:8px;"><span style="color:var(--gray-light);">🪙 NVT</span><span style="font-family:'Orbitron',monospace; color:var(--gold); font-size:13px;" id="conv-nvt-bal">0</span></div>
+        <div style="display:flex; justify-content:space-between;"><span style="color:var(--gray-light);">🌕 CRC</span><span style="font-family:'Orbitron',monospace; color:var(--crc); font-size:13px;" id="conv-crc-bal">0</span></div>
+    </div>
+</div>
+
+<!-- AIRDROP PAGE -->
+<div id="airdrop-page" class="overlay">
+    <button class="close-btn" onclick="closeAll()">✕</button>
+    <div class="page-title">Airdrop</div>
+    <div class="airdrop-hero">
+        <div style="font-size:50px; margin-bottom:12px;">🪂</div>
+        <h3>CRC AIRDROP</h3>
+        <p>Hold CRC coins in your balance to qualify for the upcoming airdrop. The more CRC you hold, the bigger your share!</p>
+        <div style="margin-top:16px; padding:14px; background:rgba(255,215,0,0.07); border-radius:12px; border:1px solid rgba(255,215,0,0.2);">
+            <div style="font-size:10px; color:var(--gray); letter-spacing:1px; text-transform:uppercase; margin-bottom:6px;">Your CRC Snapshot</div>
+            <div style="font-family:'Orbitron',monospace; font-size:26px; color:var(--crc); font-weight:900;" id="airdrop-crc-display">0</div>
+        </div>
+    </div>
+    <div class="airdrop-locked-badge">
+        <span style="font-size:20px;">🔒</span>
+        <div>
+            <div style="font-weight:700; letter-spacing:0.5px;">Distribution: Coming Soon</div>
+            <div style="font-size:11px; color:var(--gray-light); margin-top:2px;">Accumulate CRC now. Wallet connection will activate at launch.</div>
+        </div>
+    </div>
+    <div class="card" style="flex-direction:column; align-items:flex-start; gap:8px;">
+        <b>📋 How to qualify?</b>
+        <small>1. Convert NVT to CRC via the Convert tab.<br>2. Keep CRC balance above 0 during snapshot.<br>3. Connect TON wallet when launched.</small>
+    </div>
+    <button class="btn-action" style="width:100%; padding:13px; margin-top:8px;" onclick="showPage('convert-page')">🌕 Get CRC Coins</button>
+</div>
+
+<!-- RANK PAGE -->
+<div id="rank-page" class="overlay">
+    <button class="close-btn" onclick="closeAll()">✕</button>
+    <div class="page-title">Top 10 Mining Kings</div>
+    <div id="leaderboard-list"></div>
+</div>
+
+<!-- WALLET PAGE -->
+<div id="wallet-page" class="overlay">
+    <button class="close-btn" onclick="closeAll()">✕</button>
+    <div class="page-title">Wallet</div>
+    <div class="wallet-lock-banner">
+        <h4>🔒 WALLET CONNECTION — COMING SOON</h4>
+        <p>TON wallet integration is prepared but will be activated at the official airdrop launch. Your CRC balance is being tracked.</p>
+    </div>
+    <div class="wallet-connect-box">
+        <div style="font-size:46px; margin-bottom:14px; filter:grayscale(0.5);">👛</div>
+        <h3>Connect Wallet</h3>
+        <p id="wallet-status" style="color:var(--gray-light); margin-bottom:20px; font-size:13px; line-height:1.6;">Airdrop distributions will be sent here once activated.</p>
+        <div id="ton-connect-button" style="display:flex; justify-content:center; opacity:0.5; pointer-events:none;"></div>
+    </div>
+</div>
+
+<!-- BOOST PAGE -->
+<div id="boost-page" class="overlay">
+    <button class="close-btn" onclick="closeAll()">✕</button>
+    <div class="page-title">Mining Boosters</div>
+    <div class="card"><div><b>🤖 Auto-Mining Bot</b><br><small id="bot-info">Level 0</small></div><button class="btn-action" onclick="buyBot()">Upgrade</button></div>
+    <div class="card"><div><b>👆 Tap Multiplier</b><br><small id="tap-upgrade-info">Level 1</small></div><button class="btn-action" onclick="upgradeTap()">Upgrade</button></div>
+    <div class="card"><div><b>⚡ Energy Limit</b><br><small id="energy-lv-info">Max: 500</small></div><button class="btn-action" onclick="upgradeEnergy()">Upgrade</button></div>
+</div>
+
+<!-- ===== ESTATES / GAME PAGE ===== -->
+<div id="estates-page" class="overlay">
+    <button class="close-btn" onclick="closeAll()">✕</button>
+    <div class="page-title">🏛 Estates</div>
+    <div class="estate-intro">
+        <h3>PROPERTY EMPIRE</h3>
+        <p>Invest NVT to upgrade your properties. Each upgrade doubles the cost & duration, rewarding CRC + auto-mining income on completion.</p>
+    </div>
+    <div id="estates-list">
+        <!-- Rendered by JS -->
+    </div>
+</div>
+
+<!-- SETTINGS PAGE -->
+<div id="settings-page" class="overlay">
+    <button class="close-btn" onclick="closeAll()">✕</button>
+    <div class="page-title">Settings</div>
+
+    <div class="settings-section">
+        <div class="settings-title">🎨 Appearance</div>
+        <div class="settings-row">
+            <div><div class="settings-label">Dark Mode</div><div class="settings-sub">Switch between dark and light theme</div></div>
+            <label class="toggle-switch">
+                <input type="checkbox" id="dark-mode-toggle" checked onchange="toggleDarkMode()">
+                <span class="toggle-slider"></span>
+            </label>
         </div>
     </div>
 
-    <!-- AIRDROP PAGE -->
-    <div id="airdrop-page" class="overlay">
-        <button class="close-btn" onclick="closeAll()">✕</button>
-        <div class="page-title">Airdrop</div>
-        <div class="airdrop-hero">
-            <div style="font-size:50px; margin-bottom:12px;">🪂</div>
-            <h3>CRC AIRDROP</h3>
-            <p>Hold CRC coins in your balance to qualify for the upcoming airdrop. The more CRC you hold, the bigger your share!</p>
-            <div style="margin-top:16px; padding:14px; background:rgba(255,215,0,0.07); border-radius:12px; border:1px solid rgba(255,215,0,0.2);">
-                <div style="font-size:10px; color:var(--gray); letter-spacing:1px; text-transform:uppercase; margin-bottom:6px;">Your CRC Snapshot</div>
-                <div style="font-family:'Orbitron',monospace; font-size:26px; color:var(--crc); font-weight:900;" id="airdrop-crc-display">0</div>
-            </div>
-        </div>
-        <!-- Locked / Coming Soon banner -->
-        <div class="airdrop-locked-badge">
-            <span style="font-size:20px;">🔒</span>
-            <div>
-                <div style="font-weight:700; letter-spacing:0.5px;">Distribution: Coming Soon</div>
-                <div style="font-size:11px; color:var(--gray-light); margin-top:2px;">Accumulate CRC now. Wallet connection will activate at launch.</div>
-            </div>
-        </div>
-        <div class="card" style="flex-direction:column; align-items:flex-start; gap:8px;">
-            <b>📋 How to qualify?</b>
-            <small>1. Convert NVT to CRC via the Convert tab.<br>2. Keep CRC balance above 0 during snapshot.<br>3. Connect TON wallet when launched.</small>
-        </div>
-        <button class="btn-action" style="width:100%; padding:13px; margin-top:8px;" onclick="showPage('convert-page')">🌕 Get CRC Coins</button>
-    </div>
-
-    <!-- RANK PAGE -->
-    <div id="rank-page" class="overlay">
-        <button class="close-btn" onclick="closeAll()">✕</button>
-        <div class="page-title">Top 10 Mining Kings</div>
-        <div id="leaderboard-list"></div>
-    </div>
-
-    <!-- WALLET PAGE -->
-    <div id="wallet-page" class="overlay">
-        <button class="close-btn" onclick="closeAll()">✕</button>
-        <div class="page-title">Wallet</div>
-        <div class="wallet-lock-banner">
-            <h4>🔒 WALLET CONNECTION — COMING SOON</h4>
-            <p>TON wallet integration is prepared but will be activated at the official airdrop launch. Your CRC balance is being tracked.</p>
-        </div>
-        <div class="wallet-connect-box">
-            <div style="font-size:46px; margin-bottom:14px; filter:grayscale(0.5);">👛</div>
-            <h3>Connect Wallet</h3>
-            <p id="wallet-status" style="color:var(--gray-light); margin-bottom:20px; font-size:13px; line-height:1.6;">Airdrop distributions will be sent here once activated.</p>
-            <div id="ton-connect-button" style="display:flex; justify-content:center; opacity:0.5; pointer-events:none;"></div>
+    <div class="settings-section">
+        <div class="settings-title">🌐 Language</div>
+        <div class="settings-row">
+            <div><div class="settings-label">Display Language</div><div class="settings-sub">Interface language</div></div>
+            <select class="lang-select" id="lang-select" onchange="changeLang(this.value)">
+                <option value="en">🇬🇧 English</option>
+                <option value="bn">🇧🇩 Bengali</option>
+                <option value="hi">🇮🇳 Hindi</option>
+                <option value="ar">🇸🇦 Arabic</option>
+                <option value="ru">🇷🇺 Russian</option>
+                <option value="tr">🇹🇷 Turkish</option>
+                <option value="es">🇪🇸 Spanish</option>
+                <option value="zh">🇨🇳 Chinese</option>
+            </select>
         </div>
     </div>
 
-    <!-- BOOST PAGE -->
-    <div id="boost-page" class="overlay">
-        <button class="close-btn" onclick="closeAll()">✕</button>
-        <div class="page-title">Mining Boosters</div>
-        <div class="card"><div><b>🤖 Auto-Mining Bot</b><br><small id="bot-info">Level 0</small></div><button class="btn-action" onclick="buyBot()">Upgrade</button></div>
-        <div class="card"><div><b>👆 Tap Multiplier</b><br><small id="tap-upgrade-info">Level 1</small></div><button class="btn-action" onclick="upgradeTap()">Upgrade</button></div>
-        <div class="card"><div><b>⚡ Energy Limit</b><br><small id="energy-lv-info">Max: 500</small></div><button class="btn-action" onclick="upgradeEnergy()">Upgrade</button></div>
-    </div>
-
-    <!-- SETTINGS PAGE -->
-    <div id="settings-page" class="overlay">
-        <button class="close-btn" onclick="closeAll()">✕</button>
-        <div class="page-title">Settings</div>
-
-        <div class="settings-section" id="ss1">
-            <div class="settings-title">🎨 Appearance</div>
-            <div class="settings-row">
-                <div><div class="settings-label">Dark Mode</div><div class="settings-sub">Switch between dark and light theme</div></div>
-                <label class="toggle-switch">
-                    <input type="checkbox" id="dark-mode-toggle" checked onchange="toggleDarkMode()">
-                    <span class="toggle-slider"></span>
-                </label>
-            </div>
+    <div class="settings-section">
+        <div class="settings-title">🔊 Haptic & Sound</div>
+        <div class="settings-row">
+            <div><div class="settings-label">Haptic Feedback</div><div class="settings-sub">Vibrate on tap</div></div>
+            <label class="toggle-switch"><input type="checkbox" id="haptic-toggle" checked onchange="saveSettings()"><span class="toggle-slider"></span></label>
         </div>
-
-        <div class="settings-section">
-            <div class="settings-title">🌐 Language</div>
-            <div class="settings-row">
-                <div><div class="settings-label">Display Language</div><div class="settings-sub">Interface language</div></div>
-                <select class="lang-select" id="lang-select" onchange="changeLang(this.value)">
-                    <option value="en">🇬🇧 English</option>
-                    <option value="bn">🇧🇩 Bengali</option>
-                    <option value="hi">🇮🇳 Hindi</option>
-                    <option value="ar">🇸🇦 Arabic</option>
-                    <option value="ru">🇷🇺 Russian</option>
-                    <option value="tr">🇹🇷 Turkish</option>
-                    <option value="es">🇪🇸 Spanish</option>
-                    <option value="zh">🇨🇳 Chinese</option>
-                </select>
-            </div>
-        </div>
-
-        <div class="settings-section">
-            <div class="settings-title">🔊 Haptic & Sound</div>
-            <div class="settings-row">
-                <div><div class="settings-label">Haptic Feedback</div><div class="settings-sub">Vibrate on tap</div></div>
-                <label class="toggle-switch">
-                    <input type="checkbox" id="haptic-toggle" checked onchange="saveSettings()">
-                    <span class="toggle-slider"></span>
-                </label>
-            </div>
-            <div class="settings-row">
-                <div><div class="settings-label">Sound Effects</div><div class="settings-sub">Tap and reward sounds</div></div>
-                <label class="toggle-switch">
-                    <input type="checkbox" id="sound-toggle" onchange="saveSettings()">
-                    <span class="toggle-slider"></span>
-                </label>
-            </div>
-        </div>
-
-        <div class="settings-section">
-            <div class="settings-title">🖼️ Custom Assets</div>
-            <div class="settings-row" style="flex-direction:column; align-items:flex-start; gap:8px;">
-                <div class="settings-label">Custom Avatar Image URL</div>
-                <div style="font-size:11px; color:var(--gray);">Paste a direct image link to replace the tap button avatar</div>
-                <div style="display:flex; gap:8px; width:100%;">
-                    <input type="url" id="custom-avatar-url" placeholder="https://..." style="flex:1; background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.1); border-radius:8px; padding:8px 12px; color:var(--text); font-size:12px; outline:none;" />
-                    <button class="btn-action" onclick="applyCustomAvatar()" style="white-space:nowrap;">Apply</button>
-                </div>
-            </div>
-        </div>
-
-        <div class="settings-section">
-            <div class="settings-title">ℹ️ About</div>
-            <div class="settings-row"><div class="settings-label">Version</div><span style="font-family:'Orbitron',monospace; font-size:11px; color:var(--neon);">v2.0 PRO</span></div>
-            <div class="settings-row"><div class="settings-label">User ID</div><span style="font-family:'Orbitron',monospace; font-size:11px; color:var(--gray);" id="settings-uid">—</span></div>
+        <div class="settings-row">
+            <div><div class="settings-label">Sound Effects</div><div class="settings-sub">Tap and reward sounds</div></div>
+            <label class="toggle-switch"><input type="checkbox" id="sound-toggle" onchange="saveSettings()"><span class="toggle-slider"></span></label>
         </div>
     </div>
 
-    <!-- ADMIN KEY MODAL -->
-    <div id="admin-key-modal">
-        <div class="admin-modal-box">
-            <div class="admin-shield">🛡️</div>
-            <h3>ADMIN ACCESS</h3>
-            <p>Enter the secret key to access control panel</p>
-            <input type="password" class="admin-key-input" id="admin-key-input" maxlength="10" placeholder="••••••" />
-            <div class="admin-key-btns">
-                <button class="btn-cancel" onclick="closeAdminModal()">CANCEL</button>
-                <button class="btn-confirm" onclick="verifyAdminKey()">CONFIRM</button>
+    <!-- ===== MINING IMAGE (TAP AVATAR) — replaces old "Custom Avatar" ===== -->
+    <div class="settings-section">
+        <div class="settings-title">⛏️ Mining Image</div>
+        <div class="settings-row" style="flex-direction:column; align-items:flex-start; gap:8px;">
+            <div class="settings-label">Tap Button Image URL</div>
+            <div style="font-size:11px; color:var(--gray);">Paste a direct image link to customize the mining button appearance</div>
+            <div style="display:flex; gap:8px; width:100%;">
+                <input type="url" id="mining-image-url" placeholder="https://..." style="flex:1; background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.1); border-radius:8px; padding:8px 12px; color:var(--text); font-size:12px; outline:none;" />
+                <button class="btn-action" onclick="applyMiningImage()" style="white-space:nowrap;">Apply</button>
             </div>
-            <div id="admin-key-error">⚠ UNAUTHORIZED ACCESS</div>
+            <button style="background:rgba(255,77,109,0.1); border:1px solid rgba(255,77,109,0.25); color:var(--red); padding:6px 12px; border-radius:8px; font-size:11px; cursor:pointer; font-family:'Orbitron',monospace;" onclick="resetMiningImage()">RESET DEFAULT</button>
         </div>
     </div>
 
-    <!-- ADMIN PANEL -->
-    <div id="admin-panel">
-        <div class="admin-header">
-            <div>
-                <div class="admin-title">⚙ ADMIN PANEL</div>
-                <div class="admin-badge-hdr">NOVATAP CONTROL</div>
-            </div>
-            <button class="admin-close" onclick="closeAdminPanel()">EXIT ✕</button>
+    <div class="settings-section">
+        <div class="settings-title">ℹ️ About</div>
+        <div class="settings-row"><div class="settings-label">Version</div><span style="font-family:'Orbitron',monospace; font-size:11px; color:var(--neon);">v3.0 PRO</span></div>
+        <div class="settings-row"><div class="settings-label">User ID</div><span style="font-family:'Orbitron',monospace; font-size:11px; color:var(--gray);" id="settings-uid">—</span></div>
+    </div>
+</div>
+
+<!-- ===== ADMIN KEY MODAL ===== -->
+<div id="admin-key-modal">
+    <div class="admin-modal-box">
+        <div class="admin-shield">🛡️</div>
+        <h3>ADMIN ACCESS</h3>
+        <p>Enter the secret key to access control panel</p>
+        <input type="password" class="admin-key-input" id="admin-key-input" maxlength="10" placeholder="••••••" />
+        <div class="admin-key-btns">
+            <button class="btn-cancel" onclick="closeAdminModal()">CANCEL</button>
+            <button class="btn-confirm" onclick="verifyAdminKey()">CONFIRM</button>
         </div>
-        <div class="admin-body">
+        <div id="admin-key-error">⚠ UNAUTHORIZED ACCESS</div>
+    </div>
+</div>
 
-            <!-- Live Stats -->
-            <div class="admin-section">
-                <div class="admin-section-title"><span>📊</span> Live Statistics</div>
-                <div class="admin-stats-row">
-                    <div class="admin-stat-chip"><div class="admin-stat-chip-val" id="a-stat-users">—</div><div class="admin-stat-chip-label">Users</div></div>
-                    <div class="admin-stat-chip"><div class="admin-stat-chip-val" id="a-stat-total">—</div><div class="admin-stat-chip-label">Total NVT</div></div>
-                    <div class="admin-stat-chip"><div class="admin-stat-chip-val" id="a-stat-rate">—</div><div class="admin-stat-chip-label">Mine Rate</div></div>
-                </div>
+<!-- ===== ADMIN PANEL ===== -->
+<div id="admin-panel">
+    <div class="admin-header">
+        <div>
+            <div class="admin-title">⚙ ADMIN PANEL</div>
+            <div class="admin-badge-hdr">NOVATAP CONTROL</div>
+        </div>
+        <button class="admin-close" onclick="closeAdminPanel()">EXIT ✕</button>
+    </div>
+    <div class="admin-body">
+
+        <!-- Live Stats -->
+        <div class="admin-section">
+            <div class="admin-section-title"><span>📊</span> Live Statistics</div>
+            <div class="admin-stats-row">
+                <div class="admin-stat-chip"><div class="admin-stat-chip-val" id="a-stat-users">—</div><div class="admin-stat-chip-label">Users</div></div>
+                <div class="admin-stat-chip"><div class="admin-stat-chip-val" id="a-stat-total">—</div><div class="admin-stat-chip-label">Total NVT</div></div>
+                <div class="admin-stat-chip"><div class="admin-stat-chip-val" id="a-stat-rate">—</div><div class="admin-stat-chip-label">Mine Rate</div></div>
             </div>
+        </div>
 
-            <!-- Announcement -->
-            <div class="admin-section">
-                <div class="admin-section-title"><span>📢</span> Global Announcement</div>
-                <input type="text" class="admin-input" id="a-announcement" placeholder="Enter announcement..." />
-                <div style="display:flex; gap:8px;">
-                    <button class="admin-btn admin-btn-gold admin-btn-full" style="flex:2;" onclick="setAnnouncement()">BROADCAST</button>
-                    <button class="admin-btn admin-btn-red admin-btn-full" style="flex:1;" onclick="clearAnnouncement()">CLEAR</button>
-                </div>
+        <!-- Announcement -->
+        <div class="admin-section">
+            <div class="admin-section-title"><span>📢</span> Global Announcement</div>
+            <input type="text" class="admin-input" id="a-announcement" placeholder="Enter announcement..." />
+            <div style="display:flex; gap:8px;">
+                <button class="admin-btn admin-btn-gold admin-btn-full" style="flex:2;" onclick="setAnnouncement()">BROADCAST</button>
+                <button class="admin-btn admin-btn-red admin-btn-full" style="flex:1;" onclick="clearAnnouncement()">CLEAR</button>
             </div>
+        </div>
 
-            <!-- Global Settings -->
-            <div class="admin-section">
-                <div class="admin-section-title"><span>⚙️</span> Global Settings</div>
-                <div class="admin-toggle-row">
-                    <div><div class="admin-toggle-label">Maintenance Mode</div><div class="admin-toggle-sublabel">Admin UID bypasses this lock</div></div>
-                    <label class="toggle-switch-admin">
-                        <input type="checkbox" id="a-maintenance-toggle" onchange="toggleMaintenance()">
-                        <span class="toggle-slider-admin"></span>
-                    </label>
-                </div>
+        <!-- Global Settings -->
+        <div class="admin-section">
+            <div class="admin-section-title"><span>⚙️</span> Global Settings</div>
+            <div class="admin-toggle-row">
+                <div><div class="admin-toggle-label">Maintenance Mode</div><div class="admin-toggle-sublabel">Admin UID bypasses this lock</div></div>
+                <label class="toggle-switch-admin"><input type="checkbox" id="a-maintenance-toggle" onchange="toggleMaintenance()"><span class="toggle-slider-admin"></span></label>
+            </div>
+            <div class="admin-divider"></div>
+            <div class="admin-toggle-row">
+                <div><div class="admin-toggle-label">Show Airdrop Tab</div><div class="admin-toggle-sublabel">Toggle bottom nav airdrop item</div></div>
+                <label class="toggle-switch-admin toggle-green-admin"><input type="checkbox" id="a-airdrop-toggle" onchange="toggleAirdropTab()"><span class="toggle-slider-admin"></span></label>
+            </div>
+            <div class="admin-divider"></div>
+            <div class="admin-toggle-row" style="display:block;">
+                <div class="admin-toggle-label" style="margin-bottom:8px;">Global Mining Rate Multiplier</div>
+                <div class="admin-input-row"><input type="number" class="admin-input" id="a-mining-rate" placeholder="e.g. 1.5" min="0.1" max="100" step="0.1" style="margin-bottom:0;" /><button class="admin-btn" onclick="saveMiningRate()">SET</button></div>
+                <div style="font-size:11px; color:var(--gray); margin-top:6px;">1 = normal, 2 = double</div>
+            </div>
+            <div class="admin-divider"></div>
+            <div class="admin-toggle-row" style="display:block;">
+                <div class="admin-toggle-label" style="margin-bottom:8px;">Global Energy Limit Cap</div>
+                <div class="admin-input-row"><input type="number" class="admin-input" id="a-energy-cap" placeholder="e.g. 5000" min="500" step="500" style="margin-bottom:0;" /><button class="admin-btn" onclick="saveEnergyCap()">SET</button></div>
+            </div>
+            <div class="admin-divider"></div>
+            <div class="admin-toggle-row" style="display:block;">
+                <div class="admin-toggle-label" style="margin-bottom:8px;">🌕 NVT → CRC Exchange Rate</div>
+                <div class="admin-input-row"><input type="number" class="admin-input" id="a-exchange-rate" placeholder="NVT per 1 CRC (e.g. 1000)" min="1" step="1" style="margin-bottom:0;" /><button class="admin-btn admin-btn-crc" onclick="saveExchangeRate()">SET</button></div>
+                <div style="font-size:11px; color:var(--gray); margin-top:6px;">How many NVT = 1 CRC</div>
+            </div>
+        </div>
+
+        <!-- Task Management -->
+        <div class="admin-section">
+            <div class="admin-section-title"><span>📋</span> Task Management</div>
+            <div class="admin-tab-row">
+                <div class="admin-tab active-tab" id="atab-social" onclick="switchAdminTaskTab('social')">SOCIAL</div>
+                <div class="admin-tab" id="atab-video" onclick="switchAdminTaskTab('video')">VIDEO</div>
+            </div>
+            <div id="a-task-category-label" style="font-size:11px; color:var(--gray); margin-bottom:10px; letter-spacing:1px;">SOCIAL TASKS</div>
+            <input type="text" class="admin-input" id="a-task-name" placeholder="Task Title" />
+            <input type="url" class="admin-input" id="a-task-link" placeholder="Task Link (https://...)" />
+            <div class="admin-input-row" style="margin-bottom:10px;">
+                <input type="number" class="admin-input" id="a-task-reward" placeholder="Reward (NVT)" min="1" style="margin-bottom:0;" />
+                <button class="admin-btn admin-btn-green" onclick="addTask()">ADD</button>
+            </div>
+            <div class="admin-divider"></div>
+            <div id="a-task-list"></div>
+        </div>
+
+        <!-- ===== USER DATA TABLE — new detailed view with edit ===== -->
+        <div class="admin-section">
+            <div class="admin-section-title"><span>👥</span> User Data Table</div>
+            <div style="display:flex; gap:8px; margin-bottom:12px; align-items:center;">
+                <input type="text" class="admin-input" id="a-table-search" placeholder="Filter by name or ID..." style="margin-bottom:0; flex:1;" oninput="filterUserTable()" />
+                <button class="admin-btn" onclick="loadUserTable()">🔄</button>
+            </div>
+            <div style="font-size:10px; color:var(--gray); margin-bottom:10px;">Showing all users. Click Edit to modify balances inline.</div>
+            <div class="admin-users-table-wrap">
+                <table class="admin-users-table" id="a-users-table">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>TG ID</th>
+                            <th>NVT</th>
+                            <th>CRC</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="a-users-table-body">
+                        <tr><td colspan="5" style="text-align:center; color:var(--gray); padding:20px;">Click 🔄 to load users</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Legacy User Management (kept for compatibility) -->
+        <div class="admin-section">
+            <div class="admin-section-title"><span>👤</span> User Management (ID Search)</div>
+            <div class="admin-input-row" style="margin-bottom:10px;">
+                <input type="text" class="admin-input" id="a-user-search" placeholder="Enter User ID..." style="margin-bottom:0;" />
+                <button class="admin-btn" onclick="searchUser()">SEARCH</button>
+            </div>
+            <div id="admin-user-result">
+                <div class="admin-user-row"><div class="admin-user-row-label">Name</div><div class="admin-user-row-val" id="a-u-name">—</div></div>
+                <div class="admin-user-row"><div class="admin-user-row-label">User ID</div><div class="admin-user-row-val" id="a-u-id">—</div></div>
+                <div class="admin-user-row"><div class="admin-user-row-label">NVT Balance</div><div class="admin-user-row-val" id="a-u-bal">—</div></div>
+                <div class="admin-user-row"><div class="admin-user-row-label">CRC Balance</div><div class="admin-user-row-val" id="a-u-crc">—</div></div>
+                <div class="admin-user-row"><div class="admin-user-row-label">Level</div><div class="admin-user-row-val" id="a-u-lvl">—</div></div>
+                <div class="admin-user-row"><div class="admin-user-row-label">Status</div><div class="admin-user-row-val" id="a-u-status">—</div></div>
                 <div class="admin-divider"></div>
-                <div class="admin-toggle-row">
-                    <div><div class="admin-toggle-label">Show Airdrop Tab</div><div class="admin-toggle-sublabel">Toggle bottom nav airdrop item</div></div>
-                    <label class="toggle-switch-admin toggle-green-admin">
-                        <input type="checkbox" id="a-airdrop-toggle" onchange="toggleAirdropTab()">
-                        <span class="toggle-slider-admin"></span>
-                    </label>
+                <div style="font-size:10px; color:var(--gray); letter-spacing:1px; text-transform:uppercase; margin-bottom:8px;">Edit Balances</div>
+                <div class="admin-dual-input-row">
+                    <input type="number" class="admin-input" id="a-u-new-bal" placeholder="New NVT..." min="0" />
+                    <input type="number" class="admin-input crc-input" id="a-u-new-crc" placeholder="New CRC..." min="0" />
                 </div>
-                <div class="admin-divider"></div>
-                <div class="admin-toggle-row" style="display:block;">
-                    <div class="admin-toggle-label" style="margin-bottom:8px;">Global Mining Rate Multiplier</div>
-                    <div class="admin-input-row"><input type="number" class="admin-input" id="a-mining-rate" placeholder="e.g. 1.5" min="0.1" max="100" step="0.1" style="margin-bottom:0;" /><button class="admin-btn" onclick="saveMiningRate()">SET</button></div>
-                    <div style="font-size:11px; color:var(--gray); margin-top:6px;">1 = normal, 2 = double</div>
-                </div>
-                <div class="admin-divider"></div>
-                <div class="admin-toggle-row" style="display:block;">
-                    <div class="admin-toggle-label" style="margin-bottom:8px;">Global Energy Limit Cap</div>
-                    <div class="admin-input-row"><input type="number" class="admin-input" id="a-energy-cap" placeholder="e.g. 5000" min="500" step="500" style="margin-bottom:0;" /><button class="admin-btn" onclick="saveEnergyCap()">SET</button></div>
-                </div>
-                <div class="admin-divider"></div>
-                <div class="admin-toggle-row" style="display:block;">
-                    <div class="admin-toggle-label" style="margin-bottom:8px;">🌕 NVT → CRC Exchange Rate</div>
-                    <div class="admin-input-row"><input type="number" class="admin-input" id="a-exchange-rate" placeholder="NVT per 1 CRC (e.g. 1000)" min="1" step="1" style="margin-bottom:0;" /><button class="admin-btn admin-btn-crc" onclick="saveExchangeRate()">SET</button></div>
-                    <div style="font-size:11px; color:var(--gray); margin-top:6px;">How many NVT = 1 CRC</div>
+                <div style="display:flex; gap:6px; flex-wrap:wrap;">
+                    <button class="admin-btn admin-btn-gold" style="flex:1; padding:9px;" onclick="setUserBalance()">SET NVT</button>
+                    <button class="admin-btn admin-btn-crc" style="flex:1; padding:9px;" onclick="setUserCRC()">SET CRC</button>
+                    <button class="admin-btn admin-btn-red" style="flex:1; padding:9px;" onclick="blockUser()">BAN</button>
+                    <button class="admin-btn admin-btn-green" style="flex:1; padding:9px;" onclick="unblockUser()">UNBAN</button>
                 </div>
             </div>
-
-            <!-- Task Management -->
-            <div class="admin-section">
-                <div class="admin-section-title"><span>📋</span> Task Management</div>
-                <div class="admin-tab-row">
-                    <div class="admin-tab active-tab" id="atab-social" onclick="switchAdminTaskTab('social')">SOCIAL</div>
-                    <div class="admin-tab" id="atab-video" onclick="switchAdminTaskTab('video')">VIDEO</div>
-                </div>
-                <div id="a-task-category-label" style="font-size:11px; color:var(--gray); margin-bottom:10px; letter-spacing:1px;">SOCIAL TASKS</div>
-                <input type="text" class="admin-input" id="a-task-name" placeholder="Task Title" />
-                <input type="url" class="admin-input" id="a-task-link" placeholder="Task Link (https://...)" />
-                <div class="admin-input-row" style="margin-bottom:10px;">
-                    <input type="number" class="admin-input" id="a-task-reward" placeholder="Reward (NVT)" min="1" style="margin-bottom:0;" />
-                    <button class="admin-btn admin-btn-green" onclick="addTask()">ADD</button>
-                </div>
-                <div class="admin-divider"></div>
-                <div id="a-task-list"></div>
-            </div>
-
-            <!-- User Management -->
-            <div class="admin-section">
-                <div class="admin-section-title"><span>👤</span> User Management</div>
-                <div class="admin-input-row" style="margin-bottom:10px;">
-                    <input type="text" class="admin-input" id="a-user-search" placeholder="Enter User ID..." style="margin-bottom:0;" />
-                    <button class="admin-btn" onclick="searchUser()">SEARCH</button>
-                </div>
-                <div id="admin-user-result">
-                    <div class="admin-user-row"><div class="admin-user-row-label">Name</div><div class="admin-user-row-val" id="a-u-name">—</div></div>
-                    <div class="admin-user-row"><div class="admin-user-row-label">User ID</div><div class="admin-user-row-val" id="a-u-id">—</div></div>
-                    <div class="admin-user-row"><div class="admin-user-row-label">NVT Balance</div><div class="admin-user-row-val" id="a-u-bal">—</div></div>
-                    <div class="admin-user-row"><div class="admin-user-row-label">CRC Balance</div><div class="admin-user-row-val" id="a-u-crc">—</div></div>
-                    <div class="admin-user-row"><div class="admin-user-row-label">Level</div><div class="admin-user-row-val" id="a-u-lvl">—</div></div>
-                    <div class="admin-user-row"><div class="admin-user-row-label">Status</div><div class="admin-user-row-val" id="a-u-status">—</div></div>
-                    <div class="admin-divider"></div>
-                    <div style="font-size:10px; color:var(--gray); letter-spacing:1px; text-transform:uppercase; margin-bottom:8px;">Edit Balances</div>
-                    <div class="admin-dual-input-row">
-                        <input type="number" class="admin-input" id="a-u-new-bal" placeholder="New NVT..." min="0" />
-                        <input type="number" class="admin-input crc-input" id="a-u-new-crc" placeholder="New CRC..." min="0" />
-                    </div>
-                    <div style="display:flex; gap:6px; flex-wrap:wrap;">
-                        <button class="admin-btn admin-btn-gold" style="flex:1; padding:9px;" onclick="setUserBalance()">SET NVT</button>
-                        <button class="admin-btn admin-btn-crc" style="flex:1; padding:9px;" onclick="setUserCRC()">SET CRC</button>
-                        <button class="admin-btn admin-btn-red" style="flex:1; padding:9px;" onclick="blockUser()">BAN</button>
-                        <button class="admin-btn admin-btn-green" style="flex:1; padding:9px;" onclick="unblockUser()">UNBAN</button>
-                    </div>
-                </div>
-            </div>
-
-            <div id="admin-status-msg"></div>
         </div>
+
+        <div id="admin-status-msg"></div>
     </div>
+</div>
 
-    <!-- BOTTOM NAV (Premium - only Home, Tasks, Friends, Airdrop) -->
-    <div class="nav">
-        <div class="nav-item active" id="nav-home" onclick="closeAll(); setActiveNav('nav-home')">
-            <div class="nav-icon">🏠</div>
-            <span>Home</span>
-        </div>
-        <div class="nav-item" id="nav-tasks" onclick="showPage('tasks-page'); setActiveNav('nav-tasks')">
-            <div class="nav-icon">📋</div>
-            <span id="task-badge" class="badge"></span>
-            <span>Tasks</span>
-        </div>
-        <div class="nav-item" id="nav-friends" onclick="showPage('friends-page'); setActiveNav('nav-friends')">
-            <div class="nav-icon">👥</div>
-            <span>Friends</span>
-        </div>
-        <div class="nav-item" id="nav-airdrop" onclick="showPage('airdrop-page'); setActiveNav('nav-airdrop')" style="display:none;">
-            <div class="nav-icon">🪂</div>
-            <span>Airdrop</span>
-        </div>
+<!-- ===== BOTTOM NAV ===== -->
+<div class="nav">
+    <div class="nav-item active" id="nav-home" onclick="closeAll(); setActiveNav('nav-home')">
+        <div class="nav-icon">🏠</div>
+        <span>Home</span>
     </div>
+    <div class="nav-item" id="nav-tasks" onclick="showPage('tasks-page'); setActiveNav('nav-tasks')">
+        <div class="nav-icon">📋</div>
+        <span id="task-badge" class="badge"></span>
+        <span>Tasks</span>
+    </div>
+    <div class="nav-item" id="nav-friends" onclick="showPage('friends-page'); setActiveNav('nav-friends')">
+        <div class="nav-icon">👥</div>
+        <span>Friends</span>
+    </div>
+    <div class="nav-item" id="nav-airdrop" onclick="showPage('airdrop-page'); setActiveNav('nav-airdrop')" style="display:none;">
+        <div class="nav-icon">🪂</div>
+        <span>Airdrop</span>
+    </div>
+</div>
 
-    <script>
-    // ============================================================
-    // FIREBASE CONFIG
-    // ============================================================
-    const firebaseConfig = {
-        apiKey: "AIzaSyD3vuw74WjiWytZMbVrtNzn7igIyjRMC1c",
-        authDomain: "bdc-network.firebaseapp.com",
-        databaseURL: "https://bdc-network-default-rtdb.firebaseio.com",
-        projectId: "bdc-network",
-        storageBucket: "bdc-network.firebasestorage.app",
-        appId: "1:897735329291:web:0edde171fbf812e9cf290e"
+<script>
+// ============================================================
+// FIREBASE CONFIG
+// ============================================================
+const firebaseConfig = {
+    apiKey: "AIzaSyD3vuw74WjiWytZMbVrtNzn7igIyjRMC1c",
+    authDomain: "bdc-network.firebaseapp.com",
+    databaseURL: "https://bdc-network-default-rtdb.firebaseio.com",
+    projectId: "bdc-network",
+    storageBucket: "bdc-network.firebasestorage.app",
+    appId: "1:897735329291:web:0edde171fbf812e9cf290e"
+};
+firebase.initializeApp(firebaseConfig);
+const db = firebase.database();
+const tg = window.Telegram.WebApp;
+tg.expand();
+
+const uid = String(tg.initDataUnsafe?.user?.id || "887766");
+const uName = tg.initDataUnsafe?.user?.first_name || "Guest";
+const startParam = tg.initDataUnsafe?.start_param || null;
+const referrerId = (startParam && startParam !== uid) ? startParam : null;
+
+// ============================================================
+// ADMIN IDENTITY
+// ============================================================
+const ADMIN_UID = "8184879715";
+const ADMIN_SECRET_KEY = "242663";
+
+// ============================================================
+// DYNAMIC ASSET VARIABLES
+// ============================================================
+const ASSET_CONFIG = {
+    tapAvatarUrl: "",
+    profileAvatarUrl: "",
+    backgroundImageUrl: "",
+};
+
+// ============================================================
+// GAME STATE
+// ============================================================
+let balance = 0, crcBalance = 0, energy = 500, maxEnergy = 500;
+let level = 1, botLevel = 0, botStored = 0;
+let globalMiningRate = 1, exchangeRate = 1000;
+const REFERRAL_TIERS = [500, 700, 1500];
+const DAILY_REWARDS = Array.from({length:30}, (_, i) => Math.floor(200 + (i*(29800/29))));
+
+// ============================================================
+// ESTATES CONFIG — 5 properties, max level 10
+// Level 1: 5000 NVT / 5 min; each level doubles cost & time
+// ============================================================
+const ESTATE_DEFS = [
+    { id:'house',   name:'House',   icon:'🏠', desc:['Cozy starter home','Modern duplex','Villa','Luxury manor','Grand estate'] },
+    { id:'club',    name:'Club',    icon:'🎰', desc:['Local bar','Night lounge','City club','VIP club','Mega club'] },
+    { id:'pool',    name:'Pool',    icon:'🏊', desc:['Backyard pool','Community pool','Resort pool','Infinity pool','Olympic complex'] },
+    { id:'stadium', name:'Stadium', icon:'🏟️', desc:['Mini arena','Local stadium','City stadium','Mega stadium','World arena'] },
+    { id:'bar',     name:'Bar',     icon:'🍺', desc:['Street bar','Cocktail bar','Sky bar','Rooftop lounge','Crown bar'] },
+];
+const ESTATE_BASE_COST = 5000;      // NVT
+const ESTATE_BASE_TIME = 5 * 60;   // seconds (5 minutes)
+const ESTATE_MAX_LEVEL = 10;
+
+// Estate state: { [id]: { level, startedAt, claimed } }
+let estateData = {};
+
+// ============================================================
+// SETTINGS
+// ============================================================
+let appSettings = {
+    darkMode: true, haptic: true, sound: false, lang: 'en',
+    miningImageUrl: ''  // renamed from customAvatarUrl
+};
+
+function loadSettings() {
+    const saved = localStorage.getItem('novatap_settings_v3');
+    if (saved) appSettings = {...appSettings, ...JSON.parse(saved)};
+    // Migrate old setting key
+    const old = localStorage.getItem('novatap_settings');
+    if (old && !saved) { try { const o=JSON.parse(old); appSettings.miningImageUrl = o.customAvatarUrl||''; } catch(e){} }
+    applySettings();
+}
+
+function saveSettings() {
+    appSettings.haptic = document.getElementById('haptic-toggle').checked;
+    appSettings.sound = document.getElementById('sound-toggle').checked;
+    localStorage.setItem('novatap_settings_v3', JSON.stringify(appSettings));
+}
+
+function applySettings() {
+    if (!appSettings.darkMode) { document.documentElement.setAttribute('data-theme','light'); }
+    else { document.documentElement.removeAttribute('data-theme'); }
+    document.getElementById('dark-mode-toggle').checked = appSettings.darkMode;
+    document.getElementById('haptic-toggle').checked = appSettings.haptic;
+    document.getElementById('sound-toggle').checked = appSettings.sound;
+    const langSel = document.getElementById('lang-select');
+    if (langSel) langSel.value = appSettings.lang;
+    if (appSettings.miningImageUrl) applyMiningImageToUI(appSettings.miningImageUrl);
+    if (ASSET_CONFIG.backgroundImageUrl) {
+        document.documentElement.style.setProperty('--bg-image', `url('${ASSET_CONFIG.backgroundImageUrl}')`);
+    }
+    // Pre-fill the mining image input
+    const miningInput = document.getElementById('mining-image-url');
+    if (miningInput) miningInput.value = appSettings.miningImageUrl || '';
+}
+
+function toggleDarkMode() {
+    appSettings.darkMode = document.getElementById('dark-mode-toggle').checked;
+    localStorage.setItem('novatap_settings_v3', JSON.stringify(appSettings));
+    applySettings();
+}
+
+function changeLang(val) {
+    appSettings.lang = val;
+    localStorage.setItem('novatap_settings_v3', JSON.stringify(appSettings));
+}
+
+// ===== MINING IMAGE (TAP BUTTON) =====
+function applyMiningImage() {
+    const url = document.getElementById('mining-image-url').value.trim();
+    if (!url) { alert('Please enter a valid image URL.'); return; }
+    appSettings.miningImageUrl = url;
+    localStorage.setItem('novatap_settings_v3', JSON.stringify(appSettings));
+    applyMiningImageToUI(url);
+}
+
+function resetMiningImage() {
+    appSettings.miningImageUrl = '';
+    localStorage.setItem('novatap_settings_v3', JSON.stringify(appSettings));
+    document.getElementById('mining-image-url').value = '';
+    // Restore default emoji
+    const btn = document.getElementById('tap-btn');
+    btn.innerHTML = '<span class="avatar-img" id="tap-btn-avatar">⛏️</span>';
+}
+
+function applyMiningImageToUI(url) {
+    if (!url) return;
+    const btn = document.getElementById('tap-btn');
+    btn.innerHTML = '';
+    const img = document.createElement('img');
+    img.src = url; img.className = 'avatar-custom';
+    img.id = 'tap-btn-avatar';
+    img.onerror = () => {
+        btn.innerHTML = '<span class="avatar-img" id="tap-btn-avatar">⛏️</span>';
     };
-    firebase.initializeApp(firebaseConfig);
-    const db = firebase.database();
-    const tg = window.Telegram.WebApp;
-    tg.expand();
+    btn.appendChild(img);
+}
 
-    const uid = String(tg.initDataUnsafe?.user?.id || "887766");
-    const uName = tg.initDataUnsafe?.user?.first_name || "Guest";
-    const startParam = tg.initDataUnsafe?.start_param || null;
-    const referrerId = (startParam && startParam !== uid) ? startParam : null;
+// ============================================================
+// FORMAT HELPER
+// ============================================================
+function format(n) {
+    if (n >= 1e6) return (n/1e6).toFixed(2)+'M';
+    if (n >= 1e3) return (n/1e3).toFixed(1)+'K';
+    return Math.floor(n);
+}
 
-    // ============================================================
-    // ADMIN IDENTITY — Only this UID sees the admin float button
-    // ============================================================
-    const ADMIN_UID = "8184879715";    // <-- exclusive admin UID
-    const ADMIN_SECRET_KEY = "242663"; // <-- secret key
-
-    // ============================================================
-    // DYNAMIC ASSET VARIABLES — Update URLs here only
-    // ============================================================
-    const ASSET_CONFIG = {
-        tapAvatarUrl: "images/avator.png",           // e.g. "https://i.imgur.com/abc.png" — replaces ⛏️
-        profileAvatarUrl: "",       // shown in profile circle
-        backgroundImageUrl: "images/47777.jpg",     // full BG image (overrides gradient)
-    };
-
-    // ============================================================
-    // GAME STATE
-    // ============================================================
-    let balance = 0, crcBalance = 0, energy = 500, maxEnergy = 500;
-    let level = 1, botLevel = 0, botStored = 0;
-    let globalMiningRate = 1, exchangeRate = 1000;
-    const REFERRAL_TIERS = [500, 700, 1500];
-    const DAILY_REWARDS = Array.from({length:30}, (_, i) => Math.floor(200 + (i*(29800/29))));
-
-    const DEFAULT_TASK_CATEGORIES = {
-        social: [
-            { name:"Follow Facebook", reward:1000, link:"https://www.facebook.com/profile.php?id=61587487880831", id:"fb_01" },
-            { name:"Instagram Profile", reward:1000, link:"https://www.instagram.com/asportcricx?igsh=MXBxeHduano1NmN2YQ==", id:"ig_01" },
-            { name:"Subscribe YouTube", reward:1000, link:"https://www.youtube.com/@NovaTapOfficia", id:"yt_01" },
-            { name:"Telegram Channel", reward:1000, link:"https://t.me/bdc_network", id:"tg_01" },
-            { name:"Telegram Bot", reward:1000, link:"https://t.me/my_earning_test_bot", id:"tg_bot_01" },
-            { name:"Twitter Channel", reward:1000, link:"https://x.com/iftia5061", id:"tw_01" }
-        ],
-        video: [
-            { name:"FB Reel", reward:100, link:"https://www.facebook.com/reel/911261561459485/?app=fbl", id:"vid_01" },
-            { name:"FB Reel #2", reward:100, link:"https://www.facebook.com/reel/911261561459485/?app=fbl", id:"vid_02" },
-            { name:"Instagram Reel", reward:300, link:"https://www.instagram.com/reel/DURDQIGEw6S/?igsh=YXZoMWpsOWQwOTd3", id:"vid_03" },
-            { name:"Twitter Reel", reward:300, link:"https://x.com/i/status/2018397320791077140", id:"vid_04" },
-            { name:"YouTube Short", reward:300, link:"https://youtube.com/shorts/ACHRUfJNVdE?si=tGuL6yiTcIPt1AAc", id:"vid_05" }
-        ]
-    };
-    let TASK_CATEGORIES = JSON.parse(JSON.stringify(DEFAULT_TASK_CATEGORIES));
-
-    // ============================================================
-    // SETTINGS
-    // ============================================================
-    let appSettings = {
-        darkMode: true,
-        haptic: true,
-        sound: false,
-        lang: 'en',
-        customAvatarUrl: ''
-    };
-
-    function loadSettings() {
-        const saved = localStorage.getItem('novatap_settings');
-        if (saved) appSettings = {...appSettings, ...JSON.parse(saved)};
-        applySettings();
+// ============================================================
+// FIREBASE LISTENERS
+// ============================================================
+db.ref('settings').on('value', snap => {
+    if (!snap.exists()) return;
+    const s = snap.val();
+    if (s.maintenance === true && uid !== ADMIN_UID) {
+        document.getElementById('maintenance-overlay').style.display = 'flex';
+    } else {
+        document.getElementById('maintenance-overlay').style.display = 'none';
     }
+    const banner = document.getElementById('announcement-banner');
+    if (s.announcement && s.announcement.trim() !== '') {
+        banner.innerText = '📣 ' + s.announcement; banner.style.display = 'block';
+    } else { banner.style.display = 'none'; }
+    if (s.miningRate) globalMiningRate = parseFloat(s.miningRate) || 1;
+    if (s.exchangeRate) { exchangeRate = parseFloat(s.exchangeRate) || 1000; updateConversionDisplay(); }
+    const navAirdrop = document.getElementById('nav-airdrop');
+    if (navAirdrop) navAirdrop.style.display = (s.showAirdrop === true) ? 'flex' : 'none';
+    // Sync admin panel
+    const tog=document.getElementById('a-maintenance-toggle'); if(tog) tog.checked=(s.maintenance===true);
+    const airdropTog=document.getElementById('a-airdrop-toggle'); if(airdropTog) airdropTog.checked=(s.showAirdrop===true);
+    const mri=document.getElementById('a-mining-rate'); if(mri&&document.activeElement!==mri) mri.value=s.miningRate||1;
+    const eci=document.getElementById('a-energy-cap'); if(eci&&document.activeElement!==eci) eci.value=s.energyCap||500;
+    const eri=document.getElementById('a-exchange-rate'); if(eri&&document.activeElement!==eri) eri.value=s.exchangeRate||1000;
+    const ai=document.getElementById('a-announcement'); if(ai&&document.activeElement!==ai) ai.value=s.announcement||'';
+});
 
-    function saveSettings() {
-        appSettings.haptic = document.getElementById('haptic-toggle').checked;
-        appSettings.sound = document.getElementById('sound-toggle').checked;
-        localStorage.setItem('novatap_settings', JSON.stringify(appSettings));
+db.ref('tasks').on('value', snap => {
+    if (!snap.exists()) return;
+    const t = snap.val();
+    if (t.social) TASK_CATEGORIES.social = Array.isArray(t.social) ? t.social : Object.values(t.social);
+    if (t.video)  TASK_CATEGORIES.video  = Array.isArray(t.video)  ? t.video  : Object.values(t.video);
+    const tp = document.getElementById('tasks-page');
+    if (tp && tp.style.display === 'block') {
+        const cur = tp.getAttribute('data-current-tab');
+        if (cur && cur !== 'daily') renderTasks(cur);
     }
+    checkTaskNotification();
+});
 
-    function applySettings() {
-        // Dark/Light mode
-        if (!appSettings.darkMode) {
-            document.documentElement.setAttribute('data-theme', 'light');
-        } else {
-            document.documentElement.removeAttribute('data-theme');
+db.ref('users/'+uid).on('value', snap => {
+    if (snap.exists()) {
+        const d = snap.val();
+        if (d.blocked === true) {
+            const mo = document.getElementById('maintenance-overlay');
+            mo.style.display = 'flex'; mo.querySelector('h2').innerText = 'ACCESS BLOCKED';
+            mo.querySelector('p').innerText = 'Your account has been suspended. Contact support.'; return;
         }
-        // UI sync
-        document.getElementById('dark-mode-toggle').checked = appSettings.darkMode;
-        document.getElementById('haptic-toggle').checked = appSettings.haptic;
-        document.getElementById('sound-toggle').checked = appSettings.sound;
-        const langSel = document.getElementById('lang-select');
-        if (langSel) langSel.value = appSettings.lang;
-        // Custom avatar
-        if (appSettings.customAvatarUrl) applyAvatarToUI(appSettings.customAvatarUrl);
-        // Background
-        if (ASSET_CONFIG.backgroundImageUrl) {
-            document.documentElement.style.setProperty('--bg-image', `url('${ASSET_CONFIG.backgroundImageUrl}')`);
-        }
-    }
-
-    function toggleDarkMode() {
-        appSettings.darkMode = document.getElementById('dark-mode-toggle').checked;
-        localStorage.setItem('novatap_settings', JSON.stringify(appSettings));
-        applySettings();
-    }
-
-    function changeLang(val) {
-        appSettings.lang = val;
-        localStorage.setItem('novatap_settings', JSON.stringify(appSettings));
-    }
-
-    function applyCustomAvatar() {
-        const url = document.getElementById('custom-avatar-url').value.trim();
-        if (!url) return;
-        appSettings.customAvatarUrl = url;
-        localStorage.setItem('novatap_settings', JSON.stringify(appSettings));
-        applyAvatarToUI(url);
-    }
-
-    function applyAvatarToUI(url) {
-        if (!url) return;
-        // Tap button
-        const avatarEl = document.getElementById('tap-btn-avatar');
-        avatarEl.innerHTML = '';
-        avatarEl.outerHTML; // force reflow
-        const img = document.createElement('img');
-        img.src = url;
-        img.className = 'avatar-custom';
-        img.onerror = () => { document.getElementById('tap-btn-avatar').innerText = '⛏️'; };
-        document.getElementById('tap-btn').innerHTML = '';
-        document.getElementById('tap-btn').appendChild(img);
-        // Profile
-        const profCircle = document.getElementById('p-initial');
-        if (profCircle) {
-            profCircle.innerHTML = `<img src="${url}" alt="avatar" onerror="this.parentElement.innerText='${uName.charAt(0).toUpperCase()}'" />`;
-        }
-    }
-
-    // ============================================================
-    // FORMAT HELPER
-    // ============================================================
-    function format(n) {
-        if (n >= 1e6) return (n/1e6).toFixed(2)+'M';
-        if (n >= 1e3) return (n/1e3).toFixed(1)+'K';
-        return Math.floor(n);
-    }
-
-    // ============================================================
-    // FIREBASE LISTENERS
-    // ============================================================
-    db.ref('settings').on('value', snap => {
-        if (!snap.exists()) return;
-        const s = snap.val();
-
-        // Maintenance: admin UID bypasses
-        if (s.maintenance === true && uid !== ADMIN_UID) {
-            document.getElementById('maintenance-overlay').style.display = 'flex';
-        } else {
-            document.getElementById('maintenance-overlay').style.display = 'none';
-        }
-
-        // Announcement
-        const banner = document.getElementById('announcement-banner');
-        if (s.announcement && s.announcement.trim() !== '') {
-            banner.innerText = '📣 ' + s.announcement;
-            banner.style.display = 'block';
-        } else {
-            banner.style.display = 'none';
-        }
-
-        if (s.miningRate) globalMiningRate = parseFloat(s.miningRate) || 1;
-        if (s.exchangeRate) { exchangeRate = parseFloat(s.exchangeRate) || 1000; updateConversionDisplay(); }
-
-        const navAirdrop = document.getElementById('nav-airdrop');
-        if (navAirdrop) navAirdrop.style.display = (s.showAirdrop === true) ? 'flex' : 'none';
-
-        // Sync admin panel inputs
-        const tog = document.getElementById('a-maintenance-toggle');
-        if (tog) tog.checked = (s.maintenance === true);
-        const airdropTog = document.getElementById('a-airdrop-toggle');
-        if (airdropTog) airdropTog.checked = (s.showAirdrop === true);
-        const mri = document.getElementById('a-mining-rate');
-        if (mri && document.activeElement !== mri) mri.value = s.miningRate || 1;
-        const eci = document.getElementById('a-energy-cap');
-        if (eci && document.activeElement !== eci) eci.value = s.energyCap || 500;
-        const eri = document.getElementById('a-exchange-rate');
-        if (eri && document.activeElement !== eri) eri.value = s.exchangeRate || 1000;
-        const ai = document.getElementById('a-announcement');
-        if (ai && document.activeElement !== ai) ai.value = s.announcement || '';
-    });
-
-    db.ref('tasks').on('value', snap => {
-        if (!snap.exists()) return;
-        const t = snap.val();
-        if (t.social) TASK_CATEGORIES.social = Array.isArray(t.social) ? t.social : Object.values(t.social);
-        if (t.video) TASK_CATEGORIES.video = Array.isArray(t.video) ? t.video : Object.values(t.video);
-        const tp = document.getElementById('tasks-page');
-        if (tp && tp.style.display === 'block') {
-            const cur = tp.getAttribute('data-current-tab');
-            if (cur && cur !== 'daily') renderTasks(cur);
-        }
-        checkTaskNotification();
-    });
-
-    db.ref('users/' + uid).on('value', snap => {
-        if (snap.exists()) {
-            const d = snap.val();
-            if (d.blocked === true) {
-                const mo = document.getElementById('maintenance-overlay');
-                mo.style.display = 'flex';
-                mo.querySelector('h2').innerText = 'ACCESS BLOCKED';
-                mo.querySelector('p').innerText = 'Your account has been suspended. Contact support.';
-                return;
-            }
-            balance = d.balance || 0;
-            crcBalance = d.crcBalance || 0;
-            level = d.level || 1;
-            botLevel = d.botLevel || 0;
-            maxEnergy = d.maxEnergy || 500;
-            let lastSeen = d.lastSeen || Date.now();
-            let secondsPassed = Math.floor((Date.now() - lastSeen) / 1000);
-            energy = Math.min(maxEnergy, (d.energy || 0) + (secondsPassed * 1.5));
-            if (botLevel > 0) {
-                let cap = botLevel * 500;
-                botStored = Math.min(cap, (d.botStored || 0) + (secondsPassed * (botLevel * 0.2)));
-            }
-            updateUI();
-            checkTaskNotification();
-        } else {
-            db.ref('users/' + uid).set({
-                name: uName, balance: 1000, crcBalance: 0, level: 1,
-                botLevel: 0, botStored: 0, maxEnergy: 500,
-                lastSeen: Date.now(), energy: 500,
-                referredBy: referrerId || null, referralCount: 0, referralEarned: 0
-            });
-            if (referrerId) processReferral(referrerId);
-        }
-    });
-
-    // ============================================================
-    // ADMIN FLOAT BUTTON — visible ONLY for admin UID
-    // ============================================================
-    if (uid === ADMIN_UID) {
-        document.getElementById('admin-float-btn').style.display = 'flex';
-    }
-
-    // ============================================================
-    // REFERRAL SYSTEM
-    // ============================================================
-    function processReferral(refId) {
-        db.ref('users/' + refId).once('value', snap => {
-            if (!snap.exists()) return;
-            const refData = snap.val();
-            const currentCount = refData.referralCount || 0;
-            const friendNumber = currentCount + 1;
-            let REFERRAL_BONUS = friendNumber === 1 ? REFERRAL_TIERS[0] : friendNumber === 2 ? REFERRAL_TIERS[1] : REFERRAL_TIERS[2];
-            db.ref('users/' + refId).update({
-                balance: (refData.balance || 0) + REFERRAL_BONUS,
-                referralCount: currentCount + 1,
-                referralEarned: (refData.referralEarned || 0) + REFERRAL_BONUS
-            });
-            db.ref('users/' + refId + '/referrals/' + uid).set({ name: uName, joinedAt: Date.now(), tier: friendNumber, bonus: REFERRAL_BONUS });
-            db.ref('users/' + uid).update({ balance: 1500 });
-        });
-    }
-
-    function loadReferrals() {
-        const listDiv = document.getElementById('friend-list');
-        listDiv.innerHTML = '<div class="empty-state"><div class="empty-icon">⏳</div>Loading...</div>';
-        db.ref('users/' + uid).once('value', snap => {
-            if (!snap.exists()) return;
-            const d = snap.val();
-            document.getElementById('ref-total-count').innerText = d.referralCount || 0;
-            document.getElementById('ref-total-earned').innerText = format(d.referralEarned || 0);
-            const referrals = d.referrals || null;
-            if (!referrals || Object.keys(referrals).length === 0) {
-                listDiv.innerHTML = '<div class="empty-state"><div class="empty-icon">🤝</div>No referrals yet.<br>Share your link to invite friends!</div>';
-                return;
-            }
-            let html = '';
-            Object.entries(referrals).sort((a,b)=>(b[1].joinedAt||0)-(a[1].joinedAt||0)).forEach(([refUid, refInfo]) => {
-                const name = refInfo.name || 'Unknown';
-                const tier = refInfo.tier || 1;
-                const bonus = refInfo.bonus || REFERRAL_TIERS[0];
-                const tierClass = tier===1?'tier1':tier===2?'tier2':'tier3';
-                const tierLabel = tier===1?'1ST':tier===2?'2ND':'3RD+';
-                const joinDate = refInfo.joinedAt ? new Date(refInfo.joinedAt).toLocaleDateString(undefined,{month:'short',day:'numeric'}) : '—';
-                html += `<div class="referral-item"><div class="referral-item-left"><div class="referral-avatar">${name.charAt(0).toUpperCase()}</div><div><div class="referral-name">${name}</div><div class="referral-id">ID: ${refUid} · ${joinDate}</div></div></div><div><div class="referral-badge ${tierClass}">${tierLabel}</div><div style="font-family:'Orbitron',monospace; font-size:9px; color:var(--gold); text-align:center; margin-top:3px;">+${format(bonus)}</div></div></div>`;
-            });
-            listDiv.innerHTML = html;
-        });
-    }
-
-    // ============================================================
-    // TASK NOTIFICATION
-    // ============================================================
-    function checkTaskNotification() {
-        let hasNew = false;
-        if (localStorage.getItem('last_daily_claim_date') !== new Date().toDateString()) hasNew = true;
-        for (let cat in TASK_CATEGORIES) {
-            TASK_CATEGORIES[cat].forEach(t => { if (t && t.id && !localStorage.getItem('task_'+t.id)) hasNew = true; });
-        }
-        document.getElementById('task-badge').style.display = hasNew ? 'block' : 'none';
-    }
-
-    // ============================================================
-    // TASK VERIFICATION (3-second timer)
-    // ============================================================
-    let pendingTask = null;
-    let verifyTimer = null;
-
-    function doTask(url, reward, key, cat) {
-        pendingTask = { url, reward, key, cat };
-        tg.openLink(url);
-        showVerifyOverlay();
-    }
-
-    function showVerifyOverlay() {
-        const overlay = document.getElementById('task-verify-overlay');
-        const claimBtn = document.getElementById('verify-claim-btn');
-        const countdown = document.getElementById('verify-countdown');
-        const progressFill = document.getElementById('verify-progress-fill');
-        claimBtn.style.display = 'none';
-        countdown.style.display = 'block';
-        progressFill.style.transition = 'none';
-        progressFill.style.width = '100%';
-        overlay.style.display = 'flex';
-        let secs = 3;
-        countdown.innerText = secs;
-        setTimeout(() => {
-            progressFill.style.transition = `width ${secs}s linear`;
-            progressFill.style.width = '0%';
-        }, 50);
-        verifyTimer = setInterval(() => {
-            secs--;
-            countdown.innerText = secs;
-            if (secs <= 0) {
-                clearInterval(verifyTimer);
-                countdown.style.display = 'none';
-                claimBtn.style.display = 'block';
-            }
-        }, 1000);
-    }
-
-    function finishTaskClaim() {
-        if (!pendingTask) return;
-        balance += pendingTask.reward;
-        localStorage.setItem('task_'+pendingTask.key, 'done');
-        save(); updateUI();
-        renderTasks(pendingTask.cat);
-        pendingTask = null;
-        document.getElementById('task-verify-overlay').style.display = 'none';
-        tg.showAlert ? tg.showAlert('Task reward claimed! ✅') : alert('Task reward claimed!');
-    }
-
-    function cancelTaskVerify() {
-        clearInterval(verifyTimer);
-        pendingTask = null;
-        document.getElementById('task-verify-overlay').style.display = 'none';
-    }
-
-    // ============================================================
-    // CONVERSION
-    // ============================================================
-    function updateConversionDisplay() {
-        const rateEl = document.getElementById('conv-rate-display');
-        if (rateEl) rateEl.innerText = format(exchangeRate) + ' NVT = 1 CRC';
-        const nvtEl = document.getElementById('conv-nvt-bal');
-        if (nvtEl) nvtEl.innerText = format(balance);
-        const crcEl = document.getElementById('conv-crc-bal');
-        if (crcEl) crcEl.innerText = format(crcBalance);
-        const airdropEl = document.getElementById('airdrop-crc-display');
-        if (airdropEl) airdropEl.innerText = format(crcBalance);
-        previewConversion();
-    }
-
-    function previewConversion() {
-        const nvtInput = parseFloat(document.getElementById('convert-nvt-input')?.value || '0');
-        const previewEl = document.getElementById('conv-preview-crc');
-        if (!previewEl) return;
-        if (!nvtInput || nvtInput <= 0 || isNaN(nvtInput)) { previewEl.innerText = '—'; return; }
-        previewEl.innerText = format(Math.floor(nvtInput / exchangeRate));
-    }
-
-    function doConversion() {
-        const nvtInput = parseFloat(document.getElementById('convert-nvt-input').value || '0');
-        if (!nvtInput || nvtInput <= 0 || isNaN(nvtInput)) { tg.showAlert('Enter valid NVT amount.'); return; }
-        if (nvtInput > balance) { tg.showAlert('Insufficient NVT!'); return; }
-        const crcToGet = Math.floor(nvtInput / exchangeRate);
-        if (crcToGet < 1) { tg.showAlert(`Min: ${format(exchangeRate)} NVT = 1 CRC`); return; }
-        balance -= nvtInput;
-        crcBalance += crcToGet;
-        save(); updateUI(); updateConversionDisplay();
-        document.getElementById('convert-nvt-input').value = '';
-        document.getElementById('conv-preview-crc').innerText = '—';
-        tg.showAlert(`✅ ${format(nvtInput)} NVT → ${format(crcToGet)} CRC!`);
-    }
-
-    // ============================================================
-    // UPDATE UI
-    // ============================================================
-    function updateUI() {
-        const rank = balance < 10000 ? "Bronze" : balance < 50000 ? "Silver" : "Gold";
-        document.getElementById('coin-count').innerText = format(balance);
-        document.getElementById('crc-count').innerText = format(crcBalance);
-        document.getElementById('energy-val').innerText = Math.floor(energy);
-        document.getElementById('max-energy-text').innerText = maxEnergy;
-        document.getElementById('bar-fill').style.width = (energy / maxEnergy * 100) + '%';
-        document.getElementById('user-display').innerText = 'Hi, ' + uName;
-        document.getElementById('rank-display').innerText = rank;
-        document.getElementById('level-text').innerText = 'Level ' + level;
-        document.getElementById('p-initial').innerHTML = ASSET_CONFIG.profileAvatarUrl
-            ? `<img src="${ASSET_CONFIG.profileAvatarUrl}" onerror="this.parentElement.innerText='${uName.charAt(0).toUpperCase()}'" />`
-            : uName.charAt(0).toUpperCase();
-        document.getElementById('p-name').innerText = uName;
-        document.getElementById('p-id').innerText = 'ID: ' + uid;
-        document.getElementById('p-rank').innerText = rank;
-        document.getElementById('p-bal').innerText = format(balance);
-        document.getElementById('p-crc-bal').innerText = format(crcBalance);
-        document.getElementById('p-lvl').innerText = level;
-        document.getElementById('p-energy').innerText = maxEnergy;
-        document.getElementById('settings-uid').innerText = uid;
-        document.getElementById('bot-info').innerText = `Level ${botLevel} (Cost: ${format((botLevel+1)*10000)})`;
-        document.getElementById('tap-upgrade-info').innerText = `Level ${level} (Cost: ${format(level*2000)})`;
-        document.getElementById('energy-lv-info').innerText = `Max: ${maxEnergy} (Cost: ${format(maxEnergy*5)})`;
-        // Energy no-energy state
-        const tapBtn = document.getElementById('tap-btn');
-        if (energy <= 0) tapBtn.classList.add('no-energy'); else tapBtn.classList.remove('no-energy');
-        // Bot
-        if (botLevel > 0) {
-            document.getElementById('bot-ui-container').style.display = 'flex';
-            document.getElementById('bot-stored-val').innerText = format(botStored);
-            document.getElementById('bot-claim-btn').style.display = botStored >= (botLevel*10) ? 'block' : 'none';
-        }
-        updateConversionDisplay();
-        // Haptic feedback check done at tap time
-    }
-
-    // ============================================================
-    // RENDER TASKS
-    // ============================================================
-    function switchTaskTab(tab) {
-        document.querySelectorAll('.task-tabs .tab-btn').forEach(b => b.classList.remove('active'));
-        document.getElementById('tab-'+tab).classList.add('active');
-        renderTasks(tab);
-    }
-
-    function renderTasks(category) {
-        document.getElementById('tasks-page').setAttribute('data-current-tab', category);
-        const listDiv = document.getElementById('task-list-dynamic');
-        let html = '';
-        if (category === 'daily') {
-            html = '<div class="daily-grid">';
-            const dayCount = parseInt(localStorage.getItem('daily_day_count') || '0');
-            const lastClaim = localStorage.getItem('last_daily_claim_date');
-            const today = new Date().toDateString();
-            for (let i = 1; i <= 30; i++) {
-                let canClaim = (i === dayCount + 1 && lastClaim !== today);
-                let done = (i <= dayCount);
-                let reward = DAILY_REWARDS[i-1];
-                let ac = canClaim ? 'daily-active' : '';
-                html += `<div class="daily-item ${ac}" onclick="${canClaim?`claimDailyCheckin(${i},${reward})`:''}` + `" style="${done?'background:rgba(0,212,255,0.08);border-color:rgba(0,212,255,0.2);color:var(--neon);':(canClaim?'':'opacity:0.5')}">Day ${i}<br><b>${format(reward)}</b><br><small>${done?'✅':(canClaim?'Claim':'🔒')}</small></div>`;
-            }
-            html += '</div>';
-        } else {
-            const tasks = TASK_CATEGORIES[category] || [];
-            tasks.forEach(t => {
-                if (!t || !t.id) return;
-                if (!localStorage.getItem('task_'+t.id)) {
-                    html += `<div class="card"><div><b>${t.name}</b><br><small>+${format(t.reward)} NVT</small></div><button class="btn-action" onclick="doTask('${t.link}',${t.reward},'${t.id}','${category}')">Claim</button></div>`;
-                }
-            });
-            if (!html) html = '<p style="text-align:center; color:var(--gray); margin-top:40px; font-family:Rajdhani,sans-serif;">No tasks left! 🎉</p>';
-        }
-        listDiv.innerHTML = html;
-        checkTaskNotification();
-    }
-
-    function claimDailyCheckin(day, reward) {
-        balance += reward;
-        localStorage.setItem('daily_day_count', day);
-        localStorage.setItem('last_daily_claim_date', new Date().toDateString());
-        save(); updateUI(); renderTasks('daily');
-        tg.showAlert(`Day ${day} Reward: ${format(reward)} NVT!`);
-    }
-
-    // ============================================================
-    // TAP MECHANIC
-    // ============================================================
-    const tapBtn = document.getElementById('tap-btn');
-
-    tapBtn.addEventListener('touchstart', e => {
-        e.preventDefault();
-        if (energy <= 0) { tapBtn.classList.add('no-energy'); return; }
-        let earn = Math.floor(level * 2 * globalMiningRate);
-        if (energy >= earn) {
-            balance += earn; energy -= earn;
-            tapBtn.classList.add('tapping');
-            setTimeout(() => tapBtn.classList.remove('tapping'), 160);
-            const t = e.touches[0];
-            const el = document.createElement('div');
-            el.className = 'tap-anim';
-            el.innerText = '+' + earn;
-            el.style.cssText = `left:${t.clientX}px; top:${t.clientY}px; transform:translateX(-50%);`;
-            document.body.appendChild(el);
-            setTimeout(() => el.remove(), 800);
-            // Haptic
-            if (appSettings.haptic && tg.HapticFeedback) tg.HapticFeedback.impactOccurred('light');
-            updateUI(); save();
-        }
-    }, {passive: false});
-
-    tapBtn.addEventListener('click', () => {
-        if (energy <= 0) return;
-        let earn = Math.floor(level * 2 * globalMiningRate);
-        if (energy >= earn) {
-            balance += earn; energy -= earn;
-            tapBtn.classList.add('tapping');
-            setTimeout(() => tapBtn.classList.remove('tapping'), 160);
-            updateUI(); save();
-        }
-    });
-
-    // Auto-regen
-    setInterval(() => {
-        if (energy < maxEnergy) { energy += 0.5; updateUI(); }
+        balance = d.balance || 0; crcBalance = d.crcBalance || 0;
+        level = d.level || 1; botLevel = d.botLevel || 0;
+        maxEnergy = d.maxEnergy || 500;
+        let lastSeen = d.lastSeen || Date.now();
+        let secondsPassed = Math.floor((Date.now() - lastSeen) / 1000);
+        energy = Math.min(maxEnergy, (d.energy || 0) + (secondsPassed * 1.5));
         if (botLevel > 0) {
             let cap = botLevel * 500;
-            if (botStored < cap) { botStored += (botLevel * 0.2); save(); updateUI(); }
+            botStored = Math.min(cap, (d.botStored||0) + (secondsPassed * (botLevel * 0.2)));
+        }
+        // Load estate data from Firebase
+        if (d.estates) { estateData = d.estates; }
+        updateUI(); checkTaskNotification();
+    } else {
+        db.ref('users/'+uid).set({
+            name: uName, balance: 1000, crcBalance: 0, level: 1,
+            botLevel: 0, botStored: 0, maxEnergy: 500,
+            lastSeen: Date.now(), energy: 500,
+            referredBy: referrerId || null, referralCount: 0, referralEarned: 0, estates: {}
+        });
+        if (referrerId) processReferral(referrerId);
+    }
+});
+
+// ============================================================
+// SHOW ADMIN FLOAT BUTTON ONLY FOR ADMIN UID
+// ============================================================
+if (uid === ADMIN_UID) {
+    document.getElementById('admin-float-btn').style.display = 'flex';
+}
+
+// ============================================================
+// DEFAULT TASK CATEGORIES
+// ============================================================
+const DEFAULT_TASK_CATEGORIES = {
+    social: [
+        { name:"Follow Facebook",   reward:1000, link:"https://www.facebook.com/profile.php?id=61587487880831",                       id:"fb_01" },
+        { name:"Instagram Profile", reward:1000, link:"https://www.instagram.com/asportcricx?igsh=MXBxeHduano1NmN2YQ==",             id:"ig_01" },
+        { name:"Subscribe YouTube", reward:1000, link:"https://www.youtube.com/@NovaTapOfficia",                                     id:"yt_01" },
+        { name:"Telegram Channel",  reward:1000, link:"https://t.me/bdc_network",                                                   id:"tg_01" },
+        { name:"Telegram Bot",      reward:1000, link:"https://t.me/my_earning_test_bot",                                           id:"tg_bot_01" },
+        { name:"Twitter Channel",   reward:1000, link:"https://x.com/iftia5061",                                                    id:"tw_01" }
+    ],
+    video: [
+        { name:"FB Reel",           reward:100,  link:"https://www.facebook.com/reel/911261561459485/?app=fbl",                     id:"vid_01" },
+        { name:"FB Reel #2",        reward:100,  link:"https://www.facebook.com/reel/911261561459485/?app=fbl",                     id:"vid_02" },
+        { name:"Instagram Reel",    reward:300,  link:"https://www.instagram.com/reel/DURDQIGEw6S/?igsh=YXZoMWpsOWQwOTd3",         id:"vid_03" },
+        { name:"Twitter Reel",      reward:300,  link:"https://x.com/i/status/2018397320791077140",                                 id:"vid_04" },
+        { name:"YouTube Short",     reward:300,  link:"https://youtube.com/shorts/ACHRUfJNVdE?si=tGuL6yiTcIPt1AAc",                id:"vid_05" }
+    ]
+};
+let TASK_CATEGORIES = JSON.parse(JSON.stringify(DEFAULT_TASK_CATEGORIES));
+
+// ============================================================
+// REFERRAL SYSTEM
+// ============================================================
+function processReferral(refId) {
+    db.ref('users/'+refId).once('value', snap => {
+        if (!snap.exists()) return;
+        const refData = snap.val();
+        const currentCount = refData.referralCount || 0;
+        const friendNumber = currentCount + 1;
+        let REFERRAL_BONUS = friendNumber===1 ? REFERRAL_TIERS[0] : friendNumber===2 ? REFERRAL_TIERS[1] : REFERRAL_TIERS[2];
+        db.ref('users/'+refId).update({ balance:(refData.balance||0)+REFERRAL_BONUS, referralCount:currentCount+1, referralEarned:(refData.referralEarned||0)+REFERRAL_BONUS });
+        db.ref('users/'+refId+'/referrals/'+uid).set({ name:uName, joinedAt:Date.now(), tier:friendNumber, bonus:REFERRAL_BONUS });
+        db.ref('users/'+uid).update({ balance: 1500 });
+    });
+}
+
+function loadReferrals() {
+    const listDiv = document.getElementById('friend-list');
+    listDiv.innerHTML = '<div class="empty-state"><div class="empty-icon">⏳</div>Loading...</div>';
+    db.ref('users/'+uid).once('value', snap => {
+        if (!snap.exists()) return;
+        const d = snap.val();
+        document.getElementById('ref-total-count').innerText = d.referralCount || 0;
+        document.getElementById('ref-total-earned').innerText = format(d.referralEarned || 0);
+        const referrals = d.referrals || null;
+        if (!referrals || Object.keys(referrals).length === 0) {
+            listDiv.innerHTML = '<div class="empty-state"><div class="empty-icon">🤝</div>No referrals yet.<br>Share your link to invite friends!</div>'; return;
+        }
+        let html = '';
+        Object.entries(referrals).sort((a,b)=>(b[1].joinedAt||0)-(a[1].joinedAt||0)).forEach(([refUid,refInfo]) => {
+            const name=refInfo.name||'Unknown'; const tier=refInfo.tier||1; const bonus=refInfo.bonus||REFERRAL_TIERS[0];
+            const tierClass=tier===1?'tier1':tier===2?'tier2':'tier3';
+            const tierLabel=tier===1?'1ST':tier===2?'2ND':'3RD+';
+            const joinDate=refInfo.joinedAt?new Date(refInfo.joinedAt).toLocaleDateString(undefined,{month:'short',day:'numeric'}):'—';
+            html += `<div class="referral-item"><div class="referral-item-left"><div class="referral-avatar">${name.charAt(0).toUpperCase()}</div><div><div class="referral-name">${name}</div><div class="referral-id">ID: ${refUid} · ${joinDate}</div></div></div><div><div class="referral-badge ${tierClass}">${tierLabel}</div><div style="font-family:'Orbitron',monospace;font-size:9px;color:var(--gold);text-align:center;margin-top:3px;">+${format(bonus)}</div></div></div>`;
+        });
+        listDiv.innerHTML = html;
+    });
+}
+
+// ============================================================
+// TASK NOTIFICATION
+// ============================================================
+function checkTaskNotification() {
+    let hasNew = false;
+    if (localStorage.getItem('last_daily_claim_date') !== new Date().toDateString()) hasNew = true;
+    for (let cat in TASK_CATEGORIES) {
+        TASK_CATEGORIES[cat].forEach(t => { if (t && t.id && !localStorage.getItem('task_'+t.id)) hasNew = true; });
+    }
+    document.getElementById('task-badge').style.display = hasNew ? 'block' : 'none';
+}
+
+// ============================================================
+// TASK VERIFICATION — 60-second wait + 3-second spinner
+// ============================================================
+let pendingTask = null;
+let verifyTimer = null;
+
+function doTask(url, reward, key, cat) {
+    pendingTask = { url, reward, key, cat };
+    tg.openLink(url);
+    showVerifyOverlay();
+}
+
+function showVerifyOverlay() {
+    const overlay       = document.getElementById('task-verify-overlay');
+    const claimBtn      = document.getElementById('verify-claim-btn');
+    const countdown     = document.getElementById('verify-countdown');
+    const progressFill  = document.getElementById('verify-progress-fill');
+    const spinner       = document.getElementById('verify-spinner');
+    const phaseLabel    = document.getElementById('verify-phase-label');
+    const subText       = document.getElementById('verify-sub-text');
+
+    // Reset state
+    claimBtn.style.display   = 'none';
+    spinner.style.display    = 'none';
+    countdown.style.display  = 'block';
+    progressFill.style.transition = 'none';
+    progressFill.style.width = '100%';
+    phaseLabel.innerText     = 'WAITING · COMPLETE TASK';
+    subText.innerText        = 'Complete the task in the opened link. Claim unlocks after 60 seconds.';
+    overlay.style.display    = 'flex';
+
+    // --- Phase 1: 60-second countdown ---
+    let secs = 60;
+    countdown.innerText = secs;
+    setTimeout(() => {
+        progressFill.style.transition = `width ${secs}s linear`;
+        progressFill.style.width = '0%';
+    }, 50);
+
+    verifyTimer = setInterval(() => {
+        secs--;
+        countdown.innerText = secs;
+        if (secs <= 0) {
+            clearInterval(verifyTimer);
+            // --- Phase 2: 3-second loading spinner ---
+            countdown.style.display = 'none';
+            progressFill.style.width = '0%';
+            progressFill.style.transition = 'none';
+            spinner.style.display = 'block';
+            phaseLabel.innerText = 'VERIFYING · PLEASE WAIT';
+            subText.innerText = 'Confirming your task completion...';
+
+            // Animate progress fill back to 100% over 3s
+            setTimeout(() => {
+                progressFill.style.transition = 'width 3s linear';
+                progressFill.style.width = '100%';
+            }, 50);
+
+            let loadSecs = 3;
+            const loadTimer = setInterval(() => {
+                loadSecs--;
+                if (loadSecs <= 0) {
+                    clearInterval(loadTimer);
+                    // --- Phase 3: Show claim button ---
+                    spinner.style.display  = 'none';
+                    phaseLabel.innerText   = 'VERIFIED ✓';
+                    subText.innerText      = 'Your task has been verified! Claim your reward now.';
+                    claimBtn.style.display = 'block';
+                }
+            }, 1000);
         }
     }, 1000);
+}
 
-    // ============================================================
-    // BOOST
-    // ============================================================
-    function buyBot() {
-        let cost = (botLevel+1)*10000;
-        if (balance >= cost) { balance -= cost; botLevel++; save(); updateUI(); tg.showAlert('Bot Upgraded!'); }
-        else tg.showAlert('Insufficient coins!');
-    }
-    function upgradeTap() {
-        let cost = level*2000;
-        if (balance >= cost) { balance -= cost; level++; save(); updateUI(); tg.showAlert('Tap Upgraded!'); }
-        else tg.showAlert('Insufficient coins!');
-    }
-    function upgradeEnergy() {
-        let cost = maxEnergy*5;
-        if (balance >= cost) { balance -= cost; maxEnergy += 500; save(); updateUI(); tg.showAlert('Energy Increased!'); }
-        else tg.showAlert('Insufficient coins!');
-    }
+function finishTaskClaim() {
+    if (!pendingTask) return;
+    balance += pendingTask.reward;
+    localStorage.setItem('task_'+pendingTask.key, 'done');
+    save(); updateUI();
+    renderTasks(pendingTask.cat);
+    pendingTask = null;
+    document.getElementById('task-verify-overlay').style.display = 'none';
+    tg.showAlert ? tg.showAlert('Task reward claimed! ✅') : alert('Task reward claimed!');
+}
 
-    function save() {
-        db.ref('users/'+uid).update({ balance, crcBalance, level, botLevel, botStored, maxEnergy, energy, lastSeen: Date.now(), name: uName });
+function cancelTaskVerify() {
+    clearInterval(verifyTimer);
+    pendingTask = null;
+    document.getElementById('task-verify-overlay').style.display = 'none';
+}
+
+// ============================================================
+// CONVERSION
+// ============================================================
+function updateConversionDisplay() {
+    const rateEl = document.getElementById('conv-rate-display');
+    if (rateEl) rateEl.innerText = format(exchangeRate) + ' NVT = 1 CRC';
+    const nvtEl = document.getElementById('conv-nvt-bal'); if (nvtEl) nvtEl.innerText = format(balance);
+    const crcEl = document.getElementById('conv-crc-bal'); if (crcEl) crcEl.innerText = format(crcBalance);
+    const airdropEl = document.getElementById('airdrop-crc-display'); if (airdropEl) airdropEl.innerText = format(crcBalance);
+    previewConversion();
+}
+
+function previewConversion() {
+    const nvtInput = parseFloat(document.getElementById('convert-nvt-input')?.value || '0');
+    const previewEl = document.getElementById('conv-preview-crc');
+    if (!previewEl) return;
+    if (!nvtInput || nvtInput <= 0 || isNaN(nvtInput)) { previewEl.innerText = '—'; return; }
+    previewEl.innerText = format(Math.floor(nvtInput / exchangeRate));
+}
+
+function doConversion() {
+    const nvtInput = parseFloat(document.getElementById('convert-nvt-input').value || '0');
+    if (!nvtInput || nvtInput <= 0 || isNaN(nvtInput)) { tg.showAlert('Enter valid NVT amount.'); return; }
+    if (nvtInput > balance) { tg.showAlert('Insufficient NVT!'); return; }
+    const crcToGet = Math.floor(nvtInput / exchangeRate);
+    if (crcToGet < 1) { tg.showAlert(`Min: ${format(exchangeRate)} NVT = 1 CRC`); return; }
+    balance -= nvtInput; crcBalance += crcToGet;
+    save(); updateUI(); updateConversionDisplay();
+    document.getElementById('convert-nvt-input').value = '';
+    document.getElementById('conv-preview-crc').innerText = '—';
+    tg.showAlert(`✅ ${format(nvtInput)} NVT → ${format(crcToGet)} CRC!`);
+}
+
+// ============================================================
+// UPDATE UI
+// ============================================================
+function updateUI() {
+    const rank = balance < 10000 ? "Bronze" : balance < 50000 ? "Silver" : "Gold";
+    document.getElementById('coin-count').innerText  = format(balance);
+    document.getElementById('crc-count').innerText   = format(crcBalance);
+    document.getElementById('energy-val').innerText  = Math.floor(energy);
+    document.getElementById('max-energy-text').innerText = maxEnergy;
+    document.getElementById('bar-fill').style.width  = (energy / maxEnergy * 100) + '%';
+    document.getElementById('user-display').innerText = 'Hi, ' + uName;
+    document.getElementById('rank-display').innerText = rank;
+    document.getElementById('level-text').innerText   = 'Level ' + level;
+    document.getElementById('p-initial').innerHTML    = ASSET_CONFIG.profileAvatarUrl
+        ? `<img src="${ASSET_CONFIG.profileAvatarUrl}" onerror="this.parentElement.innerText='${uName.charAt(0).toUpperCase()}'" />`
+        : uName.charAt(0).toUpperCase();
+    document.getElementById('p-name').innerText   = uName;
+    document.getElementById('p-id').innerText     = 'ID: ' + uid;
+    document.getElementById('p-rank').innerText   = rank;
+    document.getElementById('p-bal').innerText    = format(balance);
+    document.getElementById('p-crc-bal').innerText= format(crcBalance);
+    document.getElementById('p-lvl').innerText    = level;
+    document.getElementById('p-energy').innerText = maxEnergy;
+    document.getElementById('settings-uid').innerText = uid;
+    document.getElementById('bot-info').innerText = `Level ${botLevel} (Cost: ${format((botLevel+1)*10000)})`;
+    document.getElementById('tap-upgrade-info').innerText = `Level ${level} (Cost: ${format(level*2000)})`;
+    document.getElementById('energy-lv-info').innerText   = `Max: ${maxEnergy} (Cost: ${format(maxEnergy*5)})`;
+    // Energy no-energy state
+    const tapBtn = document.getElementById('tap-btn');
+    if (energy <= 0) tapBtn.classList.add('no-energy'); else tapBtn.classList.remove('no-energy');
+    // Bot widget
+    if (botLevel > 0) {
+        document.getElementById('bot-ui-container').style.display = 'flex';
+        document.getElementById('bot-stored-val').innerText = format(botStored);
+        document.getElementById('bot-claim-btn').style.display = botStored >= (botLevel*10) ? 'block' : 'none';
     }
+    updateConversionDisplay();
+}
 
-    // ============================================================
-    // NAVIGATION
-    // ============================================================
-    function setActiveNav(id) {
-        document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
-        const el = document.getElementById(id);
-        if (el) el.classList.add('active');
-    }
+// ============================================================
+// RENDER TASKS
+// ============================================================
+function switchTaskTab(tab) {
+    document.querySelectorAll('.task-tabs .tab-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById('tab-'+tab).classList.add('active');
+    renderTasks(tab);
+}
 
-    function showPage(id) {
-        closeAll();
-        document.getElementById(id).style.display = 'block';
-        if (id === 'tasks-page') { switchTaskTab('daily'); }
-        if (id === 'rank-page') loadLeaderboard();
-        if (id === 'friends-page') loadReferrals();
-        if (id === 'convert-page') updateConversionDisplay();
-        if (id === 'airdrop-page') { document.getElementById('airdrop-crc-display').innerText = format(crcBalance); }
-    }
-
-    function closeAll() {
-        document.querySelectorAll('.overlay').forEach(p => p.style.display = 'none');
-        setActiveNav('nav-home');
-    }
-
-    function claimBot() {
-        if (botStored > 0) { balance += botStored; botStored = 0; updateUI(); save(); tg.showAlert('Bot earnings claimed!'); }
-    }
-
-    function invite() {
-        const link = `https://t.me/my_earning_test_bot?start=${uid}`;
-        tg.openTelegramLink(`https://t.me/share/url?url=${encodeURIComponent(link)}&text=Join NovaTap Network!`);
-    }
-
-    function loadLeaderboard() {
-        db.ref('users').orderByChild('balance').limitToLast(10).once('value', snap => {
-            let players = [];
-            snap.forEach(child => { players.push(child.val()); });
-            players.sort((a,b) => b.balance - a.balance);
-            let html = '';
-            players.forEach((p, i) => {
-                const medals = ['🥇','🥈','🥉'];
-                const medal = medals[i] || `#${i+1}`;
-                html += `<div class="card" style="${p.name===uName?'border-color:rgba(243,186,47,0.4);background:rgba(243,186,47,0.05);':''}"><span><b>${medal} ${p.name||'Unknown'}</b></span><b style="font-family:'Orbitron',monospace;font-size:13px;color:var(--gold)">${format(p.balance)}</b></div>`;
-            });
-            document.getElementById('leaderboard-list').innerHTML = html;
-        });
-    }
-
-    // ============================================================
-    // TON CONNECT
-    // ============================================================
-    async function initTonConnect() {
-        try {
-            window.tonConnectUI = new TON_CONNECT_UI.TonConnectUI({
-                manifestUrl: 'https://bdc-game.vercel.app/tonconnect-manifest.json',
-                buttonRootId: 'ton-connect-button'
-            });
-        } catch(e) { console.log('TON Connect init skipped:', e); }
-    }
-    initTonConnect();
-
-    // ============================================================
-    // ADMIN TRIGGER (5 taps on profile avatar)
-    // ============================================================
-    let avatarTapCount = 0, avatarTapTimer = null;
-
-    function handleAvatarTap() {
-        avatarTapCount++;
-        clearTimeout(avatarTapTimer);
-        if (avatarTapCount >= 5) {
-            avatarTapCount = 0;
-            openAdminModal();
-        } else {
-            avatarTapTimer = setTimeout(() => { avatarTapCount = 0; }, 2000);
+function renderTasks(category) {
+    document.getElementById('tasks-page').setAttribute('data-current-tab', category);
+    const listDiv = document.getElementById('task-list-dynamic');
+    let html = '';
+    if (category === 'daily') {
+        html = '<div class="daily-grid">';
+        const dayCount = parseInt(localStorage.getItem('daily_day_count') || '0');
+        const lastClaim = localStorage.getItem('last_daily_claim_date');
+        const today = new Date().toDateString();
+        for (let i = 1; i <= 30; i++) {
+            let canClaim = (i === dayCount + 1 && lastClaim !== today);
+            let done = (i <= dayCount);
+            let reward = DAILY_REWARDS[i-1];
+            let ac = canClaim ? 'daily-active' : '';
+            html += `<div class="daily-item ${ac}" onclick="${canClaim?`claimDailyCheckin(${i},${reward})`:''}` + `" style="${done?'background:rgba(0,212,255,0.08);border-color:rgba(0,212,255,0.2);color:var(--neon);':(canClaim?'':'opacity:0.5')}">Day ${i}<br><b>${format(reward)}</b><br><small>${done?'✅':(canClaim?'Claim':'🔒')}</small></div>`;
         }
+        html += '</div>';
+    } else {
+        const tasks = TASK_CATEGORIES[category] || [];
+        tasks.forEach(t => {
+            if (!t || !t.id) return;
+            if (!localStorage.getItem('task_'+t.id)) {
+                // Use the 60s+3s verification system for social and video tasks
+                html += `<div class="card"><div><b>${t.name}</b><br><small>+${format(t.reward)} NVT</small></div><button class="btn-action" onclick="doTask('${t.link}',${t.reward},'${t.id}','${category}')">Start</button></div>`;
+            }
+        });
+        if (!html) html = '<p style="text-align:center;color:var(--gray);margin-top:40px;font-family:Rajdhani,sans-serif;">No tasks left! 🎉</p>';
     }
+    listDiv.innerHTML = html;
+    checkTaskNotification();
+}
 
-    function openAdminModal() {
-        document.getElementById('admin-key-input').value = '';
-        document.getElementById('admin-key-error').style.display = 'none';
-        document.getElementById('admin-key-modal').style.display = 'flex';
+function claimDailyCheckin(day, reward) {
+    balance += reward;
+    localStorage.setItem('daily_day_count', day);
+    localStorage.setItem('last_daily_claim_date', new Date().toDateString());
+    save(); updateUI(); renderTasks('daily');
+    tg.showAlert(`Day ${day} Reward: ${format(reward)} NVT!`);
+}
+
+// ============================================================
+// TAP MECHANIC
+// ============================================================
+const tapBtn = document.getElementById('tap-btn');
+
+tapBtn.addEventListener('touchstart', e => {
+    e.preventDefault();
+    if (energy <= 0) { tapBtn.classList.add('no-energy'); return; }
+    let earn = Math.floor(level * 2 * globalMiningRate);
+    if (energy >= earn) {
+        balance += earn; energy -= earn;
+        tapBtn.classList.add('tapping');
+        setTimeout(() => tapBtn.classList.remove('tapping'), 160);
+        const t = e.touches[0];
+        const el = document.createElement('div');
+        el.className = 'tap-anim'; el.innerText = '+' + earn;
+        el.style.cssText = `left:${t.clientX}px; top:${t.clientY}px; transform:translateX(-50%);`;
+        document.body.appendChild(el);
+        setTimeout(() => el.remove(), 800);
+        if (appSettings.haptic && tg.HapticFeedback) tg.HapticFeedback.impactOccurred('light');
+        updateUI(); save();
     }
+}, {passive: false});
 
-    function closeAdminModal() {
-        document.getElementById('admin-key-modal').style.display = 'none';
+tapBtn.addEventListener('click', () => {
+    if (energy <= 0) return;
+    let earn = Math.floor(level * 2 * globalMiningRate);
+    if (energy >= earn) { balance += earn; energy -= earn; tapBtn.classList.add('tapping'); setTimeout(()=>tapBtn.classList.remove('tapping'),160); updateUI(); save(); }
+});
+
+// Auto-regen energy + bot income
+setInterval(() => {
+    if (energy < maxEnergy) { energy += 0.5; updateUI(); }
+    if (botLevel > 0) {
+        let cap = botLevel * 500;
+        if (botStored < cap) { botStored += (botLevel * 0.2); save(); updateUI(); }
     }
+    // Also tick estate timers
+    tickEstates();
+}, 1000);
 
-    function verifyAdminKey() {
-        const entered = document.getElementById('admin-key-input').value.trim();
-        if (entered === ADMIN_SECRET_KEY) {
-            closeAdminModal();
-            openAdminPanel();
-        } else {
-            const errEl = document.getElementById('admin-key-error');
-            errEl.style.display = 'block';
-            document.getElementById('admin-key-input').style.borderColor = 'rgba(255,77,109,0.6)';
-            setTimeout(() => { errEl.style.display = 'none'; document.getElementById('admin-key-input').style.borderColor = 'rgba(0,212,255,0.25)'; }, 2500);
+// ============================================================
+// BOOST
+// ============================================================
+function buyBot() {
+    let cost = (botLevel+1)*10000;
+    if (balance >= cost) { balance -= cost; botLevel++; save(); updateUI(); tg.showAlert('Bot Upgraded!'); }
+    else tg.showAlert('Insufficient coins!');
+}
+function upgradeTap() {
+    let cost = level*2000;
+    if (balance >= cost) { balance -= cost; level++; save(); updateUI(); tg.showAlert('Tap Upgraded!'); }
+    else tg.showAlert('Insufficient coins!');
+}
+function upgradeEnergy() {
+    let cost = maxEnergy*5;
+    if (balance >= cost) { balance -= cost; maxEnergy += 500; save(); updateUI(); tg.showAlert('Energy Increased!'); }
+    else tg.showAlert('Insufficient coins!');
+}
+
+// ============================================================
+// SAVE TO FIREBASE
+// ============================================================
+function save() {
+    db.ref('users/'+uid).update({ balance, crcBalance, level, botLevel, botStored, maxEnergy, energy, lastSeen: Date.now(), name: uName, estates: estateData });
+}
+
+// ============================================================
+// NAVIGATION
+// ============================================================
+function setActiveNav(id) {
+    document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+    const el = document.getElementById(id); if (el) el.classList.add('active');
+}
+
+function showPage(id) {
+    closeAll();
+    document.getElementById(id).style.display = 'block';
+    if (id === 'tasks-page')   { switchTaskTab('daily'); }
+    if (id === 'rank-page')    { loadLeaderboard(); }
+    if (id === 'friends-page') { loadReferrals(); }
+    if (id === 'convert-page') { updateConversionDisplay(); }
+    if (id === 'airdrop-page') { document.getElementById('airdrop-crc-display').innerText = format(crcBalance); }
+    if (id === 'estates-page') { renderEstates(); }
+}
+
+function closeAll() {
+    document.querySelectorAll('.overlay').forEach(p => p.style.display = 'none');
+    setActiveNav('nav-home');
+}
+
+function claimBot() {
+    if (botStored > 0) { balance += botStored; botStored = 0; updateUI(); save(); tg.showAlert('Bot earnings claimed!'); }
+}
+
+function invite() {
+    const link = `https://t.me/my_earning_test_bot?start=${uid}`;
+    tg.openTelegramLink(`https://t.me/share/url?url=${encodeURIComponent(link)}&text=Join NovaTap Network!`);
+}
+
+function loadLeaderboard() {
+    db.ref('users').orderByChild('balance').limitToLast(10).once('value', snap => {
+        let players = [];
+        snap.forEach(child => { players.push(child.val()); });
+        players.sort((a,b) => b.balance - a.balance);
+        let html = '';
+        players.forEach((p, i) => {
+            const medals = ['🥇','🥈','🥉'];
+            const medal = medals[i] || `#${i+1}`;
+            html += `<div class="card" style="${p.name===uName?'border-color:rgba(243,186,47,0.4);background:rgba(243,186,47,0.05);':''}"><span><b>${medal} ${p.name||'Unknown'}</b></span><b style="font-family:'Orbitron',monospace;font-size:13px;color:var(--gold)">${format(p.balance)}</b></div>`;
+        });
+        document.getElementById('leaderboard-list').innerHTML = html;
+    });
+}
+
+// ============================================================
+// ===== ESTATES / GAME SYSTEM =====
+// ============================================================
+
+/**
+ * Get estate cost for a given level (doubles each level)
+ * Level 1 = 5000, Level 2 = 10000, Level 3 = 20000 ...
+ */
+function estateCost(level) {
+    return ESTATE_BASE_COST * Math.pow(2, level - 1);
+}
+
+/**
+ * Get estate duration in seconds for a given level
+ * Level 1 = 300s (5min), doubles each level
+ */
+function estateDuration(level) {
+    return ESTATE_BASE_TIME * Math.pow(2, level - 1);
+}
+
+/**
+ * Get CRC reward for completing an estate upgrade
+ * Scales with level
+ */
+function estateCrcReward(level) {
+    return Math.floor(5 * Math.pow(2, level - 1));
+}
+
+/**
+ * Get NVT auto-income per second for an estate level
+ */
+function estateNvtIncome(level) {
+    return parseFloat((0.1 * level).toFixed(2));
+}
+
+/**
+ * Format seconds into mm:ss
+ */
+function formatTime(secs) {
+    if (secs <= 0) return '00:00';
+    const m = Math.floor(secs / 60);
+    const s = Math.floor(secs % 60);
+    return `${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
+}
+
+/**
+ * Get description/label for current estate level (cycles through desc array)
+ */
+function estateDesc(def, level) {
+    const idx = Math.min(level - 1, def.desc.length - 1);
+    return def.desc[Math.max(0, idx)];
+}
+
+/**
+ * Render all estate cards
+ */
+function renderEstates() {
+    const container = document.getElementById('estates-list');
+    let html = '';
+    ESTATE_DEFS.forEach(def => {
+        const ed = estateData[def.id] || { level:0, startedAt:null, claimed:true };
+        const curLevel = ed.level || 0;
+        const nextLevel = curLevel + 1;
+        const isMax = curLevel >= ESTATE_MAX_LEVEL;
+        const isUpgrading = ed.startedAt && !ed.claimed;
+        const cost = estateCost(nextLevel);
+        const dur = estateDuration(nextLevel);
+        const crcRew = estateCrcReward(nextLevel);
+        const nvtInc = estateNvtIncome(curLevel > 0 ? curLevel : 1);
+        // Description scales with level
+        const descLabel = curLevel > 0 ? estateDesc(def, curLevel) : 'Not built';
+
+        // Timer progress
+        let progress = 0;
+        let secsLeft = 0;
+        if (isUpgrading) {
+            const elapsed = (Date.now() - ed.startedAt) / 1000;
+            const totalDur = estateDuration(curLevel + 1);
+            secsLeft = Math.max(0, totalDur - elapsed);
+            progress = Math.min(100, (elapsed / totalDur) * 100);
         }
-    }
 
-    document.getElementById('admin-key-input').addEventListener('keydown', e => { if (e.key==='Enter') verifyAdminKey(); });
+        html += `
+        <div class="estate-card" id="ec-${def.id}">
+            <div class="estate-card-header">
+                <div class="estate-icon-box">${def.icon}</div>
+                <div style="flex:1;">
+                    <div class="estate-name">${def.name}</div>
+                    <div class="estate-level-tag">LV ${curLevel}/${ESTATE_MAX_LEVEL} · ${descLabel}</div>
+                </div>
+                ${isMax ? `<div class="estate-max-badge">MAX</div>` : ''}
+            </div>
+            <div class="estate-card-body">
+                <div class="estate-rewards-row">
+                    <div class="estate-reward-chip">
+                        <div class="erc-label">Next Cost</div>
+                        <div class="erc-val" style="color:var(--gold);">${isMax?'—':format(cost)}</div>
+                        <div style="font-size:8px;color:var(--gray);">NVT</div>
+                    </div>
+                    <div class="estate-reward-chip">
+                        <div class="erc-label">CRC Reward</div>
+                        <div class="erc-val" style="color:var(--crc);">${isMax?'—':crcRew}</div>
+                        <div style="font-size:8px;color:var(--gray);">CRC</div>
+                    </div>
+                    <div class="estate-reward-chip">
+                        <div class="erc-label">Income/s</div>
+                        <div class="erc-val" style="color:var(--neon);">${curLevel>0?nvtInc:'—'}</div>
+                        <div style="font-size:8px;color:var(--gray);">NVT</div>
+                    </div>
+                </div>
+                <div class="estate-progress-bar">
+                    <div class="estate-progress-fill" id="epf-${def.id}" style="width:${isUpgrading?progress:0}%"></div>
+                </div>
+                <div class="estate-btn-row">
+                    ${isMax
+                        ? `<button class="estate-upgrade-btn" disabled>MAX LEVEL</button>`
+                        : isUpgrading
+                            ? `<button class="estate-upgrade-btn" disabled>Upgrading…</button>`
+                            : `<button class="estate-upgrade-btn" onclick="startEstateUpgrade('${def.id}')">Upgrade LV${nextLevel} · ${!isMax?formatTime(dur):'—'}</button>`
+                    }
+                    ${(!isMax && !isUpgrading && ed.startedAt && ed.claimed === false)
+                        ? '' : ''}
+                </div>
+                ${isUpgrading
+                    ? `<div class="estate-timer-label" id="etl-${def.id}" style="display:block;">⏱ ${formatTime(secsLeft)} remaining</div>`
+                    : ''}
+                ${(!isUpgrading && ed.startedAt && ed.claimed === false && !isMax)
+                    ? `<button class="estate-claim-btn" id="ecb-${def.id}" style="display:block;width:100%;margin-top:8px;" onclick="claimEstateReward('${def.id}')">🎁 CLAIM REWARD</button>`
+                    : `<button class="estate-claim-btn" id="ecb-${def.id}" style="display:none;width:100%;margin-top:8px;" onclick="claimEstateReward('${def.id}')">🎁 CLAIM REWARD</button>`}
+            </div>
+        </div>`;
+    });
+    container.innerHTML = html;
+}
 
-    // ============================================================
-    // ADMIN PANEL
-    // ============================================================
-    let adminCurrentTaskCategory = 'social';
+/**
+ * Start upgrading an estate
+ */
+function startEstateUpgrade(estateId) {
+    const ed = estateData[estateId] || { level:0, startedAt:null, claimed:true };
+    const curLevel = ed.level || 0;
+    const nextLevel = curLevel + 1;
+    if (nextLevel > ESTATE_MAX_LEVEL) { tg.showAlert('Max level reached!'); return; }
+    const cost = estateCost(nextLevel);
+    if (balance < cost) { tg.showAlert(`Need ${format(cost)} NVT to upgrade!`); return; }
+    balance -= cost;
+    estateData[estateId] = { level: curLevel, startedAt: Date.now(), claimed: false };
+    save(); updateUI();
+    renderEstates();
+    tg.showAlert ? tg.showAlert(`Upgrading ${estateId} to LV${nextLevel}! Returns in ${formatTime(estateDuration(nextLevel))}.`) : null;
+}
 
-    function openAdminPanel() {
-        document.getElementById('admin-panel').style.display = 'block';
-        loadAdminStats();
-        loadAdminTaskList();
-    }
+/**
+ * Claim estate upgrade reward
+ */
+function claimEstateReward(estateId) {
+    const ed = estateData[estateId];
+    if (!ed || ed.claimed) return;
+    const newLevel = (ed.level || 0) + 1;
+    const crcRew = estateCrcReward(newLevel);
+    crcBalance += crcRew;
+    estateData[estateId] = { level: newLevel, startedAt: null, claimed: true };
+    save(); updateUI(); renderEstates();
+    tg.showAlert ? tg.showAlert(`✅ ${estateId.charAt(0).toUpperCase()+estateId.slice(1)} upgraded to LV${newLevel}! +${crcRew} CRC earned!`) : null;
+}
 
-    function closeAdminPanel() {
-        document.getElementById('admin-panel').style.display = 'none';
-    }
+/**
+ * Tick estate timers every second — updates progress bars & reveal claim button
+ */
+function tickEstates() {
+    const estatesPage = document.getElementById('estates-page');
+    if (!estatesPage || estatesPage.style.display !== 'block') return;
 
-    function showAdminStatus(msg, ok=true) {
-        const el = document.getElementById('admin-status-msg');
-        el.innerText = msg;
-        el.className = ok ? 'status-ok' : 'status-err';
-        el.style.display = 'block';
-        setTimeout(() => { el.style.display = 'none'; }, 3000);
-    }
+    ESTATE_DEFS.forEach(def => {
+        const ed = estateData[def.id];
+        if (!ed || ed.claimed || !ed.startedAt) return;
+        const dur = estateDuration((ed.level||0) + 1);
+        const elapsed = (Date.now() - ed.startedAt) / 1000;
+        const secsLeft = Math.max(0, dur - elapsed);
+        const progress = Math.min(100, (elapsed / dur) * 100);
 
-    function loadAdminStats() {
-        db.ref('users').once('value', snap => {
-            let userCount = 0, totalCoins = 0;
-            snap.forEach(child => { const d=child.val(); userCount++; totalCoins += (d.balance||0); });
-            document.getElementById('a-stat-users').innerText = userCount;
-            document.getElementById('a-stat-total').innerText = format(totalCoins);
+        const pfEl = document.getElementById('epf-'+def.id);
+        if (pfEl) pfEl.style.width = progress + '%';
+
+        const tlEl = document.getElementById('etl-'+def.id);
+        if (tlEl) tlEl.innerText = secsLeft > 0 ? `⏱ ${formatTime(secsLeft)} remaining` : '✅ Done!';
+
+        // When timer finishes, show claim button & re-render
+        if (secsLeft <= 0 && !ed.claimed) {
+            renderEstates();
+        }
+    });
+
+    // Passive NVT income from estates
+    ESTATE_DEFS.forEach(def => {
+        const ed = estateData[def.id];
+        if (!ed || !ed.level || ed.level <= 0 || !ed.claimed) return;
+        const inc = estateNvtIncome(ed.level);
+        balance = Math.floor(balance + inc);
+    });
+    if (ESTATE_DEFS.some(d => (estateData[d.id]?.level||0) > 0)) updateUI();
+}
+
+// ============================================================
+// TON CONNECT
+// ============================================================
+async function initTonConnect() {
+    try {
+        window.tonConnectUI = new TON_CONNECT_UI.TonConnectUI({
+            manifestUrl: 'https://bdc-game.vercel.app/tonconnect-manifest.json',
+            buttonRootId: 'ton-connect-button'
         });
-        db.ref('settings/miningRate').once('value', snap => {
-            document.getElementById('a-stat-rate').innerText = (snap.val()||1)+'x';
+    } catch(e) { console.log('TON Connect init skipped:', e); }
+}
+initTonConnect();
+
+// ============================================================
+// ADMIN TRIGGER (5 taps on profile avatar)
+// ============================================================
+let avatarTapCount = 0, avatarTapTimer = null;
+
+function handleAvatarTap() {
+    avatarTapCount++;
+    clearTimeout(avatarTapTimer);
+    if (avatarTapCount >= 5) { avatarTapCount = 0; openAdminModal(); }
+    else { avatarTapTimer = setTimeout(() => { avatarTapCount = 0; }, 2000); }
+}
+
+function openAdminModal() {
+    document.getElementById('admin-key-input').value = '';
+    document.getElementById('admin-key-error').style.display = 'none';
+    document.getElementById('admin-key-modal').style.display = 'flex';
+}
+
+function closeAdminModal() { document.getElementById('admin-key-modal').style.display = 'none'; }
+
+function verifyAdminKey() {
+    const entered = document.getElementById('admin-key-input').value.trim();
+    if (entered === ADMIN_SECRET_KEY) { closeAdminModal(); openAdminPanel(); }
+    else {
+        const errEl = document.getElementById('admin-key-error');
+        errEl.style.display = 'block';
+        document.getElementById('admin-key-input').style.borderColor = 'rgba(255,77,109,0.6)';
+        setTimeout(() => { errEl.style.display='none'; document.getElementById('admin-key-input').style.borderColor='rgba(0,212,255,0.25)'; }, 2500);
+    }
+}
+
+document.getElementById('admin-key-input').addEventListener('keydown', e => { if(e.key==='Enter') verifyAdminKey(); });
+
+// ============================================================
+// ADMIN PANEL
+// ============================================================
+let adminCurrentTaskCategory = 'social';
+// Cache for user table
+let allUsersCache = [];
+
+function openAdminPanel() {
+    document.getElementById('admin-panel').style.display = 'block';
+    loadAdminStats();
+    loadAdminTaskList();
+}
+
+function closeAdminPanel() { document.getElementById('admin-panel').style.display = 'none'; }
+
+function showAdminStatus(msg, ok=true) {
+    const el = document.getElementById('admin-status-msg');
+    el.innerText = msg; el.className = ok ? 'status-ok' : 'status-err';
+    el.style.display = 'block';
+    setTimeout(() => { el.style.display = 'none'; }, 3000);
+}
+
+function loadAdminStats() {
+    db.ref('users').once('value', snap => {
+        let userCount = 0, totalCoins = 0;
+        snap.forEach(child => { const d=child.val(); userCount++; totalCoins+=(d.balance||0); });
+        document.getElementById('a-stat-users').innerText = userCount;
+        document.getElementById('a-stat-total').innerText = format(totalCoins);
+    });
+    db.ref('settings/miningRate').once('value', snap => {
+        document.getElementById('a-stat-rate').innerText = (snap.val()||1)+'x';
+    });
+}
+
+function setAnnouncement() {
+    const msg = document.getElementById('a-announcement').value.trim();
+    db.ref('settings/announcement').set(msg).then(()=>showAdminStatus('✅ Broadcasted!')).catch(()=>showAdminStatus('❌ Failed',false));
+}
+function clearAnnouncement() {
+    db.ref('settings/announcement').set('').then(()=>{ document.getElementById('a-announcement').value=''; showAdminStatus('✅ Cleared!'); });
+}
+function toggleMaintenance() {
+    const isOn = document.getElementById('a-maintenance-toggle').checked;
+    db.ref('settings/maintenance').set(isOn).then(()=>showAdminStatus(isOn?'🔧 Maintenance ON':'✅ Maintenance OFF'));
+}
+function toggleAirdropTab() {
+    const isOn = document.getElementById('a-airdrop-toggle').checked;
+    db.ref('settings/showAirdrop').set(isOn).then(()=>showAdminStatus(isOn?'✅ Airdrop Tab Shown':'🔒 Airdrop Hidden'));
+}
+function saveMiningRate() {
+    const rate = parseFloat(document.getElementById('a-mining-rate').value);
+    if (isNaN(rate)||rate<=0) { showAdminStatus('❌ Invalid rate',false); return; }
+    db.ref('settings/miningRate').set(rate).then(()=>{ document.getElementById('a-stat-rate').innerText=rate+'x'; showAdminStatus('✅ Rate: '+rate+'x'); });
+}
+function saveEnergyCap() {
+    const cap = parseInt(document.getElementById('a-energy-cap').value);
+    if (isNaN(cap)||cap<500) { showAdminStatus('❌ Min 500',false); return; }
+    db.ref('settings/energyCap').set(cap).then(()=>showAdminStatus('✅ Energy Cap: '+cap));
+}
+function saveExchangeRate() {
+    const rate = parseFloat(document.getElementById('a-exchange-rate').value);
+    if (isNaN(rate)||rate<1) { showAdminStatus('❌ Invalid rate',false); return; }
+    db.ref('settings/exchangeRate').set(rate).then(()=>{ exchangeRate=rate; updateConversionDisplay(); showAdminStatus('✅ Rate: '+format(rate)+' NVT=1 CRC'); });
+}
+
+function switchAdminTaskTab(cat) {
+    adminCurrentTaskCategory = cat;
+    document.querySelectorAll('.admin-tab').forEach(t=>t.classList.remove('active-tab'));
+    document.getElementById('atab-'+cat).classList.add('active-tab');
+    document.getElementById('a-task-category-label').innerText = cat.toUpperCase()+' TASKS';
+    loadAdminTaskList();
+}
+
+function loadAdminTaskList() {
+    const listDiv = document.getElementById('a-task-list');
+    db.ref('tasks/'+adminCurrentTaskCategory).once('value', snap => {
+        let tasks = snap.exists() ? (Array.isArray(snap.val())?snap.val():Object.values(snap.val())) : (DEFAULT_TASK_CATEGORIES[adminCurrentTaskCategory]||[]);
+        if (!tasks.length) { listDiv.innerHTML='<p style="color:var(--gray);font-size:12px;text-align:center;padding:10px 0;">No tasks.</p>'; return; }
+        listDiv.innerHTML = tasks.map((t,i) => t ? `<div class="admin-task-item"><div style="flex:1;min-width:0;"><div class="admin-task-name">${t.name}</div><div style="font-size:10px;color:var(--gray);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${t.link}</div></div><div class="admin-task-reward">+${format(t.reward)}</div><button class="admin-btn admin-btn-red" style="padding:6px 10px;font-size:9px;margin-left:6px;" onclick="removeTask(${i})">✕</button></div>` : '').join('');
+    });
+}
+
+function addTask() {
+    const name=document.getElementById('a-task-name').value.trim();
+    const link=document.getElementById('a-task-link').value.trim();
+    const reward=parseInt(document.getElementById('a-task-reward').value);
+    if (!name||!link||isNaN(reward)||reward<1) { showAdminStatus('❌ Fill all fields',false); return; }
+    const newTask = {name,link,reward,id:adminCurrentTaskCategory+'_'+Date.now()};
+    db.ref('tasks/'+adminCurrentTaskCategory).once('value', snap => {
+        let tasks = snap.exists() ? (Array.isArray(snap.val())?snap.val():Object.values(snap.val())) : [...(DEFAULT_TASK_CATEGORIES[adminCurrentTaskCategory]||[])];
+        tasks.push(newTask);
+        db.ref('tasks/'+adminCurrentTaskCategory).set(tasks).then(()=>{
+            document.getElementById('a-task-name').value='';
+            document.getElementById('a-task-link').value='';
+            document.getElementById('a-task-reward').value='';
+            showAdminStatus('✅ Task added!'); loadAdminTaskList();
         });
+    });
+}
+
+function removeTask(idx) {
+    db.ref('tasks/'+adminCurrentTaskCategory).once('value', snap => {
+        let tasks = snap.exists() ? (Array.isArray(snap.val())?snap.val():Object.values(snap.val())) : [...(DEFAULT_TASK_CATEGORIES[adminCurrentTaskCategory]||[])];
+        tasks.splice(idx, 1);
+        db.ref('tasks/'+adminCurrentTaskCategory).set(tasks).then(()=>{ showAdminStatus('✅ Removed!'); loadAdminTaskList(); });
+    });
+}
+
+// ===== USER DATA TABLE =====
+function loadUserTable() {
+    const tbody = document.getElementById('a-users-table-body');
+    tbody.innerHTML = '<tr><td colspan="5" style="text-align:center;color:var(--gray);padding:16px;">Loading...</td></tr>';
+    db.ref('users').once('value', snap => {
+        allUsersCache = [];
+        snap.forEach(child => { allUsersCache.push({ id: child.key, ...child.val() }); });
+        allUsersCache.sort((a,b) => (b.balance||0) - (a.balance||0));
+        renderUserTable(allUsersCache);
+    });
+}
+
+function filterUserTable() {
+    const q = document.getElementById('a-table-search').value.trim().toLowerCase();
+    const filtered = allUsersCache.filter(u =>
+        (u.name||'').toLowerCase().includes(q) || String(u.id).includes(q)
+    );
+    renderUserTable(filtered);
+}
+
+function renderUserTable(users) {
+    const tbody = document.getElementById('a-users-table-body');
+    if (!users.length) {
+        tbody.innerHTML = '<tr><td colspan="5" style="text-align:center;color:var(--gray);padding:16px;">No users found.</td></tr>'; return;
     }
+    tbody.innerHTML = users.map(u => `
+        <tr id="urow-${u.id}">
+            <td><div class="tbl-name">${u.name||'Unknown'}</div></td>
+            <td><div class="tbl-id">${u.id}</div></td>
+            <td><div class="tbl-nvt">${format(u.balance||0)}</div></td>
+            <td><div class="tbl-crc">${format(u.crcBalance||0)}</div></td>
+            <td><button class="tbl-edit-btn" onclick="openInlineEdit('${u.id}',${u.balance||0},${u.crcBalance||0})">EDIT</button></td>
+        </tr>
+    `).join('');
+}
 
-    function setAnnouncement() {
-        const msg = document.getElementById('a-announcement').value.trim();
-        db.ref('settings/announcement').set(msg).then(() => showAdminStatus('✅ Broadcasted!')).catch(() => showAdminStatus('❌ Failed',false));
-    }
+/**
+ * Open an inline edit row below the selected user row
+ */
+function openInlineEdit(userId, nvt, crc) {
+    // Remove any existing edit row
+    const existingEdit = document.getElementById('edit-row-'+userId);
+    if (existingEdit) { existingEdit.remove(); return; } // Toggle off
+    // Remove other open edit rows
+    document.querySelectorAll('[id^="edit-row-"]').forEach(r => r.remove());
 
-    function clearAnnouncement() {
-        db.ref('settings/announcement').set('').then(() => { document.getElementById('a-announcement').value=''; showAdminStatus('✅ Cleared!'); });
-    }
+    const row = document.getElementById('urow-'+userId);
+    if (!row) return;
 
-    function toggleMaintenance() {
-        const isOn = document.getElementById('a-maintenance-toggle').checked;
-        db.ref('settings/maintenance').set(isOn).then(() => showAdminStatus(isOn?'🔧 Maintenance ON':'✅ Maintenance OFF'));
-    }
+    const editRow = document.createElement('tr');
+    editRow.id = 'edit-row-'+userId;
+    editRow.className = 'tbl-edit-row';
+    editRow.innerHTML = `
+        <td colspan="5" style="padding:10px 6px;">
+            <div style="display:flex; gap:8px; align-items:center; flex-wrap:wrap;">
+                <input type="number" class="tbl-inline-input" id="ei-nvt-${userId}" value="${nvt}" placeholder="NVT" />
+                <input type="number" class="tbl-inline-input" id="ei-crc-${userId}" value="${crc}" placeholder="CRC" style="border-color:rgba(255,215,0,0.3);color:var(--crc);" />
+                <button class="tbl-save-btn" onclick="saveInlineEdit('${userId}')">SAVE</button>
+                <button style="background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);color:var(--gray);padding:5px 8px;border-radius:6px;font-size:9px;cursor:pointer;font-family:'Orbitron',monospace;" onclick="this.closest('tr').remove()">✕</button>
+            </div>
+        </td>
+    `;
+    row.parentNode.insertBefore(editRow, row.nextSibling);
+}
 
-    function toggleAirdropTab() {
-        const isOn = document.getElementById('a-airdrop-toggle').checked;
-        db.ref('settings/showAirdrop').set(isOn).then(() => showAdminStatus(isOn?'✅ Airdrop Tab Shown':'🔒 Airdrop Hidden'));
-    }
+/**
+ * Save inline edit — updates NVT and CRC for the selected user
+ */
+function saveInlineEdit(userId) {
+    const newNVT = parseInt(document.getElementById('ei-nvt-'+userId)?.value || '0');
+    const newCRC = parseInt(document.getElementById('ei-crc-'+userId)?.value || '0');
+    if (isNaN(newNVT)||newNVT<0 || isNaN(newCRC)||newCRC<0) { showAdminStatus('❌ Invalid values',false); return; }
+    db.ref('users/'+userId).update({ balance: newNVT, crcBalance: newCRC }).then(() => {
+        // Update cache
+        const u = allUsersCache.find(u => u.id === userId);
+        if (u) { u.balance = newNVT; u.crcBalance = newCRC; }
+        // Update the displayed row
+        const row = document.getElementById('urow-'+userId);
+        if (row) {
+            row.querySelector('.tbl-nvt').innerText = format(newNVT);
+            row.querySelector('.tbl-crc').innerText = format(newCRC);
+        }
+        document.getElementById('edit-row-'+userId)?.remove();
+        showAdminStatus(`✅ Updated user ${userId}`);
+    }).catch(() => showAdminStatus('❌ Update failed', false));
+}
 
-    function saveMiningRate() {
-        const rate = parseFloat(document.getElementById('a-mining-rate').value);
-        if (isNaN(rate) || rate <= 0) { showAdminStatus('❌ Invalid rate',false); return; }
-        db.ref('settings/miningRate').set(rate).then(() => { document.getElementById('a-stat-rate').innerText = rate+'x'; showAdminStatus('✅ Rate: '+rate+'x'); });
-    }
+// ===== Legacy User Management (ID Search) =====
+let adminCurrentUserId = null;
 
-    function saveEnergyCap() {
-        const cap = parseInt(document.getElementById('a-energy-cap').value);
-        if (isNaN(cap) || cap < 500) { showAdminStatus('❌ Min 500',false); return; }
-        db.ref('settings/energyCap').set(cap).then(() => showAdminStatus('✅ Energy Cap: '+cap));
-    }
+function searchUser() {
+    const searchId = document.getElementById('a-user-search').value.trim();
+    if (!searchId) { showAdminStatus('❌ Enter User ID',false); return; }
+    db.ref('users/'+searchId).once('value', snap => {
+        if (!snap.exists()) { showAdminStatus('❌ Not found',false); document.getElementById('admin-user-result').style.display='none'; return; }
+        const d = snap.val();
+        adminCurrentUserId = searchId;
+        document.getElementById('a-u-name').innerText  = d.name||'—';
+        document.getElementById('a-u-id').innerText    = searchId;
+        document.getElementById('a-u-bal').innerText   = format(d.balance||0)+' NVT';
+        document.getElementById('a-u-crc').innerText   = format(d.crcBalance||0)+' CRC';
+        document.getElementById('a-u-lvl').innerText   = 'Level '+(d.level||1);
+        document.getElementById('a-u-status').innerText= d.blocked ? '🔴 BANNED' : '🟢 ACTIVE';
+        document.getElementById('a-u-new-bal').value='';
+        document.getElementById('a-u-new-crc').value='';
+        document.getElementById('admin-user-result').style.display='block';
+    });
+}
 
-    function saveExchangeRate() {
-        const rate = parseFloat(document.getElementById('a-exchange-rate').value);
-        if (isNaN(rate) || rate < 1) { showAdminStatus('❌ Invalid rate',false); return; }
-        db.ref('settings/exchangeRate').set(rate).then(() => { exchangeRate=rate; updateConversionDisplay(); showAdminStatus('✅ Rate: '+format(rate)+' NVT=1 CRC'); });
-    }
+function setUserBalance() {
+    if (!adminCurrentUserId) return;
+    const newBal = parseInt(document.getElementById('a-u-new-bal').value);
+    if (isNaN(newBal)||newBal<0) { showAdminStatus('❌ Invalid NVT',false); return; }
+    db.ref('users/'+adminCurrentUserId).update({balance:newBal}).then(()=>{ document.getElementById('a-u-bal').innerText=format(newBal)+' NVT'; showAdminStatus('✅ NVT set: '+format(newBal)); });
+}
+function setUserCRC() {
+    if (!adminCurrentUserId) return;
+    const newCRC = parseInt(document.getElementById('a-u-new-crc').value);
+    if (isNaN(newCRC)||newCRC<0) { showAdminStatus('❌ Invalid CRC',false); return; }
+    db.ref('users/'+adminCurrentUserId).update({crcBalance:newCRC}).then(()=>{ document.getElementById('a-u-crc').innerText=format(newCRC)+' CRC'; showAdminStatus('✅ CRC set: '+format(newCRC)); });
+}
+function blockUser() {
+    if (!adminCurrentUserId) return;
+    db.ref('users/'+adminCurrentUserId).update({blocked:true}).then(()=>{ document.getElementById('a-u-status').innerText='🔴 BANNED'; showAdminStatus('⛔ User banned!'); });
+}
+function unblockUser() {
+    if (!adminCurrentUserId) return;
+    db.ref('users/'+adminCurrentUserId).update({blocked:false}).then(()=>{ document.getElementById('a-u-status').innerText='🟢 ACTIVE'; showAdminStatus('✅ User unbanned!'); });
+}
 
-    function switchAdminTaskTab(cat) {
-        adminCurrentTaskCategory = cat;
-        document.querySelectorAll('.admin-tab').forEach(t=>t.classList.remove('active-tab'));
-        document.getElementById('atab-'+cat).classList.add('active-tab');
-        document.getElementById('a-task-category-label').innerText = cat.toUpperCase()+' TASKS';
-        loadAdminTaskList();
-    }
-
-    function loadAdminTaskList() {
-        const listDiv = document.getElementById('a-task-list');
-        db.ref('tasks/'+adminCurrentTaskCategory).once('value', snap => {
-            let tasks = snap.exists() ? (Array.isArray(snap.val()) ? snap.val() : Object.values(snap.val())) : (DEFAULT_TASK_CATEGORIES[adminCurrentTaskCategory] || []);
-            if (!tasks.length) { listDiv.innerHTML = '<p style="color:var(--gray);font-size:12px;text-align:center;padding:10px 0;">No tasks.</p>'; return; }
-            listDiv.innerHTML = tasks.map((t,i) => t ? `<div class="admin-task-item"><div style="flex:1;min-width:0;"><div class="admin-task-name">${t.name}</div><div style="font-size:10px;color:var(--gray);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${t.link}</div></div><div class="admin-task-reward">+${format(t.reward)}</div><button class="admin-btn admin-btn-red" style="padding:6px 10px;font-size:9px;margin-left:6px;" onclick="removeTask(${i})">✕</button></div>` : '').join('');
-        });
-    }
-
-    function addTask() {
-        const name=document.getElementById('a-task-name').value.trim();
-        const link=document.getElementById('a-task-link').value.trim();
-        const reward=parseInt(document.getElementById('a-task-reward').value);
-        if (!name||!link||isNaN(reward)||reward<1) { showAdminStatus('❌ Fill all fields',false); return; }
-        const newTask = {name, link, reward, id: adminCurrentTaskCategory+'_'+Date.now()};
-        db.ref('tasks/'+adminCurrentTaskCategory).once('value', snap => {
-            let tasks = snap.exists() ? (Array.isArray(snap.val()) ? snap.val() : Object.values(snap.val())) : [...(DEFAULT_TASK_CATEGORIES[adminCurrentTaskCategory]||[])];
-            tasks.push(newTask);
-            db.ref('tasks/'+adminCurrentTaskCategory).set(tasks).then(() => {
-                document.getElementById('a-task-name').value='';
-                document.getElementById('a-task-link').value='';
-                document.getElementById('a-task-reward').value='';
-                showAdminStatus('✅ Task added!'); loadAdminTaskList();
-            });
-        });
-    }
-
-    function removeTask(idx) {
-        db.ref('tasks/'+adminCurrentTaskCategory).once('value', snap => {
-            let tasks = snap.exists() ? (Array.isArray(snap.val()) ? snap.val() : Object.values(snap.val())) : [...(DEFAULT_TASK_CATEGORIES[adminCurrentTaskCategory]||[])];
-            tasks.splice(idx, 1);
-            db.ref('tasks/'+adminCurrentTaskCategory).set(tasks).then(() => { showAdminStatus('✅ Removed!'); loadAdminTaskList(); });
-        });
-    }
-
-    let adminCurrentUserId = null;
-
-    function searchUser() {
-        const searchId = document.getElementById('a-user-search').value.trim();
-        if (!searchId) { showAdminStatus('❌ Enter User ID',false); return; }
-        db.ref('users/'+searchId).once('value', snap => {
-            if (!snap.exists()) { showAdminStatus('❌ Not found',false); document.getElementById('admin-user-result').style.display='none'; return; }
-            const d = snap.val();
-            adminCurrentUserId = searchId;
-            document.getElementById('a-u-name').innerText = d.name||'—';
-            document.getElementById('a-u-id').innerText = searchId;
-            document.getElementById('a-u-bal').innerText = format(d.balance||0)+' NVT';
-            document.getElementById('a-u-crc').innerText = format(d.crcBalance||0)+' CRC';
-            document.getElementById('a-u-lvl').innerText = 'Level '+(d.level||1);
-            document.getElementById('a-u-status').innerText = d.blocked ? '🔴 BANNED' : '🟢 ACTIVE';
-            document.getElementById('a-u-new-bal').value='';
-            document.getElementById('a-u-new-crc').value='';
-            document.getElementById('admin-user-result').style.display='block';
-        });
-    }
-
-    function setUserBalance() {
-        if (!adminCurrentUserId) return;
-        const newBal = parseInt(document.getElementById('a-u-new-bal').value);
-        if (isNaN(newBal)||newBal<0) { showAdminStatus('❌ Invalid NVT',false); return; }
-        db.ref('users/'+adminCurrentUserId).update({balance:newBal}).then(() => { document.getElementById('a-u-bal').innerText=format(newBal)+' NVT'; showAdminStatus('✅ NVT set: '+format(newBal)); });
-    }
-
-    function setUserCRC() {
-        if (!adminCurrentUserId) return;
-        const newCRC = parseInt(document.getElementById('a-u-new-crc').value);
-        if (isNaN(newCRC)||newCRC<0) { showAdminStatus('❌ Invalid CRC',false); return; }
-        db.ref('users/'+adminCurrentUserId).update({crcBalance:newCRC}).then(() => { document.getElementById('a-u-crc').innerText=format(newCRC)+' CRC'; showAdminStatus('✅ CRC set: '+format(newCRC)); });
-    }
-
-    function blockUser() {
-        if (!adminCurrentUserId) return;
-        db.ref('users/'+adminCurrentUserId).update({blocked:true}).then(() => { document.getElementById('a-u-status').innerText='🔴 BANNED'; showAdminStatus('⛔ User banned!'); });
-    }
-
-    function unblockUser() {
-        if (!adminCurrentUserId) return;
-        db.ref('users/'+adminCurrentUserId).update({blocked:false}).then(() => { document.getElementById('a-u-status').innerText='🟢 ACTIVE'; showAdminStatus('✅ User unbanned!'); });
-    }
-
-    // ============================================================
-    // INIT
-    // ============================================================
-    loadSettings();
-    </script>
+// ============================================================
+// INIT
+// ============================================================
+loadSettings();
+</script>
 </body>
 </html>
