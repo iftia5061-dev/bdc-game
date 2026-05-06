@@ -37,7 +37,7 @@
             --surface: rgba(14,20,38,0.85);
             --border: rgba(0,212,255,0.15);
             --nav-h: 80px;
-            --bg-image: url('https://raw.githubusercontent.com/iftia5061-dev/bdc-game/main/images/bgimg.jpg');
+            --bg-image: url('backgroungimg.jpg');
         }
         [data-theme="light"] {
             --dark: #f0f4ff;
@@ -160,15 +160,25 @@
         }
 
         /* ===== PREMIUM SVG ICON SYSTEM ===== */
-        /* Floating left buttons */
         .floating-actions-left {
-            position:absolute; left:12px; top:50%; transform:translateY(-50%);
-            display:flex; flex-direction:column; gap:10px; z-index:5;
+            position: absolute;
+            left: 12px;
+            top: 35%;
+            transform: translateY(-50%);
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            z-index: 5;
         }
-        /* Floating right buttons — bot+rank stacked */
         .floating-actions-right {
-            position:absolute; right:12px; top:50%; transform:translateY(-50%);
-            display:flex; flex-direction:column; gap:10px; z-index:5;
+            position: absolute;
+            right: 12px;
+            top: 35%;
+            transform: translateY(-50%);
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            z-index: 5;
         }
         .float-btn {
             width:56px; height:56px; border-radius:16px;
@@ -192,8 +202,7 @@
         .float-btn.estates-btn { border-color:rgba(160,110,255,0.45); background:linear-gradient(135deg, rgba(160,110,255,0.14), rgba(14,20,38,0.85)); }
         .float-btn.admin-float { border-color:rgba(255,77,109,0.5); background:linear-gradient(135deg, rgba(255,77,109,0.15), rgba(14,20,38,0.8)); display:none; }
 
-        /* ===== BOT UI — above rank button on right side ===== */
-        /* Bot is now rendered as a compact widget inline in floating-actions-right */
+        /* ===== BOT WIDGET ===== */
         .bot-widget {
             width:56px; background:linear-gradient(135deg, rgba(0,212,255,0.12), rgba(14,20,38,0.85));
             border-radius:16px; border:1px solid rgba(0,212,255,0.35);
@@ -232,29 +241,51 @@
         }
         @keyframes ringRotate { from{transform:rotate(0deg)} to{transform:rotate(360deg)} }
         .coin-btn {
-            width:190px; height:190px; border-radius:50%;
-            display:flex; flex-direction:column; justify-content:center; align-items:center;
-            cursor:pointer; border:none; position:relative;
-            transition:transform 0.12s cubic-bezier(0.34,1.56,0.64,1), filter 0.4s ease, box-shadow 0.2s;
-            background: radial-gradient(circle at 35% 35%, rgba(255,224,102,0.9) 0%, rgba(243,186,47,0.8) 30%, rgba(160,110,0,0.9) 70%, rgba(100,70,0,1) 100%);
-            box-shadow: 0 0 0 3px rgba(243,186,47,0.3), 0 0 40px rgba(243,186,47,0.25), 0 0 80px rgba(243,186,47,0.1), inset 0 2px 4px rgba(255,255,255,0.3), inset 0 -2px 6px rgba(0,0,0,0.4);
-            overflow:hidden;
+            background: url('Avator.png') no-repeat center center !important;
+            background-size: contain !important;
+            position: relative;
+            width: 300px;
+            height: 300px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            filter: drop-shadow(0 0 20px rgba(0, 212, 255, 0.6));
+            transition: transform 0.15s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            z-index: 5;
+            border: none !important;
+            box-shadow: none !important;
         }
-        .coin-btn .avatar-img { font-size:72px; line-height:1; pointer-events:none; transition:transform 0.12s; }
-        /* Custom avatar image inside tap button */
+        .coin-btn .avatar-img {
+            width: 80%;
+            height: auto;
+            z-index: 2;
+            filter: drop-shadow(0 0 25px rgba(0, 212, 255, 0.8));
+        }
         .coin-btn .avatar-custom {
-            width:140px; height:140px; border-radius:50%;
-            object-fit:cover; pointer-events:none;
-            border:3px solid rgba(243,186,47,0.5);
-            box-shadow:0 0 20px rgba(243,186,47,0.3);
+            width: 180px;
+            height: 50px;
+            background: radial-gradient(ellipse at center, rgba(0, 212, 255, 0.6) 0%, transparent 80%);
+            border-radius: 50%;
+            position: absolute;
+            bottom: 10px;
+            z-index: 1;
+            border-bottom: 3px solid var(--neon);
+            filter: blur(2px);
         }
         .coin-btn::before {
             content:''; position:absolute; top:15%; left:15%; width:30%; height:25%;
             background:radial-gradient(ellipse, rgba(255,255,255,0.35) 0%, transparent 70%);
             border-radius:50%; pointer-events:none;
         }
-        .coin-btn.tapping { transform:scale(1.1); box-shadow:0 0 0 4px rgba(243,186,47,0.6), 0 0 70px rgba(243,186,47,0.5), inset 0 2px 4px rgba(255,255,255,0.2), inset 0 -2px 6px rgba(0,0,0,0.5); }
-        .coin-btn.no-energy { transform:scale(0.82) !important; filter:grayscale(1) brightness(0.55) !important; cursor:not-allowed; box-shadow:0 0 0 2px rgba(255,255,255,0.1) !important; animation:deadShake 0.4s ease; }
+        .coin-btn.tapping {
+            transform: scale(1.1);
+            filter: drop-shadow(0 0 40px rgba(243, 186, 47, 0.9));
+        }
+        .coin-btn.no-energy {
+            transform: scale(0.82) !important;
+            filter: grayscale(1) brightness(0.4) !important;
+            cursor: not-allowed;
+        }
         @keyframes deadShake { 0%{transform:scale(0.82) rotate(0deg)} 25%{transform:scale(0.82) rotate(-3deg)} 75%{transform:scale(0.82) rotate(3deg)} 100%{transform:scale(0.82) rotate(0deg)} }
 
         /* ===== TAP ANIMATION ===== */
@@ -265,16 +296,29 @@
         }
         @keyframes fadeUp { 0%{opacity:1;transform:translateY(0) scale(1)} 50%{opacity:1;transform:translateY(-60px) scale(1.1)} 100%{opacity:0;transform:translateY(-120px) scale(0.8)} }
 
-        /* ===== ENERGY BAR — lowered, bolder/premium ===== */
-        .stat-box { width:82%; margin-top:4px; }
+        /* ===== ENERGY BAR ===== */
+        .stat-box {
+            width: 82%;
+            position: absolute;
+            bottom: 50px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            flex-direction: column;
+            z-index: 10;
+        }
         .energy-header {
-            display:flex; justify-content:space-between; align-items:center;
-            font-size:13px; margin-bottom:9px; font-weight:700; letter-spacing:0.6px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 13px;
+            margin-bottom: 8px;
+            font-weight: 700;
+            letter-spacing: 0.6px;
         }
         .energy-label { color:var(--neon); font-weight:800; letter-spacing:1px; }
         .energy-label span { color:white; font-weight:800; }
         #level-text { font-family:'Orbitron',monospace; font-size:11px; color:var(--gold); letter-spacing:1px; font-weight:700; }
-        /* Thicker, more premium bar */
         .bar-bg {
             width:100%; height:11px; background:rgba(255,255,255,0.05); border-radius:12px;
             overflow:visible; border:1px solid rgba(0,212,255,0.15); position:relative;
@@ -405,7 +449,7 @@
         .daily-active { border:1.5px solid var(--gold) !important; animation:pulse 1.5s infinite; cursor:pointer; background:linear-gradient(135deg, rgba(243,186,47,0.15), rgba(243,186,47,0.05)) !important; color:var(--gold) !important; }
         @keyframes pulse { 0%{transform:scale(1); box-shadow:0 0 0 0 rgba(243,186,47,0.3)} 50%{transform:scale(1.04); box-shadow:0 0 12px rgba(243,186,47,0.2)} 100%{transform:scale(1); box-shadow:0 0 0 0 rgba(243,186,47,0)} }
 
-        /* ===== TASK VERIFICATION OVERLAY — 60s + 3s loading ===== */
+        /* ===== TASK VERIFICATION OVERLAY ===== */
         #task-verify-overlay {
             display:none; position:fixed; inset:0;
             background:rgba(5,8,16,0.92); z-index:5000;
@@ -423,7 +467,6 @@
         .verify-phase-label { font-family:'Orbitron',monospace; font-size:9px; color:var(--gray); letter-spacing:2px; margin-bottom:12px; }
         .verify-progress { width:100%; height:5px; background:rgba(255,255,255,0.06); border-radius:4px; overflow:hidden; margin-bottom:20px; }
         .verify-progress-fill { height:100%; background:linear-gradient(90deg, var(--neon), var(--gold)); border-radius:4px; transition:width 1s linear; }
-        /* Loading spinner for 3s phase */
         .verify-spinner { width:48px; height:48px; border:4px solid rgba(0,212,255,0.15); border-top:4px solid var(--neon); border-radius:50%; animation:spin 0.7s linear infinite; margin:0 auto 16px; display:none; }
         @keyframes spin { to{transform:rotate(360deg)} }
         #verify-claim-btn { display:none; width:100%; }
@@ -605,12 +648,7 @@
         /* ===== ADMIN USER TABLE ===== */
         .admin-users-table-wrap { overflow-x:auto; margin-top:12px; }
         .admin-users-table { width:100%; border-collapse:collapse; font-size:11px; }
-        .admin-users-table th {
-            font-family:'Orbitron',monospace; font-size:8px; color:var(--neon);
-            letter-spacing:1px; text-transform:uppercase; padding:8px 6px;
-            border-bottom:1px solid rgba(0,212,255,0.2); text-align:left;
-            white-space:nowrap;
-        }
+        .admin-users-table th { font-family:'Orbitron',monospace; font-size:8px; color:var(--neon); letter-spacing:1px; text-transform:uppercase; padding:8px 6px; border-bottom:1px solid rgba(0,212,255,0.2); text-align:left; white-space:nowrap; }
         .admin-users-table td { padding:8px 6px; border-bottom:1px solid rgba(255,255,255,0.04); vertical-align:middle; }
         .admin-users-table tr:hover td { background:rgba(0,212,255,0.04); }
         .tbl-name { font-weight:600; color:var(--text); max-width:90px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
@@ -619,7 +657,6 @@
         .tbl-crc { font-family:'Orbitron',monospace; font-size:10px; color:var(--crc); }
         .tbl-edit-btn { background:rgba(0,212,255,0.15); border:1px solid rgba(0,212,255,0.3); color:var(--neon); padding:4px 8px; border-radius:6px; font-family:'Orbitron',monospace; font-size:8px; cursor:pointer; white-space:nowrap; transition:all 0.2s; letter-spacing:0.5px; }
         .tbl-edit-btn:active { background:rgba(0,212,255,0.3); }
-        /* Inline edit row */
         .tbl-edit-row td { background:rgba(0,212,255,0.06); }
         .tbl-inline-input { background:rgba(0,212,255,0.06); border:1px solid rgba(0,212,255,0.25); border-radius:6px; padding:5px 7px; color:var(--text); font-family:'Orbitron',monospace; font-size:10px; width:70px; outline:none; }
         .tbl-save-btn { background:linear-gradient(135deg, var(--green), #008040); border:none; color:#000; padding:5px 8px; border-radius:6px; font-family:'Orbitron',monospace; font-size:8px; cursor:pointer; font-weight:700; }
@@ -672,7 +709,6 @@
 
     <!-- ===== FLOATING LEFT: Boost, Convert, Wallet, Estates ===== -->
     <div class="floating-actions-left">
-        <!-- BOOST — premium lightning bolt SVG -->
         <div class="float-btn boost" onclick="showPage('boost-page')">
             <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M13 2L3 14H12L11 22L21 10H12L13 2Z" fill="rgba(243,186,47,0.9)" stroke="rgba(243,186,47,0.6)" stroke-width="1.5" stroke-linejoin="round"/>
@@ -686,7 +722,6 @@
             </svg>
             <div class="fb-label">Boost</div>
         </div>
-        <!-- CONVERT — swap arrows SVG -->
         <div class="float-btn convert" onclick="showPage('convert-page')">
             <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <circle cx="12" cy="12" r="9" stroke="rgba(255,215,0,0.5)" stroke-width="1.5"/>
@@ -696,7 +731,6 @@
             </svg>
             <div class="fb-label">Convert</div>
         </div>
-        <!-- WALLET — premium wallet SVG -->
         <div class="float-btn wallet" onclick="showPage('wallet-page')">
             <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <rect x="2" y="7" width="20" height="14" rx="3" stroke="#00d4ff" stroke-width="1.5" fill="rgba(0,212,255,0.1)"/>
@@ -706,7 +740,6 @@
             </svg>
             <div class="fb-label">Wallet</div>
         </div>
-        <!-- ESTATES — building/castle SVG -->
         <div class="float-btn estates-btn" onclick="showPage('estates-page')">
             <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <rect x="3" y="12" width="18" height="10" rx="1" fill="rgba(160,110,255,0.2)" stroke="#a06eff" stroke-width="1.5"/>
@@ -720,15 +753,13 @@
         </div>
     </div>
 
-    <!-- ===== FLOATING RIGHT: Bot widget (above Rank), Rank, Admin ===== -->
+    <!-- ===== FLOATING RIGHT: Bot widget, Rank, Admin ===== -->
     <div class="floating-actions-right">
-        <!-- BOT WIDGET — positioned above Rank -->
         <div class="bot-widget" id="bot-ui-container">
             <div class="bot-widget-icon">🤖</div>
             <div id="bot-stored-val">0</div>
             <button id="bot-claim-btn" class="bot-claim-mini" onclick="claimBot()" style="display:none;">CLAIM</button>
         </div>
-        <!-- RANK — trophy SVG -->
         <div class="float-btn rank" onclick="showPage('rank-page')">
             <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M8 3H5C4.4 3 4 3.4 4 4V8C4 10.2 5.8 12 8 12" stroke="#00e676" stroke-width="1.5" stroke-linecap="round"/>
@@ -739,7 +770,6 @@
             </svg>
             <div class="fb-label">Rank</div>
         </div>
-        <!-- ADMIN float button — shown only for admin UID -->
         <div class="float-btn admin-float" id="admin-float-btn" onclick="openAdminModal()">
             <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M12 3L4 7V12C4 16 7.6 19.7 12 21C16.4 19.7 20 16 20 12V7L12 3Z" fill="rgba(255,77,109,0.15)" stroke="#ff4d6d" stroke-width="1.5" stroke-linejoin="round"/>
@@ -754,12 +784,13 @@
         <div class="coin-btn-ring2"></div>
         <div class="coin-btn-ring"></div>
         <div class="coin-btn" id="tap-btn">
-            <!-- Default avatar; replaced if tapAvatarUrl is set or user provides URL -->
-            <img src="https://raw.githubusercontent.com/iftia5061-dev/bdc-game/main/images/avator.png" id="avatar-img">
+            <img src="Avator.png" class="avatar-img" id="tap-btn-avatar" alt="Avatar">
+            <div class="avatar-custom"></div>
+            <span class="avatar-img-placeholder"></span>
         </div>
     </div>
 
-    <!-- ===== ENERGY BAR — premium, lowered, bolder ===== -->
+    <!-- ===== ENERGY BAR ===== -->
     <div class="stat-box">
         <div class="energy-header">
             <span class="energy-label">⚡ <span id="energy-val">500</span> / <span id="max-energy-text">500</span></span>
@@ -830,7 +861,7 @@
     <div id="task-list-dynamic"></div>
 </div>
 
-<!-- ===== TASK VERIFY OVERLAY — 60s wait + 3s loading spinner ===== -->
+<!-- ===== TASK VERIFY OVERLAY ===== -->
 <div id="task-verify-overlay">
     <div class="verify-box">
         <div class="verify-icon" id="verify-icon-emoji">🔍</div>
@@ -839,7 +870,6 @@
         <div class="verify-timer" id="verify-countdown">60</div>
         <div class="verify-phase-label" id="verify-phase-label">WAITING · COMPLETE TASK</div>
         <div class="verify-progress"><div class="verify-progress-fill" id="verify-progress-fill" style="width:100%"></div></div>
-        <!-- 3-second loading spinner shown after 60s ===== -->
         <div class="verify-spinner" id="verify-spinner"></div>
         <button class="btn-action admin-btn-full" id="verify-claim-btn" onclick="finishTaskClaim()" style="display:none;">✅ CLAIM REWARD</button>
         <button style="width:100%; margin-top:8px; padding:10px; background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.08); border-radius:10px; color:var(--gray); font-family:'Orbitron',monospace; font-size:10px; cursor:pointer;" onclick="cancelTaskVerify()">CANCEL</button>
@@ -934,9 +964,7 @@
         <h3>PROPERTY EMPIRE</h3>
         <p>Invest NVT to upgrade your properties. Each upgrade doubles the cost & duration, rewarding CRC + auto-mining income on completion.</p>
     </div>
-    <div id="estates-list">
-        <!-- Rendered by JS -->
-    </div>
+    <div id="estates-list"></div>
 </div>
 
 <!-- SETTINGS PAGE -->
@@ -981,20 +1009,6 @@
         <div class="settings-row">
             <div><div class="settings-label">Sound Effects</div><div class="settings-sub">Tap and reward sounds</div></div>
             <label class="toggle-switch"><input type="checkbox" id="sound-toggle" onchange="saveSettings()"><span class="toggle-slider"></span></label>
-        </div>
-    </div>
-
-    <!-- ===== MINING IMAGE (TAP AVATAR) — replaces old "Custom Avatar" ===== -->
-    <div class="settings-section">
-        <div class="settings-title">⛏️ Mining Image</div>
-        <div class="settings-row" style="flex-direction:column; align-items:flex-start; gap:8px;">
-            <div class="settings-label">Tap Button Image URL</div>
-            <div style="font-size:11px; color:var(--gray);">Paste a direct image link to customize the mining button appearance</div>
-            <div style="display:flex; gap:8px; width:100%;">
-                <input type="url" id="mining-image-url" placeholder="https://..." style="flex:1; background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.1); border-radius:8px; padding:8px 12px; color:var(--text); font-size:12px; outline:none;" />
-                <button class="btn-action" onclick="applyMiningImage()" style="white-space:nowrap;">Apply</button>
-            </div>
-            <button style="background:rgba(255,77,109,0.1); border:1px solid rgba(255,77,109,0.25); color:var(--red); padding:6px 12px; border-radius:8px; font-size:11px; cursor:pointer; font-family:'Orbitron',monospace;" onclick="resetMiningImage()">RESET DEFAULT</button>
         </div>
     </div>
 
@@ -1100,7 +1114,7 @@
             <div id="a-task-list"></div>
         </div>
 
-        <!-- ===== USER DATA TABLE — new detailed view with edit ===== -->
+        <!-- User Data Table -->
         <div class="admin-section">
             <div class="admin-section-title"><span>👥</span> User Data Table</div>
             <div style="display:flex; gap:8px; margin-bottom:12px; align-items:center;">
@@ -1126,7 +1140,7 @@
             </div>
         </div>
 
-        <!-- Legacy User Management (kept for compatibility) -->
+        <!-- Legacy User Management -->
         <div class="admin-section">
             <div class="admin-section-title"><span>👤</span> User Management (ID Search)</div>
             <div class="admin-input-row" style="margin-bottom:10px;">
@@ -1212,9 +1226,9 @@ const ADMIN_SECRET_KEY = "242663";
 // DYNAMIC ASSET VARIABLES
 // ============================================================
 const ASSET_CONFIG = {
-    tapAvatarUrl: "images/avator.png",
-    profileAvatarUrl: "",
-    backgroundImageUrl: "https://raw.githubusercontent.com/iftia5061-dev/bdc-game/main/images/bgimg.jpg",
+    tapAvatarUrl: "",
+    profileAvatarUrl: "boy.png",
+    backgroundImageUrl: "",
 };
 
 // ============================================================
@@ -1228,7 +1242,6 @@ const DAILY_REWARDS = Array.from({length:30}, (_, i) => Math.floor(200 + (i*(298
 
 // ============================================================
 // ESTATES CONFIG — 5 properties, max level 10
-// Level 1: 5000 NVT / 5 min; each level doubles cost & time
 // ============================================================
 const ESTATE_DEFS = [
     { id:'house',   name:'House',   icon:'🏠', desc:['Cozy starter home','Modern duplex','Villa','Luxury manor','Grand estate'] },
@@ -1237,11 +1250,10 @@ const ESTATE_DEFS = [
     { id:'stadium', name:'Stadium', icon:'🏟️', desc:['Mini arena','Local stadium','City stadium','Mega stadium','World arena'] },
     { id:'bar',     name:'Bar',     icon:'🍺', desc:['Street bar','Cocktail bar','Sky bar','Rooftop lounge','Crown bar'] },
 ];
-const ESTATE_BASE_COST = 5000;      // NVT
-const ESTATE_BASE_TIME = 5 * 60;   // seconds (5 minutes)
+const ESTATE_BASE_COST = 5000;
+const ESTATE_BASE_TIME = 5 * 60;
 const ESTATE_MAX_LEVEL = 10;
 
-// Estate state: { [id]: { level, startedAt, claimed } }
 let estateData = {};
 
 // ============================================================
@@ -1249,13 +1261,12 @@ let estateData = {};
 // ============================================================
 let appSettings = {
     darkMode: true, haptic: true, sound: false, lang: 'en',
-    miningImageUrl: ''  // renamed from customAvatarUrl
+    miningImageUrl: ''
 };
 
 function loadSettings() {
     const saved = localStorage.getItem('novatap_settings_v3');
     if (saved) appSettings = {...appSettings, ...JSON.parse(saved)};
-    // Migrate old setting key
     const old = localStorage.getItem('novatap_settings');
     if (old && !saved) { try { const o=JSON.parse(old); appSettings.miningImageUrl = o.customAvatarUrl||''; } catch(e){} }
     applySettings();
@@ -1279,7 +1290,6 @@ function applySettings() {
     if (ASSET_CONFIG.backgroundImageUrl) {
         document.documentElement.style.setProperty('--bg-image', `url('${ASSET_CONFIG.backgroundImageUrl}')`);
     }
-    // Pre-fill the mining image input
     const miningInput = document.getElementById('mining-image-url');
     if (miningInput) miningInput.value = appSettings.miningImageUrl || '';
 }
@@ -1295,7 +1305,6 @@ function changeLang(val) {
     localStorage.setItem('novatap_settings_v3', JSON.stringify(appSettings));
 }
 
-// ===== MINING IMAGE (TAP BUTTON) =====
 function applyMiningImage() {
     const url = document.getElementById('mining-image-url').value.trim();
     if (!url) { alert('Please enter a valid image URL.'); return; }
@@ -1308,7 +1317,6 @@ function resetMiningImage() {
     appSettings.miningImageUrl = '';
     localStorage.setItem('novatap_settings_v3', JSON.stringify(appSettings));
     document.getElementById('mining-image-url').value = '';
-    // Restore default emoji
     const btn = document.getElementById('tap-btn');
     btn.innerHTML = '<span class="avatar-img" id="tap-btn-avatar">⛏️</span>';
 }
@@ -1354,7 +1362,6 @@ db.ref('settings').on('value', snap => {
     if (s.exchangeRate) { exchangeRate = parseFloat(s.exchangeRate) || 1000; updateConversionDisplay(); }
     const navAirdrop = document.getElementById('nav-airdrop');
     if (navAirdrop) navAirdrop.style.display = (s.showAirdrop === true) ? 'flex' : 'none';
-    // Sync admin panel
     const tog=document.getElementById('a-maintenance-toggle'); if(tog) tog.checked=(s.maintenance===true);
     const airdropTog=document.getElementById('a-airdrop-toggle'); if(airdropTog) airdropTog.checked=(s.showAirdrop===true);
     const mri=document.getElementById('a-mining-rate'); if(mri&&document.activeElement!==mri) mri.value=s.miningRate||1;
@@ -1394,7 +1401,6 @@ db.ref('users/'+uid).on('value', snap => {
             let cap = botLevel * 500;
             botStored = Math.min(cap, (d.botStored||0) + (secondsPassed * (botLevel * 0.2)));
         }
-        // Load estate data from Firebase
         if (d.estates) { estateData = d.estates; }
         updateUI(); checkTaskNotification();
     } else {
@@ -1461,6 +1467,9 @@ function loadReferrals() {
         const d = snap.val();
         document.getElementById('ref-total-count').innerText = d.referralCount || 0;
         document.getElementById('ref-total-earned').innerText = format(d.referralEarned || 0);
+        // Also update p-refs in profile with live referral count
+        const pRefs = document.getElementById('p-refs');
+        if (pRefs) pRefs.innerText = d.referralCount || 0;
         const referrals = d.referrals || null;
         if (!referrals || Object.keys(referrals).length === 0) {
             listDiv.innerHTML = '<div class="empty-state"><div class="empty-icon">🤝</div>No referrals yet.<br>Share your link to invite friends!</div>'; return;
@@ -1510,7 +1519,6 @@ function showVerifyOverlay() {
     const phaseLabel    = document.getElementById('verify-phase-label');
     const subText       = document.getElementById('verify-sub-text');
 
-    // Reset state
     claimBtn.style.display   = 'none';
     spinner.style.display    = 'none';
     countdown.style.display  = 'block';
@@ -1520,7 +1528,6 @@ function showVerifyOverlay() {
     subText.innerText        = 'Complete the task in the opened link. Claim unlocks after 60 seconds.';
     overlay.style.display    = 'flex';
 
-    // --- Phase 1: 60-second countdown ---
     let secs = 60;
     countdown.innerText = secs;
     setTimeout(() => {
@@ -1533,7 +1540,6 @@ function showVerifyOverlay() {
         countdown.innerText = secs;
         if (secs <= 0) {
             clearInterval(verifyTimer);
-            // --- Phase 2: 3-second loading spinner ---
             countdown.style.display = 'none';
             progressFill.style.width = '0%';
             progressFill.style.transition = 'none';
@@ -1541,7 +1547,6 @@ function showVerifyOverlay() {
             phaseLabel.innerText = 'VERIFYING · PLEASE WAIT';
             subText.innerText = 'Confirming your task completion...';
 
-            // Animate progress fill back to 100% over 3s
             setTimeout(() => {
                 progressFill.style.transition = 'width 3s linear';
                 progressFill.style.width = '100%';
@@ -1552,7 +1557,6 @@ function showVerifyOverlay() {
                 loadSecs--;
                 if (loadSecs <= 0) {
                     clearInterval(loadTimer);
-                    // --- Phase 3: Show claim button ---
                     spinner.style.display  = 'none';
                     phaseLabel.innerText   = 'VERIFIED ✓';
                     subText.innerText      = 'Your task has been verified! Claim your reward now.';
@@ -1614,7 +1618,8 @@ function doConversion() {
 }
 
 // ============================================================
-// UPDATE UI
+// UPDATE UI — FIXED: p-refs now populated with a placeholder
+// (loadReferrals() fills the real value when friends page opens)
 // ============================================================
 function updateUI() {
     const rank = balance < 10000 ? "Bronze" : balance < 50000 ? "Silver" : "Gold";
@@ -1636,14 +1641,15 @@ function updateUI() {
     document.getElementById('p-crc-bal').innerText= format(crcBalance);
     document.getElementById('p-lvl').innerText    = level;
     document.getElementById('p-energy').innerText = maxEnergy;
+    // p-refs shows '—' here; loadReferrals() populates the real count
+    const pRefs = document.getElementById('p-refs');
+    if (pRefs && pRefs.innerText === '0') pRefs.innerText = '—';
     document.getElementById('settings-uid').innerText = uid;
     document.getElementById('bot-info').innerText = `Level ${botLevel} (Cost: ${format((botLevel+1)*10000)})`;
     document.getElementById('tap-upgrade-info').innerText = `Level ${level} (Cost: ${format(level*2000)})`;
     document.getElementById('energy-lv-info').innerText   = `Max: ${maxEnergy} (Cost: ${format(maxEnergy*5)})`;
-    // Energy no-energy state
     const tapBtn = document.getElementById('tap-btn');
     if (energy <= 0) tapBtn.classList.add('no-energy'); else tapBtn.classList.remove('no-energy');
-    // Bot widget
     if (botLevel > 0) {
         document.getElementById('bot-ui-container').style.display = 'flex';
         document.getElementById('bot-stored-val').innerText = format(botStored);
@@ -1683,7 +1689,6 @@ function renderTasks(category) {
         tasks.forEach(t => {
             if (!t || !t.id) return;
             if (!localStorage.getItem('task_'+t.id)) {
-                // Use the 60s+3s verification system for social and video tasks
                 html += `<div class="card"><div><b>${t.name}</b><br><small>+${format(t.reward)} NVT</small></div><button class="btn-action" onclick="doTask('${t.link}',${t.reward},'${t.id}','${category}')">Start</button></div>`;
             }
         });
@@ -1702,33 +1707,37 @@ function claimDailyCheckin(day, reward) {
 }
 
 // ============================================================
-// TAP MECHANIC
+// TAP MECHANIC — FIXED
+// - Removed duplicate listener
+// - Fixed undefined variable `t` → now correctly uses `e`
 // ============================================================
 const tapBtn = document.getElementById('tap-btn');
 
-tapBtn.addEventListener('touchstart', e => {
-    e.preventDefault();
-    if (energy <= 0) { tapBtn.classList.add('no-energy'); return; }
+tapBtn.addEventListener('click', (e) => {
+    if (energy <= 0) {
+        tapBtn.classList.add('no-energy');
+        tapBtn.style.animation = 'deadShake 0.4s ease';
+        setTimeout(() => tapBtn.style.animation = '', 400);
+        return;
+    }
     let earn = Math.floor(level * 2 * globalMiningRate);
     if (energy >= earn) {
-        balance += earn; energy -= earn;
+        balance += earn;
+        energy -= earn;
         tapBtn.classList.add('tapping');
         setTimeout(() => tapBtn.classList.remove('tapping'), 160);
-        const t = e.touches[0];
+
+        // Floating +N animation — fixed: was referencing undefined `t`, now uses `e`
         const el = document.createElement('div');
-        el.className = 'tap-anim'; el.innerText = '+' + earn;
-        el.style.cssText = `left:${t.clientX}px; top:${t.clientY}px; transform:translateX(-50%);`;
+        el.className = 'tap-anim';
+        el.innerText = '+' + earn;
+        el.style.cssText = `left:${e.clientX}px; top:${e.clientY}px; transform:translateX(-50%); z-index:9999; pointer-events:none;`;
         document.body.appendChild(el);
         setTimeout(() => el.remove(), 800);
-        if (appSettings.haptic && tg.HapticFeedback) tg.HapticFeedback.impactOccurred('light');
-        updateUI(); save();
-    }
-}, {passive: false});
 
-tapBtn.addEventListener('click', () => {
-    if (energy <= 0) return;
-    let earn = Math.floor(level * 2 * globalMiningRate);
-    if (energy >= earn) { balance += earn; energy -= earn; tapBtn.classList.add('tapping'); setTimeout(()=>tapBtn.classList.remove('tapping'),160); updateUI(); save(); }
+        updateUI();
+        save();
+    }
 });
 
 // Auto-regen energy + bot income
@@ -1738,7 +1747,6 @@ setInterval(() => {
         let cap = botLevel * 500;
         if (botStored < cap) { botStored += (botLevel * 0.2); save(); updateUI(); }
     }
-    // Also tick estate timers
     tickEstates();
 }, 1000);
 
@@ -1820,40 +1828,22 @@ function loadLeaderboard() {
 // ===== ESTATES / GAME SYSTEM =====
 // ============================================================
 
-/**
- * Get estate cost for a given level (doubles each level)
- * Level 1 = 5000, Level 2 = 10000, Level 3 = 20000 ...
- */
 function estateCost(level) {
     return ESTATE_BASE_COST * Math.pow(2, level - 1);
 }
 
-/**
- * Get estate duration in seconds for a given level
- * Level 1 = 300s (5min), doubles each level
- */
 function estateDuration(level) {
     return ESTATE_BASE_TIME * Math.pow(2, level - 1);
 }
 
-/**
- * Get CRC reward for completing an estate upgrade
- * Scales with level
- */
 function estateCrcReward(level) {
     return Math.floor(5 * Math.pow(2, level - 1));
 }
 
-/**
- * Get NVT auto-income per second for an estate level
- */
 function estateNvtIncome(level) {
     return parseFloat((0.1 * level).toFixed(2));
 }
 
-/**
- * Format seconds into mm:ss
- */
 function formatTime(secs) {
     if (secs <= 0) return '00:00';
     const m = Math.floor(secs / 60);
@@ -1861,42 +1851,47 @@ function formatTime(secs) {
     return `${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
 }
 
-/**
- * Get description/label for current estate level (cycles through desc array)
- */
 function estateDesc(def, level) {
     const idx = Math.min(level - 1, def.desc.length - 1);
     return def.desc[Math.max(0, idx)];
 }
 
-/**
- * Render all estate cards
- */
+// ============================================================
+// RENDER ESTATES — FIXED
+// Key fix: split isUpgrading into isStillCooking + isReadyToClaim
+// so that when the timer expires, the claim button is shown
+// immediately without needing a page refresh.
+// ============================================================
 function renderEstates() {
     const container = document.getElementById('estates-list');
     let html = '';
     ESTATE_DEFS.forEach(def => {
-        const ed = estateData[def.id] || { level:0, startedAt:null, claimed:true };
+        const ed = estateData[def.id] || { level: 0, startedAt: null, claimed: true };
         const curLevel = ed.level || 0;
         const nextLevel = curLevel + 1;
         const isMax = curLevel >= ESTATE_MAX_LEVEL;
-        const isUpgrading = ed.startedAt && !ed.claimed;
-        const cost = estateCost(nextLevel);
-        const dur = estateDuration(nextLevel);
-        const crcRew = estateCrcReward(nextLevel);
-        const nvtInc = estateNvtIncome(curLevel > 0 ? curLevel : 1);
-        // Description scales with level
+
+        // An upgrade is pending if startedAt is set AND reward not yet claimed
+        const isUpgrading = !!ed.startedAt && ed.claimed === false;
+
+        const cost    = estateCost(nextLevel);
+        const dur     = estateDuration(nextLevel);
+        const crcRew  = estateCrcReward(nextLevel);
+        const nvtInc  = estateNvtIncome(curLevel > 0 ? curLevel : 1);
         const descLabel = curLevel > 0 ? estateDesc(def, curLevel) : 'Not built';
 
-        // Timer progress
         let progress = 0;
         let secsLeft = 0;
         if (isUpgrading) {
-            const elapsed = (Date.now() - ed.startedAt) / 1000;
             const totalDur = estateDuration(curLevel + 1);
+            const elapsed  = (Date.now() - ed.startedAt) / 1000;
             secsLeft = Math.max(0, totalDur - elapsed);
             progress = Math.min(100, (elapsed / totalDur) * 100);
         }
+
+        // FIX: separate the two states so the claim button appears automatically
+        const isReadyToClaim = isUpgrading && secsLeft <= 0;
+        const isStillCooking = isUpgrading && secsLeft > 0;
 
         html += `
         <div class="estate-card" id="ec-${def.id}">
@@ -1912,50 +1907,60 @@ function renderEstates() {
                 <div class="estate-rewards-row">
                     <div class="estate-reward-chip">
                         <div class="erc-label">Next Cost</div>
-                        <div class="erc-val" style="color:var(--gold);">${isMax?'—':format(cost)}</div>
+                        <div class="erc-val" style="color:var(--gold);">${isMax ? '—' : format(cost)}</div>
                         <div style="font-size:8px;color:var(--gray);">NVT</div>
                     </div>
                     <div class="estate-reward-chip">
                         <div class="erc-label">CRC Reward</div>
-                        <div class="erc-val" style="color:var(--crc);">${isMax?'—':crcRew}</div>
+                        <div class="erc-val" style="color:var(--crc);">${isMax ? '—' : crcRew}</div>
                         <div style="font-size:8px;color:var(--gray);">CRC</div>
                     </div>
                     <div class="estate-reward-chip">
                         <div class="erc-label">Income/s</div>
-                        <div class="erc-val" style="color:var(--neon);">${curLevel>0?nvtInc:'—'}</div>
+                        <div class="erc-val" style="color:var(--neon);">${curLevel > 0 ? nvtInc : '—'}</div>
                         <div style="font-size:8px;color:var(--gray);">NVT</div>
                     </div>
                 </div>
+
                 <div class="estate-progress-bar">
-                    <div class="estate-progress-fill" id="epf-${def.id}" style="width:${isUpgrading?progress:0}%"></div>
+                    <div class="estate-progress-fill" id="epf-${def.id}"
+                        style="width:${isStillCooking ? progress : (isReadyToClaim ? 100 : 0)}%">
+                    </div>
                 </div>
+
                 <div class="estate-btn-row">
                     ${isMax
                         ? `<button class="estate-upgrade-btn" disabled>MAX LEVEL</button>`
-                        : isUpgrading
+                        : isStillCooking
                             ? `<button class="estate-upgrade-btn" disabled>Upgrading…</button>`
-                            : `<button class="estate-upgrade-btn" onclick="startEstateUpgrade('${def.id}')">Upgrade LV${nextLevel} · ${!isMax?formatTime(dur):'—'}</button>`
+                            : isReadyToClaim
+                                ? `<button class="estate-upgrade-btn" disabled style="opacity:0.4;">Done ✓</button>`
+                                : `<button class="estate-upgrade-btn" onclick="startEstateUpgrade('${def.id}')">Upgrade LV${nextLevel} · ${formatTime(dur)}</button>`
                     }
-                    ${(!isMax && !isUpgrading && ed.startedAt && ed.claimed === false)
-                        ? '' : ''}
                 </div>
-                ${isUpgrading
-                    ? `<div class="estate-timer-label" id="etl-${def.id}" style="display:block;">⏱ ${formatTime(secsLeft)} remaining</div>`
-                    : ''}
-                ${(!isUpgrading && ed.startedAt && ed.claimed === false && !isMax)
-                    ? `<button class="estate-claim-btn" id="ecb-${def.id}" style="display:block;width:100%;margin-top:8px;" onclick="claimEstateReward('${def.id}')">🎁 CLAIM REWARD</button>`
-                    : `<button class="estate-claim-btn" id="ecb-${def.id}" style="display:none;width:100%;margin-top:8px;" onclick="claimEstateReward('${def.id}')">🎁 CLAIM REWARD</button>`}
+
+                <!-- Timer label: only shown while actively counting down -->
+                <div class="estate-timer-label" id="etl-${def.id}"
+                    style="display:${isStillCooking ? 'block' : 'none'};">
+                    ⏱ ${formatTime(secsLeft)} remaining
+                </div>
+
+                <!-- Claim button: shown immediately when timer has expired -->
+                <button
+                    class="estate-claim-btn"
+                    id="ecb-${def.id}"
+                    style="display:${isReadyToClaim ? 'block' : 'none'}; width:100%; margin-top:8px;"
+                    onclick="claimEstateReward('${def.id}')">
+                    🎁 CLAIM REWARD
+                </button>
             </div>
         </div>`;
     });
     container.innerHTML = html;
 }
 
-/**
- * Start upgrading an estate
- */
 function startEstateUpgrade(estateId) {
-    const ed = estateData[estateId] || { level:0, startedAt:null, claimed:true };
+    const ed = estateData[estateId] || { level: 0, startedAt: null, claimed: true };
     const curLevel = ed.level || 0;
     const nextLevel = curLevel + 1;
     if (nextLevel > ESTATE_MAX_LEVEL) { tg.showAlert('Max level reached!'); return; }
@@ -1965,12 +1970,9 @@ function startEstateUpgrade(estateId) {
     estateData[estateId] = { level: curLevel, startedAt: Date.now(), claimed: false };
     save(); updateUI();
     renderEstates();
-    tg.showAlert ? tg.showAlert(`Upgrading ${estateId} to LV${nextLevel}! Returns in ${formatTime(estateDuration(nextLevel))}.`) : null;
+    if (tg.showAlert) tg.showAlert(`Upgrading ${estateId} to LV${nextLevel}! Returns in ${formatTime(estateDuration(nextLevel))}.`);
 }
 
-/**
- * Claim estate upgrade reward
- */
 function claimEstateReward(estateId) {
     const ed = estateData[estateId];
     if (!ed || ed.claimed) return;
@@ -1979,44 +1981,65 @@ function claimEstateReward(estateId) {
     crcBalance += crcRew;
     estateData[estateId] = { level: newLevel, startedAt: null, claimed: true };
     save(); updateUI(); renderEstates();
-    tg.showAlert ? tg.showAlert(`✅ ${estateId.charAt(0).toUpperCase()+estateId.slice(1)} upgraded to LV${newLevel}! +${crcRew} CRC earned!`) : null;
+    if (tg.showAlert) tg.showAlert(`✅ ${estateId.charAt(0).toUpperCase()+estateId.slice(1)} upgraded to LV${newLevel}! +${crcRew} CRC earned!`);
 }
 
-/**
- * Tick estate timers every second — updates progress bars & reveal claim button
- */
+// ============================================================
+// TICK ESTATES — FIXED
+// Key fixes:
+// 1. In-progress timers update DOM elements directly (no re-render).
+// 2. When secsLeft hits 0, set needsFullRender = true so
+//    renderEstates() is called ONCE — which will then see
+//    isReadyToClaim = true and show the Claim button correctly.
+// 3. Passive NVT income only applies to fully completed estates
+//    (level > 0 AND claimed = true), not ones mid-upgrade.
+// ============================================================
 function tickEstates() {
     const estatesPage = document.getElementById('estates-page');
     if (!estatesPage || estatesPage.style.display !== 'block') return;
 
+    let needsFullRender = false;
+
     ESTATE_DEFS.forEach(def => {
         const ed = estateData[def.id];
         if (!ed || ed.claimed || !ed.startedAt) return;
-        const dur = estateDuration((ed.level||0) + 1);
-        const elapsed = (Date.now() - ed.startedAt) / 1000;
+
+        const dur      = estateDuration((ed.level || 0) + 1);
+        const elapsed  = (Date.now() - ed.startedAt) / 1000;
         const secsLeft = Math.max(0, dur - elapsed);
         const progress = Math.min(100, (elapsed / dur) * 100);
 
-        const pfEl = document.getElementById('epf-'+def.id);
-        if (pfEl) pfEl.style.width = progress + '%';
+        if (secsLeft > 0) {
+            // Still counting — update DOM elements in place (avoids expensive re-render every second)
+            const pfEl = document.getElementById('epf-' + def.id);
+            if (pfEl) pfEl.style.width = progress + '%';
 
-        const tlEl = document.getElementById('etl-'+def.id);
-        if (tlEl) tlEl.innerText = secsLeft > 0 ? `⏱ ${formatTime(secsLeft)} remaining` : '✅ Done!';
-
-        // When timer finishes, show claim button & re-render
-        if (secsLeft <= 0 && !ed.claimed) {
-            renderEstates();
+            const tlEl = document.getElementById('etl-' + def.id);
+            if (tlEl) tlEl.innerText = `⏱ ${formatTime(secsLeft)} remaining`;
+        } else {
+            // Timer just expired — flag for a full re-render.
+            // renderEstates() will compute isReadyToClaim = true
+            // and show the Claim button automatically.
+            needsFullRender = true;
         }
     });
 
-    // Passive NVT income from estates
+    // Passive NVT income — only from fully built & claimed estates
+    let earnedPassive = 0;
     ESTATE_DEFS.forEach(def => {
         const ed = estateData[def.id];
-        if (!ed || !ed.level || ed.level <= 0 || !ed.claimed) return;
-        const inc = estateNvtIncome(ed.level);
-        balance = Math.floor(balance + inc);
+        if (!ed || !ed.level || ed.level <= 0 || ed.claimed !== true) return;
+        earnedPassive += estateNvtIncome(ed.level);
     });
-    if (ESTATE_DEFS.some(d => (estateData[d.id]?.level||0) > 0)) updateUI();
+    if (earnedPassive > 0) {
+        balance += earnedPassive;
+        updateUI();
+    }
+
+    // Re-render only when a timer just expired — not every single tick
+    if (needsFullRender) {
+        renderEstates();
+    }
 }
 
 // ============================================================
@@ -2069,7 +2092,6 @@ document.getElementById('admin-key-input').addEventListener('keydown', e => { if
 // ADMIN PANEL
 // ============================================================
 let adminCurrentTaskCategory = 'social';
-// Cache for user table
 let allUsersCache = [];
 
 function openAdminPanel() {
@@ -2209,14 +2231,9 @@ function renderUserTable(users) {
     `).join('');
 }
 
-/**
- * Open an inline edit row below the selected user row
- */
 function openInlineEdit(userId, nvt, crc) {
-    // Remove any existing edit row
     const existingEdit = document.getElementById('edit-row-'+userId);
-    if (existingEdit) { existingEdit.remove(); return; } // Toggle off
-    // Remove other open edit rows
+    if (existingEdit) { existingEdit.remove(); return; }
     document.querySelectorAll('[id^="edit-row-"]').forEach(r => r.remove());
 
     const row = document.getElementById('urow-'+userId);
@@ -2238,18 +2255,13 @@ function openInlineEdit(userId, nvt, crc) {
     row.parentNode.insertBefore(editRow, row.nextSibling);
 }
 
-/**
- * Save inline edit — updates NVT and CRC for the selected user
- */
 function saveInlineEdit(userId) {
     const newNVT = parseInt(document.getElementById('ei-nvt-'+userId)?.value || '0');
     const newCRC = parseInt(document.getElementById('ei-crc-'+userId)?.value || '0');
     if (isNaN(newNVT)||newNVT<0 || isNaN(newCRC)||newCRC<0) { showAdminStatus('❌ Invalid values',false); return; }
     db.ref('users/'+userId).update({ balance: newNVT, crcBalance: newCRC }).then(() => {
-        // Update cache
         const u = allUsersCache.find(u => u.id === userId);
         if (u) { u.balance = newNVT; u.crcBalance = newCRC; }
-        // Update the displayed row
         const row = document.getElementById('urow-'+userId);
         if (row) {
             row.querySelector('.tbl-nvt').innerText = format(newNVT);
